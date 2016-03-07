@@ -71,6 +71,10 @@ public class IntsTests {
         assertTrue(isNonDecreasingOrder(values, 0, values.length-1));
     }
 
+    /**
+     * Fixed error of first for
+     * <p><b>i < r to i<= r</b></p>
+     */
     @Test
     public void sorts_a_sub_range_of_a_small_array() {
         // Arrange
@@ -79,5 +83,31 @@ public class IntsTests {
         Ints.insertionSort(values, 2, 5);
         // Assert
         assertTrue(isNonDecreasingOrder(values, 2, 5));
+    }
+
+    /**
+     * Fixed error of second for
+     * <p><b>j > 0 to j >= 0</b></p>
+     */
+    @Test
+    public void sort_all_elements_of_decreasing_array() {
+        int [] values = {10,4,2,1,0,-1,-20};
+
+        Ints.insertionSort(values, 0, values.length-1);
+
+        assertTrue(isNonDecreasingOrder(values, 0, values.length-1));
+    }
+
+    /**
+     * Fixed error of second for
+     * <p><b>j >= 0 to j >= l</b></p>
+     */
+    @Test
+    public void sort_sub_array_with_several_elements() {
+        int [] values =  {-20,4,-1,2,1,0,10,234,-1234,0,1243};
+
+        Ints.insertionSort(values, 2, 8);
+
+        assertTrue(isNonDecreasingOrder(values, 2, 8));
     }
 }
