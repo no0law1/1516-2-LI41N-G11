@@ -1,33 +1,74 @@
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-/**
- * TODO: Commentary
- */
+
 public class DataSourceFactoryTest {
+
+    //CREATE TABLE student ( number int primary key, name varchar(128) );
 
     private DataSource dataSource;
 
-    @Before
-    public void setUp(){
-        dataSource = DataSourceFactory.createDataSource();
+    public DataSourceFactoryTest(){
+        dataSource = DataSourceFactory.createInstance();
     }
 
-    @After
-    public void tearDown(){ }
-
-
+    /**
+     * Tests the connection to DataBase
+     *
+     * @throws SQLException if some error occurs
+     */
     @Test
-    public void testGetConnection() throws Exception {
-        try(Connection connection = dataSource.getConnection()){
-            connection.prepareStatement("SELECT * FROM student").executeQuery();
+    public void testGetConnection() throws SQLException {
+        try(Connection conn = dataSource.getConnection()){
+            conn.prepareStatement("SELECT * FROM student").executeQuery();
+        }
+    }
+
+    /**
+     * Tests SELECT after INSERT
+     * the data used by this test isn't persistent
+     *
+     * @throws SQLException if some error occurs
+     */
+    @Test
+    public void testSelect() throws Exception{
+        try(Connection conn = dataSource.getConnection()){
+            conn.setAutoCommit(false);
+            try(PreparedStatement pstmt = conn.prepareStatement(
+                    "INSERT INTO student (number, name) VALUES (31743, 'Ricardo Cacheira');")){
+                assertEquals(1, pstmt.executeUpdate());
+            }
+            try(PreparedStatement pstmt = conn.prepareStatement(
+                    "SELECT * FROM student")){
+                try(ResultSet result = pstmt.executeQuery()){
+                    assertTrue(result.next());
+                    assertEquals(31743, result.getInt("number"));
+                    assertEquals("Ricardo Cacheira", result.getString("name"));
+                }
+            }
+        }
+    }
+    /**
+     * Tests INSERT
+     * the data used by this test isn't persistent
+     *
+     * @throws SQLException if some error occurs
+     */
+    @Test
+    public void testInsert() throws Exception{
+        try(Connection conn = dataSource.getConnection()){
+            conn.setAutoCommit(false);
+            try(PreparedStatement pstmt = conn.prepareStatement(
+                    "INSERT INTO student (number, name) VALUES (31743, 'Ricardo Cacheira');")){
+                assertEquals(1, pstmt.executeUpdate());
+            }
         }
     }
 
