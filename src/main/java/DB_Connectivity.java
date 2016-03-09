@@ -4,6 +4,7 @@
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import org.postgresql.ds.PGSimpleDataSource;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,14 +15,15 @@ public class DB_Connectivity {
 
     private static Connection connect()throws Exception {
 
-        SQLServerDataSource dataSource = new SQLServerDataSource();
+        org.postgresql.ds.PGSimpleDataSource dataSource = new PGSimpleDataSource();
+//        SQLServerDataSource dataSource = new SQLServerDataSource();
         Connection con;
         Properties prop = new Properties();
         FileInputStream configFile = new FileInputStream("config.properties");
 
         prop.load(configFile);
-        dataSource.setServerName(prop.getProperty("sqlServer"));
-        dataSource.setInstanceName(prop.getProperty("instanceName"));
+        dataSource.setServerName(prop.getProperty("server"));
+//        dataSource.setInstanceName(prop.getProperty("instanceName"));
         dataSource.setDatabaseName(prop.getProperty("databaseName"));
         dataSource.setPortNumber(Integer.parseInt(prop.getProperty("portNumber")));
         dataSource.setUser(prop.getProperty("user"));
