@@ -2,8 +2,6 @@
  * Created by Clefos on 09-03-2016.
  */
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.io.FileInputStream;
@@ -44,7 +42,7 @@ public class DB_Connectivity {
             System.out.println("Error while accessing the properties from file"+e.getMessage());
         } catch (NumberFormatException e){
             System.out.println("The port number must be a number"+e.getMessage());
-        } catch (SQLServerException e) {
+        } catch (SQLException e) {
             System.out.println("Error while getting a connection from the server using a 'dataSource' instance"+e.getMessage());
         }catch (Exception e) {
             System.out.println("Unknown Error"+e.getMessage());
