@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
  */
 public class DB_ConnectivityTest {
 
+
     @Test
     public void testGetConnection() throws Exception {
         try(Connection connection = DB_Connectivity.getConnection()){
