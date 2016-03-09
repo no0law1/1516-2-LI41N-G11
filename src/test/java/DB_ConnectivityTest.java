@@ -13,7 +13,7 @@ public class DB_ConnectivityTest {
 
     @Test
     public void testGetConnection() throws Exception {
-        try(Connection connection = DB_Connectivity.getConnection()){
+        try(Connection connection = DB_Connectivity.createDataSource().getConnection()){
 
         }
     }
