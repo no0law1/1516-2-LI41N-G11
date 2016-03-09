@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
@@ -20,11 +21,22 @@ public class DataSourceFactoryTests {
         dataSource = DataSourceFactory.createInstance();
     }
 
+    /**
+     * Tests the connection to DataBase
+     *
+     * @throws SQLException if some error occurs
+     */
     @Test
-    public void testGetConnection() throws Exception {
+    public void testGetConnection() throws SQLException {
         try(Connection conn = dataSource.getConnection()){}
     }
 
+    /**
+     * Tests SELECT after INSERT
+     * the data used by this test isn't persistent
+     *
+     * @throws SQLException if some error occurs
+     */
     @Test
     public void testSelect() throws Exception{
         try(Connection conn = dataSource.getConnection()){
@@ -43,7 +55,12 @@ public class DataSourceFactoryTests {
             }
         }
     }
-
+    /**
+     * Tests INSERT
+     * the data used by this test isn't persistent
+     *
+     * @throws SQLException if some error occurs
+     */
     @Test
     public void testInsert() throws Exception{
         try(Connection conn = dataSource.getConnection()){

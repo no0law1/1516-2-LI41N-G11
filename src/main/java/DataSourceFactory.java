@@ -8,7 +8,22 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Properties;
 
+/**
+ * Class who knows how to create a DataSource
+ */
 public class DataSourceFactory {
+
+    /**
+     * creates a DataSource with the environment variables defined bellow
+     * 
+     * LS_1516V_DB_SERVER - Database Server name
+     * LS_1516V_DB_NAME - Database name
+     * LS_1516V_DB_PORT_NUMBER - Database port number
+     * LS_1516V_DB_USER - Database user
+     * LS_1516V_DB_PASSWORD - Database user password
+     *
+     * @return DataSource that can be used to connect to the database set on environment variables
+     */
     public static DataSource createInstance(){
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
 
