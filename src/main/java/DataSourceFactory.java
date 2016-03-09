@@ -8,11 +8,9 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Properties;
 
-public class DB_Connectivity {
-    public static DataSource createDataSource(){
+public class DataSourceFactory {
+    public static DataSource createInstance(){
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
-
-        Properties prop = new Properties();
 
         pgSimpleDataSource.setServerName(System.getenv("LS_1516V_DB_SERVER"));
         pgSimpleDataSource.setDatabaseName(System.getenv("LS_1516V_DB_NAME"));
