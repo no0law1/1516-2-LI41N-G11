@@ -8,7 +8,10 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Properties;
 
-public class DB_Connectivity {
+/**
+ * TODO: Commentary
+ */
+public class DataSourceFactory {
     public static DataSource createDataSource(){
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
 
