@@ -5,8 +5,6 @@
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
-import java.sql.*;
-import java.util.Properties;
 
 /**
  * Class that knows how to create a DataSource

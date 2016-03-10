@@ -15,7 +15,7 @@ public class DataSourceFactoryTest {
 
     private DataSource dataSource;
 
-    public DataSourceFactoryTest(){
+    public DataSourceFactoryTest() {
         dataSource = DataSourceFactory.createInstance();
     }
 
@@ -83,4 +83,20 @@ public class DataSourceFactoryTest {
             assertEquals(resultSet.getString("name"), "Nuno Reis");
         }
     }
+
+    @Test
+    public void testDelete() throws Exception{
+        try(Connection con = dataSource.getConnection()){
+            con.setAutoCommit(false);
+            con.prepareStatement("insert into student(number, name) values (37686, 'Cristian Clefos'), (37687, 'Cristian Clefos'), (37688, 'Cristian')").executeUpdate();
+            con.prepareStatement("delete from student where student.name = 'Cristian Clefos'").executeUpdate();
+            ResultSet res = con.prepareStatement("select * from student where name = 'Cristian Clefos'").executeQuery();
+            assertEquals(false, res.next());
+            res = con.prepareStatement("select * from student where name = 'Cristian'").executeQuery();
+            res.next();
+            assertEquals(res.getString("name"), "Cristian");
+        }
+    }
+
+
 }
