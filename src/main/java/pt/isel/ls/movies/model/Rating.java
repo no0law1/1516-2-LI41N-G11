@@ -1,7 +1,7 @@
 package pt.isel.ls.movies.model;
 
 /**
- * Created by ricardo on 16/03/2016.
+ * Class whose instance represents a rating value count of a movie
  */
 public class Rating {
     public int mid;
