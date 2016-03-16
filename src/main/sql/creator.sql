@@ -6,17 +6,17 @@
 --	may have the same title.
 create table movie(
 	id serial primary key,
-	title varchar(123),
+	title varchar(128),
 	release_year int, --YYYY-MM-00 Ano e Mês
-	genre varchar(123)
+	genre varchar(128)
 );
 
 create table review(
 	mid int,
 	id int,
-	reviewer_name varchar(123),
-	review_summary varchar(123),
-	review varchar(255),
+	reviewer_name varchar(128),
+	review_summary varchar(128),
+	review varchar(256),
 	rating int not null,
 
 	primary key(mid, id),
