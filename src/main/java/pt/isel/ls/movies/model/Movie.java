@@ -5,5 +5,7 @@ package pt.isel.ls.movies.model;
  */
 public class Movie {
     public int id;
-
+    public String title;
+    public int releaseYear;
+    public int genre;
 }
