@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.commands;
+package pt.isel.ls.movies.engine.commands;
 
 /**
  * TODO: comment
