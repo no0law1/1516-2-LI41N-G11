@@ -2,6 +2,8 @@ package pt.isel.ls.movies.data;
 
 import pt.isel.ls.movies.model.Review;
 
+import java.sql.Connection;
+
 /**
  * Review's Data Access Object
  */
@@ -13,7 +15,7 @@ public class ReviewDAO {
      * @param review Review to be added
      * @return Unique identifier for the review added
      */
-    public static int[] submitReview(Review review){
+    public static int[] submitReview(Connection connection, Review review){
         throw new UnsupportedOperationException();
     }
 
@@ -23,7 +25,7 @@ public class ReviewDAO {
      * @param mid Unique identifier of a Movie
      * @return All reviews of a Movie
      */
-    public static Review[] getReviews(int mid){
+    public static Review[] getReviews(Connection connection, int mid){
         throw new UnsupportedOperationException();
     }
 
@@ -34,7 +36,7 @@ public class ReviewDAO {
      * @param rid Unique identifier of a Review
      * @return one review
      */
-    public static Review getReview(int mid, int rid){
+    public static Review getReview(Connection connection, int mid, int rid){
         throw new UnsupportedOperationException();
     }
 }

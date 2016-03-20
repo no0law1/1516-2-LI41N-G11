@@ -2,6 +2,8 @@ package pt.isel.ls.movies.data;
 
 import pt.isel.ls.movies.model.Rating;
 
+import java.sql.Connection;
+
 /**
  * Rating's Data Access Object
  */
@@ -13,7 +15,7 @@ public class RatingDAO {
      * @param rating Rating
      * @return Unique identifier of the Rating
      */
-    public static int submitRating(Rating rating){
+    public static int submitRating(Connection connection, Rating rating){
         throw new UnsupportedOperationException();
     }
 
@@ -22,7 +24,7 @@ public class RatingDAO {
      * @param mid Unique identifier for the movie ratings.
      * @return List of the movie ratings
      */
-    public static Rating[] getMovieRatings(int mid){
+    public static Rating[] getMovieRatings(Connection connection, int mid){
         throw new UnsupportedOperationException();
     }
 }

@@ -16,7 +16,7 @@ public class DataSourceFactoryTest {
     private DataSource dataSource;
 
     public DataSourceFactoryTest() {
-        dataSource = DataSourceFactory.createInstance();
+        dataSource = DataSourceFactory.createTestInstance();
     }
 
     /**
