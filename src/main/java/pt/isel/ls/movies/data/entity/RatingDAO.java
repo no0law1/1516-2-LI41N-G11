@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.data;
+package pt.isel.ls.movies.data.entity;
 
 import pt.isel.ls.movies.model.Rating;
 

@@ -1,9 +1,6 @@
-/**
- * Created by Clefos on 09-03-2016.
- */
+package pt.isel.ls.movies.data;
 
 import org.postgresql.ds.PGSimpleDataSource;
-
 import javax.sql.DataSource;
 
 /**

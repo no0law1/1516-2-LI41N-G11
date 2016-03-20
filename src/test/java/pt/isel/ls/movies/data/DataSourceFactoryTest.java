@@ -1,4 +1,7 @@
+package pt.isel.ls.movies.data;
+
 import org.junit.Test;
+import pt.isel.ls.movies.data.DataSourceFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
