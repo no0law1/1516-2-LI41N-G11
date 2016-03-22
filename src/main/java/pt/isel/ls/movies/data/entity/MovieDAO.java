@@ -41,7 +41,7 @@ public class MovieDAO {
      * Gets from the database all the movies
      * @return an array of all movies
      */
-    public static List<Movie> getMovies(Connection connection) throws SQLException {
+    public static List<Movie> getMovies(Connection connection) throws Exception {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select * from movie");
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -55,7 +55,10 @@ public class MovieDAO {
             Movie movie = new Movie(id, title, releaseYear, genre);
             movies.add(movie);
         }
-        return movies;
+        if(!movies.isEmpty()) {
+            return movies;
+        }
+        throw new NoDataException();
     }
 
     /**
@@ -83,8 +86,18 @@ public class MovieDAO {
      *
      * @return the detail for the movie with the highest average rating.
      */
-    public static Movie getHighestRatingMovie(Connection connection){
-        throw new UnsupportedOperationException();
+    public static Movie getHighestRatingMovie(Connection connection) throws Exception {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select * from movie where id=?");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+            int id = resultSet.getInt(1);
+            String title = resultSet.getString(2);
+            int releaseYear = resultSet.getInt(3);
+            String genre = resultSet.getString(4);
+            return new Movie(id, title, releaseYear, genre);
+        }
+        throw new NoDataException();
     }
 
     /**

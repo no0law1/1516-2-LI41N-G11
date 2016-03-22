@@ -79,7 +79,7 @@ public class MovieDAOTest {
 
     @Test
     public void testGetHighestRatingMovie() throws Exception {
-
+        //TODO: Test
     }
 
     @Test

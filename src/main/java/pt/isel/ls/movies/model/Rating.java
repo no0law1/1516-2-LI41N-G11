@@ -13,4 +13,13 @@ public class Rating {
         this.val = val;
         this.count = count;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Rating)){
+            return false;
+        }
+        Rating rating = (Rating)o;
+        return this.mid == rating.mid && this.val == rating.val && this.count == rating.count;
+    }
 }
