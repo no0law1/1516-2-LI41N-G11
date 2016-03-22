@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * TODO: Commentary.
+ * Testing class of model class Rating
  */
 public class RatingTest {
 

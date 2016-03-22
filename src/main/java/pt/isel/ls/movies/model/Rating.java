@@ -8,6 +8,10 @@ public class Rating {
     public int val;
     public int count;
 
+    public Rating(int mid, int val){
+        this(mid, val, 1);
+    }
+
     public Rating(int mid, int val, int count){
         this.mid = mid;
         this.val = val;
