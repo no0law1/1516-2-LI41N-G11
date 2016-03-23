@@ -87,8 +87,13 @@ public class MovieDAO {
      * @return the detail for the movie with the highest average rating.
      */
     public static Movie getHighestRatingMovie(Connection connection) throws Exception {
+//        return getHighestRatingMovies(connection, 1).get(1);
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select * from movie where id=?");
+                connection.prepareStatement("select id, title, release_year, genre\n" +
+                        "\tfrom movie join rating on id=mid\n" +
+                        "\tgroup by id\n" +
+                        "\torder by SUM(val*count)::float/SUM(count) desc\n" +
+                        "\tlimit 1");
         ResultSet resultSet = preparedStatement.executeQuery();
         if(resultSet.next()){
             int id = resultSet.getInt(1);
@@ -105,8 +110,23 @@ public class MovieDAO {
      *
      * @return the detail for the movie with the lowes average rating.
      */
-    public static Movie getLowestRatingMovie(Connection connection){
-        throw new UnsupportedOperationException();
+    public static Movie getLowestRatingMovie(Connection connection) throws Exception {
+//        return getLowestRatingMovies(connection, 1).get(1);
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select id, title, release_year, genre\n" +
+                        "\tfrom movie join rating on id=mid\n" +
+                        "\tgroup by id\n" +
+                        "\torder by SUM(val*count)::float/SUM(count) asc\n" +
+                        "\tlimit 1");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+            int id = resultSet.getInt(1);
+            String title = resultSet.getString(2);
+            int releaseYear = resultSet.getInt(3);
+            String genre = resultSet.getString(4);
+            return new Movie(id, title, releaseYear, genre);
+        }
+        throw new NoDataException();
     }
 
     /**
@@ -115,8 +135,28 @@ public class MovieDAO {
      * @param n number of movies
      * @return the detail for the {@code n} movies with the highest average rating.
      */
-    public static Movie[] getHighestRatingMovies(Connection connection, int n){
-        throw new UnsupportedOperationException();
+    public static List<Movie> getHighestRatingMovies(Connection connection, int n) throws Exception {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select id, title, release_year, genre\n" +
+                        "\tfrom movie join rating on id=mid\n" +
+                        "\tgroup by id\n" +
+                        "\torder by SUM(val*count)::float/SUM(count) desc\n" +
+                        "\tlimit ?");
+        preparedStatement.setInt(1, n);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<Movie> movies = new LinkedList<>();
+        while(resultSet.next()){
+            int id = resultSet.getInt(1);
+            String title = resultSet.getString(2);
+            int releaseYear = resultSet.getInt(3);
+            String genre = resultSet.getString(4);
+            movies.add(new Movie(id, title, releaseYear, genre));
+        }
+        if(movies.isEmpty()) {
+            throw new NoDataException();
+        }
+        return movies;
     }
 
     /**
@@ -125,7 +165,27 @@ public class MovieDAO {
      * @param n number of movies
      * @return the detail for the {@code n} movies with the lowest average rating.
      */
-    public static Movie[] getLowestRatingMovies(Connection connection, int n){
-        throw new UnsupportedOperationException();
+    public static List<Movie> getLowestRatingMovies(Connection connection, int n) throws Exception {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select id, title, release_year, genre\n" +
+                        "\tfrom movie join rating on id=mid\n" +
+                        "\tgroup by id\n" +
+                        "\torder by SUM(val*count)::float/SUM(count) asc\n" +
+                        "\tlimit ?");
+        preparedStatement.setInt(1, n);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<Movie> movies = new LinkedList<>();
+        while(resultSet.next()){
+            int id = resultSet.getInt(1);
+            String title = resultSet.getString(2);
+            int releaseYear = resultSet.getInt(3);
+            String genre = resultSet.getString(4);
+            movies.add(new Movie(id, title, releaseYear, genre));
+        }
+        if(movies.isEmpty()) {
+            throw new NoDataException();
+        }
+        return movies;
     }
 }
