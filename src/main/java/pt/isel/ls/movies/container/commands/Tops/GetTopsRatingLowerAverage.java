@@ -1,16 +1,12 @@
 package pt.isel.ls.movies.container.commands.Tops;
 
-import pt.isel.ls.movies.container.commands.Command;
+import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.engine.Request;
 
 /**
  * TODO: Commentary.
  */
-public class GetTopsRatingLowerAverage extends Command {
-
-    public GetTopsRatingLowerAverage(String commandRoute) {
-        super(commandRoute);
-    }
+public class GetTopsRatingLowerAverage implements ICommand {
 
     @Override
     public void execute(Request request) throws Exception {

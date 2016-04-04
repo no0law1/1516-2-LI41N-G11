@@ -30,26 +30,26 @@ public class Router {
         Router router = new Router();
 
         /**  MOVIES  **/
-        router.add("POST", "/movies", new PostMovie("/movies"));
-        router.add("GET", "/movies", new GetMovieList("/movies"));
-        router.add("GET", "/movies/{p}", new GetMovie("/movies/{mid}"));
-        router.add("GET", "/tops/reviews/higher/count", new GetHighestRatedMovie("/tops/reviews/higher/count"));
-        router.add("GET", "/tops/{n}/reviews/higher/count", new GetHighestRatedMovies("/tops/{n}/reviews/higher/count"));
+        router.add("POST", "/movies", new PostMovie());
+        router.add("GET", "/movies", new GetMovieList());
+        router.add("GET", "/movies/{mid}", new GetMovie());
+        router.add("GET", "/tops/reviews/higher/count", new GetHighestRatedMovie());
+        router.add("GET", "/tops/{n}/reviews/higher/count", new GetHighestRatedMovies());
 
         /**  RATING  **/
-        router.add("POST", "/movies/{p}/ratings", new PostRating("/movies/{mid}/ratings"));
-        router.add("GET", "/movies/{p}/ratings", new GetMovieRating("/movies/{mid}/ratings"));
+        router.add("POST", "/movies/{mid}/ratings", new PostRating());
+        router.add("GET", "/movies/{mid}/ratings", new GetMovieRating());
 
         /**  REVIEW  **/
-        router.add("POST", "/movies/{p}/reviews", new PostReview("/movies/{mid}/reviews"));
-        router.add("GET", "/movies/{p}/reviews", new GetMovieReviews("/movies/{mid}/reviews"));
-        router.add("GET", "/movies/{p}/reviews/{p}", new GetReview("/movies/{mid}/reviews/{rid}"));
+        router.add("POST", "/movies/{mid}/reviews", new PostReview());
+        router.add("GET", "/movies/{mid}/reviews", new GetMovieReviews());
+        router.add("GET", "/movies/{mid}/reviews/{rid}", new GetReview());
 
         /**  TOPS  **/
-        router.add("GET", "/tops/ratings/higher/average", new GetTopsRatingHigherAverage("/tops/ratings/higher/average"));
-        router.add("GET", "/tops/{p}/ratings/higher/average", new GetNTopsRatingHigherAverage("/tops/{n}/ratings/higher/average"));
-        router.add("GET", "/tops/ratings/lower/average", new GetTopsRatingLowerAverage("/tops/ratings/lower/average"));
-        router.add("GET", "/tops/{p}/ratings/lower/average", new GetNTopsRatingLowerAverage("/tops/{n}/ratings/lower/average"));
+        router.add("GET", "/tops/ratings/higher/average", new GetTopsRatingHigherAverage());
+        router.add("GET", "/tops/{n}/ratings/higher/average", new GetNTopsRatingHigherAverage());
+        router.add("GET", "/tops/ratings/lower/average", new GetTopsRatingLowerAverage());
+        router.add("GET", "/tops/{n}/ratings/lower/average", new GetNTopsRatingLowerAverage());
 
         return router;
     }
@@ -62,48 +62,87 @@ public class Router {
         }
         for (String name: path.split("/")) {
             if(name.isEmpty()) continue;
-            Node auxNode = node.get(name);
-            if(auxNode == null){
-                auxNode = new Node();
-                node.nodes.put(name, auxNode);
+            if(name.startsWith("{")) {
+                if(!name.endsWith("}")) {
+                    throw new IllegalArgumentException("A path parameter must ends with \"}\"");
+                }
+                node = addParameter(node, name);
             }
-            node = auxNode;
+            else {
+                node = addNode(node, name);
+            }
         }
         node.setCommand(ICommand);
     }
 
-    public ICommand get(Request request){
-        return get(request.getMethod(), request.getPath());
+    public Node addNode(Node node, String name){
+        Node auxNode = node.get(name);
+        if(auxNode == null){
+            auxNode = new Node();
+            node.nodes.put(name, auxNode);
+        }
+        return auxNode;
     }
 
-    public ICommand get(String method, String path){
-        Node node = methods.get(method);
+    public Node addParameter(Node node, String name){
+        Node auxNode;
+        if(node.parameter == null){
+            auxNode = new Node();
+            node.parameter = new Parameter(name, auxNode);
+        }
+        else{
+            auxNode = node.parameter.node;
+        }
+        return auxNode;
+    }
+
+    public ICommand get(Request request){
+        Node node = methods.get(request.getMethod());
         if(node == null){
             throw new UnsupportedOperationException("Method not found");
         }
-        for (String name: path.split("/")) {
+        for (String name: request.getPath().split("/")) {
             if(name.isEmpty()) continue;
-            if(Character.isDigit(name.charAt(0))){
-                name = "{p}";
+            Node auxNode = node.get(name);
+            if(auxNode == null){
+                if(node.parameter == null) {
+                    throw new UnsupportedOperationException("Path not found");
+                }
+                request.getQueryParams().put(node.parameter.getParameterName(), name);
+                node = node.parameter.node;
             }
-            node = node.get(name);
-            if(node == null){
-                throw new UnsupportedOperationException("Path not found");
+            else {
+                node = auxNode;
             }
         }
         return node.getCommand();
     }
 
+    private class Parameter{
+        private final String name;
+        private final Node node;
+
+        private Parameter(String name, Node node) {
+            this.name = name;
+            this.node = node;
+        }
+
+        private String getParameterName(){
+            return name.substring(1, name.length()-1);
+        }
+    }
+
     private class Node {
-        private ICommand ICommand;
+        private ICommand iCommand;
         private Map<String, Node> nodes;
+        private Router.Parameter parameter;
 
         public Node(){
             this(null);
-        };
+        }
 
-        public Node(ICommand ICommand){
-            this.ICommand = ICommand;
+        public Node(ICommand iCommand){
+            this.iCommand = iCommand;
             nodes = new HashMap<>();
         }
 
@@ -112,12 +151,12 @@ public class Router {
         }
 
         public ICommand getCommand(){
-            return ICommand;
-        };
+            return iCommand;
+        }
 
 
-        public void setCommand(ICommand ICommand){
-            this.ICommand = ICommand;
+        public void setCommand(ICommand iCommand){
+            this.iCommand = iCommand;
         }
     }
 }

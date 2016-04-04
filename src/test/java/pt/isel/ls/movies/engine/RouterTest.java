@@ -22,36 +22,43 @@ public class RouterTest {
 
     @Test
     public void testGet() throws Exception {
-        assertTrue(router.get("GET", "/movies") instanceof GetMovieList);
+        Request request = Request.create(new String[]{"GET", "/movies"});
+        assertTrue(router.get(request) instanceof GetMovieList);
     }
 
     @Test
     public void testGet2() throws Exception {
-        assertTrue(router.get("GET", "/tops/ratings/higher/average") instanceof GetTopsRatingHigherAverage);
+        Request request = Request.create(new String[]{"GET", "/tops/ratings/higher/average"});
+        assertTrue(router.get(request) instanceof GetTopsRatingHigherAverage);
     }
 
     @Test
     public void testGet3() throws Exception {
-        assertTrue(router.get("POST", "/movies") instanceof PostMovie);
+        Request request = Request.create(new String[]{"POST", "/movies"});
+        assertTrue(router.get(request) instanceof PostMovie);
     }
 
     @Test
     public void testGetWithParameterOnPath() throws Exception {
-        assertTrue(router.get("GET", "/movies/12") instanceof GetMovie);
+        Request request = Request.create(new String[]{"GET", "/movies/12"});
+        assertTrue(router.get(request) instanceof GetMovie);
     }
 
     @Test
     public void testGetWithParameterInTheMiddleOfPath() throws Exception {
-        assertTrue(router.get("GET", "/tops/{p}/ratings/higher/average") instanceof GetNTopsRatingHigherAverage);
+        Request request = Request.create(new String[]{"GET", "/tops/{n}/ratings/higher/average"});
+        assertTrue(router.get(request) instanceof GetNTopsRatingHigherAverage);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testGetNotExistingMethod() throws Exception {
-        router.get("SDA", "/movies");
+        Request request = Request.create(new String[]{"SDA", "/movies"});
+        router.get(request);
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testGetNotExistingPath() throws Exception {
-        router.get("GET", "/movies/test");
+        Request request = Request.create(new String[]{"GET", "/movies/test/unholy"});
+        router.get(request);
     }
 }

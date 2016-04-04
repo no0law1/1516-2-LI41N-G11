@@ -14,6 +14,8 @@ public class Request {
 
     private String parameters;
 
+    private Map<String, String> map;
+
     public Request(String method, String path, String parameters) {
         this.method = method;
         this.path = path;
@@ -28,11 +30,15 @@ public class Request {
     }
 
     public Map<String, String> getQueryParams(){
-        Map<String, String> map = new HashMap<>();
-        String[] splittedParameters = parameters.split("&");
-        for (String splittedParameter : splittedParameters) {
-            String[] keyValue = splittedParameter.split("=");
-            map.put(keyValue[0], keyValue[1]);
+        if(map == null) {
+            map = new HashMap<>();
+            if(parameters != null && !parameters.isEmpty()) {
+                String[] splittedParameters = parameters.split("&");
+                for (String splittedParameter : splittedParameters) {
+                    String[] keyValue = splittedParameter.split("=");
+                    map.put(keyValue[0], keyValue[1]);
+                }
+            }
         }
         return map;
     }
