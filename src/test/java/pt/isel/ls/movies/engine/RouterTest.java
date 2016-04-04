@@ -1,13 +1,13 @@
 package pt.isel.ls.movies.engine;
 
 import org.junit.Test;
-import pt.isel.ls.movies.engine.commands.Movies.GetMovie;
-import pt.isel.ls.movies.engine.commands.Movies.GetMovieList;
-import pt.isel.ls.movies.engine.commands.Movies.PostMovie;
-import pt.isel.ls.movies.engine.commands.Tops.GetNTopsRatingHigherAverage;
-import pt.isel.ls.movies.engine.commands.Tops.GetTopsRatingHigherAverage;
+import pt.isel.ls.movies.container.commands.Movies.GetMovie;
+import pt.isel.ls.movies.container.commands.Movies.GetMovieList;
+import pt.isel.ls.movies.container.commands.Movies.PostMovie;
+import pt.isel.ls.movies.container.commands.Tops.GetNTopsRatingHigherAverage;
+import pt.isel.ls.movies.container.commands.Tops.GetTopsRatingHigherAverage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * TODO: comment
