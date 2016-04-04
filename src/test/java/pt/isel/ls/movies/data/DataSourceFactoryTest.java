@@ -1,7 +1,6 @@
 package pt.isel.ls.movies.data;
 
 import org.junit.Test;
-import pt.isel.ls.movies.data.DataSourceFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -9,7 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class DataSourceFactoryTest {
@@ -17,9 +17,9 @@ public class DataSourceFactoryTest {
     //CREATE TABLE student ( number int primary key, name varchar(128) );
 
     private DataSource dataSource;
-
     public DataSourceFactoryTest() {
-        dataSource = DataSourceFactory.createTestInstance();
+        System.setProperty("LS_1516V_DB_SERVER", "movies_test");
+        dataSource = DataSourceFactory.createInstance();
     }
 
     /**

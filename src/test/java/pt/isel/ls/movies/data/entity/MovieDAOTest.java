@@ -8,12 +8,12 @@ import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.model.Rating;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class of model class Movie Data Access Object
@@ -24,7 +24,8 @@ public class MovieDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        dataSource = DataSourceFactory.createTestInstance();
+        System.setProperty("LS_1516V_DB_SERVER", "movies_test");
+        dataSource = DataSourceFactory.createInstance();
     }
 
     @After

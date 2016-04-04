@@ -1,5 +1,6 @@
 package pt.isel.ls.movies;
 
+import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Router;
 
@@ -24,6 +25,6 @@ public class MoviesApp {
 
     private void run(String[] args) throws Exception {
         Request request = Request.create(args);
-        router.get(request).execute(request);
+        router.get(request).execute(DataSourceFactory.createInstance(), request);
     }
 }
