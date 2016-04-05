@@ -24,8 +24,7 @@ public class RatingDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty("LS_1516V_DB_SERVER", "movies_test");
-        dataSource = DataSourceFactory.createInstance();
+        dataSource = DataSourceFactory.createTestInstance();
     }
 
     @After
@@ -43,7 +42,7 @@ public class RatingDAOTest {
             connection.setAutoCommit(false);
             int id = MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
 
-            assertEquals(id, expected.mid);
+            assertEquals(id, expected.getMid());
             assertEquals(expected, RatingDAO.submitRating(connection, expected));
         }
     }
@@ -57,7 +56,7 @@ public class RatingDAOTest {
             int id = MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
             RatingDAO.submitRating(connection, expected);
 
-            assertEquals(id, expected.mid);
+            assertEquals(id, expected.getMid());
             assertEquals(expected, RatingDAO.submitRating(connection, expected));
         }
     }

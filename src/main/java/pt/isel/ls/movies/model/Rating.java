@@ -4,9 +4,12 @@ package pt.isel.ls.movies.model;
  * Class whose instance represents a rating value count of a movie
  */
 public class Rating {
-    public int mid;
-    public int val;
-    public int count;
+
+    private int mid;
+
+    private int val;
+
+    private int count;
 
     public Rating(int mid, int val){
         this(mid, val, 1);
@@ -16,6 +19,18 @@ public class Rating {
         this.mid = mid;
         this.val = val;
         this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public int getMid() {
+        return mid;
+    }
+
+    public int getVal() {
+        return val;
     }
 
     @Override

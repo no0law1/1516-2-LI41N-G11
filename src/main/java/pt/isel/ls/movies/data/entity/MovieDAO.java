@@ -4,7 +4,10 @@ import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Movie;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,9 +27,9 @@ public class MovieDAO {
                 connection.prepareStatement(
                         "insert into movie(title, release_year, genre) values (?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setString(1, movie.title);
-        preparedStatement.setInt(2, movie.releaseYear);
-        preparedStatement.setString(3, movie.genre);
+        preparedStatement.setString(1, movie.getTitle());
+        preparedStatement.setInt(2, movie.getReleaseYear());
+        preparedStatement.setString(3, movie.getGenre());
 
         if(preparedStatement.executeUpdate() != 0){
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -106,9 +109,9 @@ public class MovieDAO {
     }
 
     /**
-     * Gets from the database the movie with the lowes average rating.
+     * Gets from the database the movie with the lowest average rating.
      *
-     * @return the detail for the movie with the lowes average rating.
+     * @return the detail for the movie with the lowest average rating.
      */
     public static Movie getLowestRatingMovie(Connection connection) throws Exception {
 //        return getLowestRatingMovies(connection, 1).get(1);

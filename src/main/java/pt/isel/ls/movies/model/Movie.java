@@ -4,10 +4,10 @@ package pt.isel.ls.movies.model;
  * Class whose instance represents a movie
  */
 public class Movie {
-    public int id;
-    public String title;
-    public int releaseYear;
-    public String genre;
+    private int id;
+    private String title;
+    private int releaseYear;
+    private String genre;
 
     public Movie(int id, String title, int releaseYear, String genre){
         this.id = id;
@@ -20,6 +20,22 @@ public class Movie {
         this.title = title;
         this.releaseYear = releaseYear;
         this.genre = genre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     @Override

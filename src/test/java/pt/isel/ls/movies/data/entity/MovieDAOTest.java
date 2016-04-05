@@ -24,8 +24,7 @@ public class MovieDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty("LS_1516V_DB_SERVER", "movies_test");
-        dataSource = DataSourceFactory.createInstance();
+        dataSource = DataSourceFactory.createTestInstance();
     }
 
     @After

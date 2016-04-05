@@ -18,8 +18,7 @@ public class DataSourceFactoryTest {
 
     private DataSource dataSource;
     public DataSourceFactoryTest() {
-        System.setProperty("LS_1516V_DB_SERVER", "movies_test");
-        dataSource = DataSourceFactory.createInstance();
+        dataSource = DataSourceFactory.createTestInstance();
     }
 
     /**

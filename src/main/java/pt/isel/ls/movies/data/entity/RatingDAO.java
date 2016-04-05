@@ -4,7 +4,9 @@ import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Rating;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,8 +24,8 @@ public class RatingDAO {
     public static Rating submitRating(Connection connection, Rating rating) throws Exception {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select * from rating where mid=? and val=?");
-        preparedStatement.setInt(1, rating.mid);
-        preparedStatement.setInt(2, rating.val);
+        preparedStatement.setInt(1, rating.getMid());
+        preparedStatement.setInt(2, rating.getVal());
 
         try(ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
@@ -31,8 +33,8 @@ public class RatingDAO {
             } else {
                 preparedStatement = connection.prepareStatement("insert into rating(mid, val, count) values (?, ?, 1)");
             }
-            preparedStatement.setInt(1, rating.mid);
-            preparedStatement.setInt(2, rating.val);
+            preparedStatement.setInt(1, rating.getMid());
+            preparedStatement.setInt(2, rating.getVal());
             if(preparedStatement.executeUpdate() != 0){
                 return rating;
             }

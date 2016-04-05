@@ -25,12 +25,12 @@ public class Review {
         }
     }
 
-    public int mid;
-    public int id;
-    public String reviewerName;
-    public String reviewSummary;
-    public String review;
-    public int rating;
+    private int mid;
+    private int id;
+    private String reviewerName;
+    private String reviewSummary;
+    private String review;
+    private int rating;
 
     public Review(int mid, int id, String reviewerName, String reviewSummary, String review, int rating){
         this.mid = mid;
@@ -40,6 +40,31 @@ public class Review {
         this.review = review;
         this.rating = rating;
     }
+
+    public int getMid() {
+        return mid;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public String getReviewerName() {
+        return reviewerName;
+    }
+
+    public String getReviewSummary() {
+        return reviewSummary;
+    }
+
     @Override
     public boolean equals(Object o) {
         if(!(o instanceof Review)){

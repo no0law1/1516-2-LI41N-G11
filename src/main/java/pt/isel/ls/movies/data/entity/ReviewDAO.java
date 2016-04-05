@@ -5,7 +5,10 @@ import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.model.Review;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,16 +28,16 @@ public class ReviewDAO {
                 connection.prepareStatement(
                         "insert into review(mid, id, reviewer_name, review_summary, review, rating) values (?, ?, ?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setInt(1, review.mid);
-        preparedStatement.setInt(2, getReviewId(connection, review.mid));
-        preparedStatement.setString(3, review.reviewerName);
-        preparedStatement.setString(4, review.reviewSummary);
-        preparedStatement.setString(5, review.review);
-        preparedStatement.setInt(6, review.rating);
+        preparedStatement.setInt(1, review.getMid());
+        preparedStatement.setInt(2, getReviewId(connection, review.getMid()));
+        preparedStatement.setString(3, review.getReviewerName());
+        preparedStatement.setString(4, review.getReviewSummary());
+        preparedStatement.setString(5, review.getReview());
+        preparedStatement.setInt(6, review.getRating());
 
         if(preparedStatement.executeUpdate() != 0){
             // Update rating count
-            RatingDAO.submitRating(connection, new Rating(review.mid, review.rating));
+            RatingDAO.submitRating(connection, new Rating(review.getMid(), review.getRating()));
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if(resultSet.next()){
