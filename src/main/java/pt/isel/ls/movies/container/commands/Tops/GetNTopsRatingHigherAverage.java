@@ -17,13 +17,15 @@ public class GetNTopsRatingHigherAverage implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
-        try (Connection connection = dataSource.getConnection()) {
-            int n = Integer.parseInt(request.getQueryParams().get("n"));
-            List<Movie> movies = MovieDAO.getHighestRatingMovies(connection, n);
+        List<Movie> movies;
+        int n = Integer.parseInt(request.getQueryParams().get("n"));
 
-            for (Movie movie : movies) {
-                new MovieView(movie).show();
-            }
+        try (Connection connection = dataSource.getConnection()) {
+            movies = MovieDAO.getHighestRatingMovies(connection, n);
+        }
+
+        for (Movie movie : movies) {
+            new MovieView(movie).show();
         }
     }
 }

@@ -12,6 +12,13 @@ public class PostReview implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
-        //TODO: implementation
+//        Review.ReviewUID reviewUID;
+//        Review review = new Review()
+//
+//        try (Connection connection = dataSource.getConnection()) {
+//            reviewUID = ReviewDAO.submitReview(connection, review);
+//        }
+//
+//        new ReviewView(review).show();
     }
 }

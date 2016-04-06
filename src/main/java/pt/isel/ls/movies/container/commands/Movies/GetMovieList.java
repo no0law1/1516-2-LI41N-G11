@@ -17,11 +17,14 @@ public class GetMovieList implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        List<Movie> movies;
+
         try (Connection connection = dataSource.getConnection()) {
-            List<Movie> movies = MovieDAO.getMovies(connection);
-            for (Movie movie : movies) {
-                new MovieView(movie).show();
-            }
+            movies = MovieDAO.getMovies(connection);
+        }
+
+        for (Movie movie : movies) {
+            new MovieView(movie).show();
         }
     }
 }

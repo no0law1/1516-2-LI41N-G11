@@ -17,15 +17,19 @@ public class GetMovieRating implements ICommand{
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        List<Rating> ratings;
+        int mid = Integer.parseInt(request.get("mid"));
+
         try (Connection connection = dataSource.getConnection()) {
-            int mid = Integer.parseInt(request.getQueryParams().get("mid"));
-            List<Rating> ratings = RatingDAO.getMovieRatings(connection, mid);
-
-            //TODO: Show Average
-
-            for (Rating rating : ratings) {
-                new RatingView(rating).show();
-            }
+            ratings = RatingDAO.getMovieRatings(connection, mid);
         }
+
+        float average = 0;
+        for (Rating rating : ratings) {
+            average += rating.getVal() * rating.getCount();
+            new RatingView(rating).show();
+        }
+        //TODO: Improve
+        System.out.printf("Average: %s", average / ratings.size());
     }
 }

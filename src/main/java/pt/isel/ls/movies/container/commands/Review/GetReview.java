@@ -16,12 +16,14 @@ public class GetReview implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
-        try (Connection connection = dataSource.getConnection()) {
-            int mid = Integer.parseInt(request.getQueryParams().get("mid"));
-            int id = Integer.parseInt(request.getQueryParams().get("mid"));
-            Review review = ReviewDAO.getReview(connection, new Review.ReviewUID(mid, id));
+        Review review;
+        int mid = Integer.parseInt(request.get("mid"));
+        int id = Integer.parseInt(request.get("mid"));
 
-            new ReviewView(review).show();
+        try (Connection connection = dataSource.getConnection()) {
+            review = ReviewDAO.getReview(connection, new Review.ReviewUID(mid, id));
         }
+
+        new ReviewView(review).show();
     }
 }

@@ -43,6 +43,10 @@ public class Request {
         return map;
     }
 
+    public String get(String key) {
+        return map.get(key);
+    }
+
     public String getMethod() {
         return method;
     }

@@ -17,12 +17,15 @@ public class GetHighestRatedMovies implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        List<Movie> movies;
+        int n = Integer.parseInt(request.get("n"));
+
         try (Connection connection = dataSource.getConnection()) {
-            int n = Integer.parseInt(request.getQueryParams().get("n"));
-            List<Movie> movies = MovieDAO.getHighestRatingMovies(connection, n);
-            for (Movie movie : movies) {
-                new MovieView(movie).show();
-            }
+            movies = MovieDAO.getHighestRatingMovies(connection, n);
+        }
+
+        for (Movie movie : movies) {
+            new MovieView(movie).show();
         }
     }
 }

@@ -16,10 +16,13 @@ public class GetMovie implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        Movie movie;
+        int mid = Integer.parseInt(request.get("mid"));
+
         try(Connection connection = dataSource.getConnection()){
-            int mid = Integer.parseInt(request.getQueryParams().get("mid"));
-            Movie movie = MovieDAO.getMovie(connection, mid);
-            new MovieView(movie).show();
+            movie = MovieDAO.getMovie(connection, mid);
         }
+
+        new MovieView(movie).show();
     }
 }

@@ -16,9 +16,12 @@ public class GetHighestRatedMovie implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        Movie movie;
+
         try (Connection connection = dataSource.getConnection()) {
-            Movie movie = MovieDAO.getHighestRatingMovie(connection);
-            new MovieView(movie).show();
+            movie = MovieDAO.getHighestRatingMovie(connection);
         }
+
+        new MovieView(movie).show();
     }
 }
