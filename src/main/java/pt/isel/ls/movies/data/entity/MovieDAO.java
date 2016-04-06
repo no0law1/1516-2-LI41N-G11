@@ -61,7 +61,7 @@ public class MovieDAO {
         if(!movies.isEmpty()) {
             return movies;
         }
-        throw new NoDataException("There was no data");
+        throw new NoDataException("There is no Movies");
     }
 
     /**
@@ -81,7 +81,7 @@ public class MovieDAO {
             String genre = resultSet.getString(4);
             return new Movie(id, title, releaseYear, genre);
         }
-        throw new NoDataException();
+        throw new NoDataException("There is no such movie with the id: " + id);
     }
 
     /**
@@ -105,7 +105,7 @@ public class MovieDAO {
             String genre = resultSet.getString(4);
             return new Movie(id, title, releaseYear, genre);
         }
-        throw new NoDataException("There was no data");
+        throw new NoDataException("There is no Movies");
     }
 
     /**
@@ -129,7 +129,7 @@ public class MovieDAO {
             String genre = resultSet.getString(4);
             return new Movie(id, title, releaseYear, genre);
         }
-        throw new NoDataException("There was no data");
+        throw new NoDataException("There is no Movies");
     }
 
     /**
@@ -157,7 +157,7 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         if(movies.isEmpty()) {
-            throw new NoDataException("There was no data");
+            throw new NoDataException("There is no Movies");
         }
         return movies;
     }
@@ -187,7 +187,7 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         if(movies.isEmpty()) {
-            throw new NoDataException("There was no data");
+            throw new NoDataException("There is no Movies");
         }
         return movies;
     }
@@ -213,7 +213,7 @@ public class MovieDAO {
             String genre = resultSet.getString(4);
             return new Movie(id, title, releaseYear, genre);
         }
-        throw new NoDataException("There was no data");
+        throw new NoDataException("There is no Movies");
     }
 
     /**
@@ -241,7 +241,7 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         if (movies.isEmpty()) {
-            throw new NoDataException("There was no data");
+            throw new NoDataException("There is no Movies");
         }
         return movies;
     }

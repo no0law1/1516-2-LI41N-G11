@@ -39,7 +39,7 @@ public class RatingDAO {
                 return rating;
             }
         }
-        throw new InsertException("Cannot submit rating");
+        throw new InsertException("Couldn't submit rating");
     }
 
     /**
@@ -63,7 +63,7 @@ public class RatingDAO {
             }
         }
         if(ratings.isEmpty()){
-            throw new NoDataException();
+            throw new NoDataException("There is no Ratings for the movie with the id: " + mid);
         }
         return ratings;
     }

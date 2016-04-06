@@ -69,7 +69,7 @@ public class ReviewDAO {
             reviews.add(new Review(mid, id, reviewerName, reviewSummary, review, rating));
         }
         if(reviews.isEmpty()){
-            throw new NoDataException();
+            throw new NoDataException("There are no Reviews to Movie");
         }
         return reviews;
     }
@@ -95,7 +95,7 @@ public class ReviewDAO {
             int rating = resultSet.getInt(6);
             return new Review(reviewUID.mid, reviewUID.id, reviewerName, reviewSummary, review, rating);
         }
-        throw new NoDataException();
+        throw new NoDataException("There is no Review with mid: " + reviewUID.mid + " and id: " + reviewUID.id);
     }
 
     /**
