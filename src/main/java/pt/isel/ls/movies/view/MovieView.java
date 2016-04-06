@@ -30,6 +30,7 @@ public class MovieView implements IView {
         System.out.printf("%s: %s\n", "title", title);
         System.out.printf("%s: %s\n", "release year", releaseYear);
         System.out.printf("%s: %s\n", "genre", genre);
+        System.out.println();
     }
 
 }

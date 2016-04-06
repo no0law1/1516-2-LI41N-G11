@@ -5,7 +5,7 @@ import pt.isel.ls.movies.engine.Request;
 import javax.sql.DataSource;
 
 /**
- * TODO: comment
+ * Contract of a Command class.
  */
 public interface ICommand {
 

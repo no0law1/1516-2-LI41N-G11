@@ -61,7 +61,7 @@ public class MovieDAO {
         if(!movies.isEmpty()) {
             return movies;
         }
-        throw new NoDataException();
+        throw new NoDataException("There was no data");
     }
 
     /**
@@ -105,7 +105,7 @@ public class MovieDAO {
             String genre = resultSet.getString(4);
             return new Movie(id, title, releaseYear, genre);
         }
-        throw new NoDataException();
+        throw new NoDataException("There was no data");
     }
 
     /**
@@ -129,7 +129,7 @@ public class MovieDAO {
             String genre = resultSet.getString(4);
             return new Movie(id, title, releaseYear, genre);
         }
-        throw new NoDataException();
+        throw new NoDataException("There was no data");
     }
 
     /**
@@ -157,13 +157,13 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         if(movies.isEmpty()) {
-            throw new NoDataException();
+            throw new NoDataException("There was no data");
         }
         return movies;
     }
 
     /**
-     * Gets from the database the {@code n} movie with the lowest average rating.
+     * Gets from the database the {@code n} movies with the lowest average rating.
      *
      * @param n number of movies
      * @return the detail for the {@code n} movies with the lowest average rating.
@@ -187,8 +187,64 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         if(movies.isEmpty()) {
-            throw new NoDataException();
+            throw new NoDataException("There was no data");
         }
         return movies;
     }
+
+    /**
+     * Gets from the database the movie with the most reviews.
+     *
+     * @return the detail for the {@code n} movies with the lowest average rating.
+     */
+    public static Movie getMostReviewedMovie(Connection connection) throws Exception {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select movie.id, title, release_year, genre\n" +
+                        "\tfrom movie join review on movie.id=mid\n" +
+                        "\tgroup by movie.id\n" +
+                        "\torder by count(mid) desc\n" +
+                        "\tlimit 1");
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            int id = resultSet.getInt(1);
+            String title = resultSet.getString(2);
+            int releaseYear = resultSet.getInt(3);
+            String genre = resultSet.getString(4);
+            return new Movie(id, title, releaseYear, genre);
+        }
+        throw new NoDataException("There was no data");
+    }
+
+    /**
+     * Gets from the database the {@code n} movies with the most reviews.
+     *
+     * @param n number of movies
+     * @return the detail for the {@code n} movies with the lowest average rating.
+     */
+    public static List<Movie> getMostReviewedMovies(Connection connection, int n) throws Exception {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select movie.id, title, release_year, genre\n" +
+                        "\tfrom movie join review on movie.id=mid\n" +
+                        "\tgroup by movie.id\n" +
+                        "\torder by count(mid) desc\n" +
+                        "\tlimit ?");
+        preparedStatement.setInt(1, n);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<Movie> movies = new LinkedList<>();
+        while (resultSet.next()) {
+            int id = resultSet.getInt(1);
+            String title = resultSet.getString(2);
+            int releaseYear = resultSet.getInt(3);
+            String genre = resultSet.getString(4);
+            movies.add(new Movie(id, title, releaseYear, genre));
+        }
+        if (movies.isEmpty()) {
+            throw new NoDataException("There was no data");
+        }
+        return movies;
+    }
+
+
 }

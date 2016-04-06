@@ -7,10 +7,6 @@ import pt.isel.ls.movies.container.commands.Rating.PostRating;
 import pt.isel.ls.movies.container.commands.Review.GetMovieReviews;
 import pt.isel.ls.movies.container.commands.Review.GetReview;
 import pt.isel.ls.movies.container.commands.Review.PostReview;
-import pt.isel.ls.movies.container.commands.Tops.GetNTopsRatingHigherAverage;
-import pt.isel.ls.movies.container.commands.Tops.GetNTopsRatingLowerAverage;
-import pt.isel.ls.movies.container.commands.Tops.GetTopsRatingHigherAverage;
-import pt.isel.ls.movies.container.commands.Tops.GetTopsRatingLowerAverage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,8 +29,12 @@ public class Router {
         router.add("POST", "/movies", new PostMovie());
         router.add("GET", "/movies", new GetMovieList());
         router.add("GET", "/movies/{mid}", new GetMovie());
-        router.add("GET", "/tops/reviews/higher/count", new GetHighestRatedMovie());
-        router.add("GET", "/tops/{n}/reviews/higher/count", new GetHighestRatedMovies());
+        router.add("GET", "/tops/ratings/higher/average", new GetHighestRatedMovie());
+        router.add("GET", "/tops/{n}/ratings/higher/average", new GetHighestRatedMovies());
+        router.add("GET", "/tops/ratings/lower/average", new GetLowestRatedMovie());
+        router.add("GET", "/tops/{n}/ratings/lower/average", new GetLowestRatedMovies());
+        router.add("GET", "/tops/reviews/higher/count", new GetMostReviewedMovie());
+        router.add("GET", "/tops/{n}/reviews/higher/count", new GetMostReviewedMovies());
 
         /**  RATING  **/
         router.add("POST", "/movies/{mid}/ratings", new PostRating());
@@ -44,12 +44,6 @@ public class Router {
         router.add("POST", "/movies/{mid}/reviews", new PostReview());
         router.add("GET", "/movies/{mid}/reviews", new GetMovieReviews());
         router.add("GET", "/movies/{mid}/reviews/{rid}", new GetReview());
-
-        /**  TOPS  **/
-        router.add("GET", "/tops/ratings/higher/average", new GetTopsRatingHigherAverage());
-        router.add("GET", "/tops/{n}/ratings/higher/average", new GetNTopsRatingHigherAverage());
-        router.add("GET", "/tops/ratings/lower/average", new GetTopsRatingLowerAverage());
-        router.add("GET", "/tops/{n}/ratings/lower/average", new GetNTopsRatingLowerAverage());
 
         return router;
     }

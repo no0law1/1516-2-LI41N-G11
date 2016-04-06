@@ -33,5 +33,6 @@ public class RatingView implements IView {
         System.out.printf("%s: %s\n", "mid", mid);
         System.out.printf("%s: %s\n", "val", val);
         System.out.printf("%s: %s\n", "count", count);
+        System.out.println();
     }
 }

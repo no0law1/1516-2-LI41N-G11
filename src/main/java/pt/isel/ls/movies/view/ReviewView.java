@@ -41,5 +41,6 @@ public class ReviewView implements IView {
         System.out.printf("%s: %s", "Review Summary", reviewSummary);
         System.out.printf("%s: %s", "Review", review);
         System.out.printf("%s: %s", "Rating", rating);
+        System.out.println();
     }
 }

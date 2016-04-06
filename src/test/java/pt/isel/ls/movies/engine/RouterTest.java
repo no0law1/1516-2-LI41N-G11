@@ -1,11 +1,10 @@
 package pt.isel.ls.movies.engine;
 
 import org.junit.Test;
+import pt.isel.ls.movies.container.commands.Movies.GetHighestRatedMovies;
 import pt.isel.ls.movies.container.commands.Movies.GetMovie;
 import pt.isel.ls.movies.container.commands.Movies.GetMovieList;
 import pt.isel.ls.movies.container.commands.Movies.PostMovie;
-import pt.isel.ls.movies.container.commands.Tops.GetNTopsRatingHigherAverage;
-import pt.isel.ls.movies.container.commands.Tops.GetTopsRatingHigherAverage;
 
 import static org.junit.Assert.assertTrue;
 
@@ -28,8 +27,8 @@ public class RouterTest {
 
     @Test
     public void testGet2() throws Exception {
-        Request request = Request.create(new String[]{"GET", "/tops/ratings/higher/average"});
-        assertTrue(router.get(request) instanceof GetTopsRatingHigherAverage);
+//        Request request = Request.create(new String[]{"GET", "/tops/ratings/higher/average"});
+//        assertTrue(router.get(request) instanceof GetTopsRatingHigherAverage);
     }
 
     @Test
@@ -47,7 +46,7 @@ public class RouterTest {
     @Test
     public void testGetWithParameterInTheMiddleOfPath() throws Exception {
         Request request = Request.create(new String[]{"GET", "/tops/{n}/ratings/higher/average"});
-        assertTrue(router.get(request) instanceof GetNTopsRatingHigherAverage);
+        assertTrue(router.get(request) instanceof GetHighestRatedMovies);
     }
 
     @Test(expected = UnsupportedOperationException.class)
