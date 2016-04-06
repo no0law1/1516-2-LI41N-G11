@@ -90,7 +90,7 @@ public class MovieDAO {
      * @return the detail for the movie with the highest average rating.
      */
     public static Movie getHighestRatingMovie(Connection connection) throws Exception {
-        return getHighestRatingMovies(connection, 1).get(1);
+        return getHighestRatingMovies(connection, 1).get(0);
     }
 
     /**
@@ -99,7 +99,7 @@ public class MovieDAO {
      * @return the detail for the movie with the lowest average rating.
      */
     public static Movie getLowestRatingMovie(Connection connection) throws Exception {
-        return getLowestRatingMovies(connection, 1).get(1);
+        return getLowestRatingMovies(connection, 1).get(0);
     }
 
     /**
