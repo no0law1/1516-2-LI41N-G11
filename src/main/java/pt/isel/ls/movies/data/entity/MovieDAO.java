@@ -113,7 +113,7 @@ public class MovieDAO {
                 connection.prepareStatement("select id, title, release_year, genre\n" +
                         "\tfrom movie join rating on id=mid\n" +
                         "\tgroup by id\n" +
-                        "\torder by SUM(val*count)::float/SUM(count) desc\n" +
+                        "\torder by SUM(val*count)::float/SUM(count) desc, release_year desc, title asc\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -143,7 +143,7 @@ public class MovieDAO {
                 connection.prepareStatement("select id, title, release_year, genre\n" +
                         "\tfrom movie join rating on id=mid\n" +
                         "\tgroup by id\n" +
-                        "\torder by SUM(val*count)::float/SUM(count) asc\n" +
+                        "\torder by SUM(val*count)::float/SUM(count) asc, release_year desc, title asc\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -168,22 +168,7 @@ public class MovieDAO {
      * @return the detail for the {@code n} movies with the lowest average rating.
      */
     public static Movie getMostReviewedMovie(Connection connection) throws Exception {
-        PreparedStatement preparedStatement =
-                connection.prepareStatement("select movie.id, title, release_year, genre\n" +
-                        "\tfrom movie join review on movie.id=mid\n" +
-                        "\tgroup by movie.id\n" +
-                        "\torder by count(mid) desc\n" +
-                        "\tlimit 1");
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        if (resultSet.next()) {
-            int id = resultSet.getInt(1);
-            String title = resultSet.getString(2);
-            int releaseYear = resultSet.getInt(3);
-            String genre = resultSet.getString(4);
-            return new Movie(id, title, releaseYear, genre);
-        }
-        throw new NoDataException("There is no Movies");
+        return getMostReviewedMovies(connection, 1).get(0);
     }
 
     /**
@@ -197,7 +182,7 @@ public class MovieDAO {
                 connection.prepareStatement("select movie.id, title, release_year, genre\n" +
                         "\tfrom movie join review on movie.id=mid\n" +
                         "\tgroup by movie.id\n" +
-                        "\torder by count(mid) desc\n" +
+                        "\torder by count(mid) desc, release_year desc, title asc\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();

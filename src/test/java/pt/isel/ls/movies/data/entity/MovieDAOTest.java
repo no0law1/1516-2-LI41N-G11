@@ -4,11 +4,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import pt.isel.ls.movies.data.DataSourceFactory;
+import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.model.Rating;
+import pt.isel.ls.movies.model.Review;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,6 +37,15 @@ public class MovieDAOTest {
         }
     }
 
+    @Test(expected = SQLException.class)
+    public void testInsertionErrorOnMovieWithTheSameTitleAndReleaseYear() throws Exception {
+        try(Connection connection = dataSource.getConnection()){
+            connection.setAutoCommit(false);
+            MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
+            MovieDAO.submitMovie(connection, new Movie(2, "test", 2016, "genre_test"));
+        }
+    }
+
     @Test
     public void testInsertMovie() throws Exception {
         try(Connection connection = dataSource.getConnection()){
@@ -41,7 +53,7 @@ public class MovieDAOTest {
             Movie expected = new Movie(1, "test", 2016, "genre_test");
             int id = MovieDAO.submitMovie(connection, expected);
             Movie actual = MovieDAO.getMovie(connection, id);
-            assertTrue(expected.equals(actual));
+            assertEquals(expected, actual);
         }
     }
 
@@ -61,7 +73,7 @@ public class MovieDAOTest {
 
             assertEquals(expected.size(), actual.size());
             for (int i = 0; i < expected.size(); i++) {
-                assertTrue(expected.get(i).equals(actual.get(i)));
+                assertEquals(expected, actual);
             }
         }
     }
@@ -74,7 +86,7 @@ public class MovieDAOTest {
             Movie expected = new Movie(2, "test2", 2016, "genre_test2");
             int id = MovieDAO.submitMovie(connection, expected);
             Movie actual = MovieDAO.getMovie(connection, id);
-            assertTrue(expected.equals(actual));
+            assertEquals(expected, actual);
         }
     }
 
@@ -88,7 +100,7 @@ public class MovieDAOTest {
             RatingDAO.submitRating(connection, new Rating(1, 4, 2));
 
             Movie actual = MovieDAO.getHighestRatingMovie(connection);
-            assertTrue(expected.equals(actual));
+            assertEquals(expected, actual);
         }
     }
 
@@ -105,7 +117,7 @@ public class MovieDAOTest {
             RatingDAO.submitRating(connection, new Rating(2, 5));
 
             Movie actual = MovieDAO.getHighestRatingMovie(connection);
-            assertTrue(expected.equals(actual));
+            assertEquals(expected, actual);
         }
     }
 
@@ -119,7 +131,7 @@ public class MovieDAOTest {
             RatingDAO.submitRating(connection, new Rating(1, 4, 1));
 
             Movie actual = MovieDAO.getLowestRatingMovie(connection);
-            assertTrue(expected.equals(actual));
+            assertEquals(expected, actual);
         }
     }
 
@@ -136,7 +148,7 @@ public class MovieDAOTest {
             RatingDAO.submitRating(connection, new Rating(2, 5));
 
             Movie actual = MovieDAO.getLowestRatingMovie(connection);
-            assertTrue(expected.equals(actual));
+            assertEquals(expected, actual);
         }
     }
 
@@ -160,8 +172,8 @@ public class MovieDAOTest {
 
 
             assertEquals(actual.size(), 2);
-            assertTrue(actual.get(0).equals(expected.get(1)));
-            assertTrue(actual.get(1).equals(expected.get(0)));
+            assertEquals(actual.get(0), expected.get(1));
+            assertEquals(actual.get(1), expected.get(0));
         }
     }
 
@@ -186,9 +198,9 @@ public class MovieDAOTest {
 
 
             assertEquals(actual.size(), 3);
-            assertTrue(actual.get(0).equals(expected.get(1)));
-            assertTrue(actual.get(1).equals(expected.get(0)));
-            assertTrue(actual.get(2).equals(expected.get(2)));
+            assertEquals(actual.get(0), expected.get(1));
+            assertEquals(actual.get(1), expected.get(0));
+            assertEquals(actual.get(2), expected.get(2));
         }
     }
 
@@ -212,8 +224,8 @@ public class MovieDAOTest {
 
 
             assertEquals(actual.size(), 2);
-            assertTrue(actual.get(0).equals(expected.get(1)));
-            assertTrue(actual.get(1).equals(expected.get(0)));
+            assertEquals(actual.get(0), expected.get(1));
+            assertEquals(actual.get(1), expected.get(0));
         }
     }
 
@@ -237,8 +249,8 @@ public class MovieDAOTest {
 
 
             assertEquals(actual.size(), 2);
-            assertTrue(actual.get(0).equals(expected.get(0)));
-            assertTrue(actual.get(1).equals(expected.get(1)));
+            assertEquals(actual.get(0), expected.get(0));
+            assertEquals(actual.get(1), expected.get(1));
         }
     }
 
@@ -263,9 +275,9 @@ public class MovieDAOTest {
 
 
             assertEquals(actual.size(), 3);
-            assertTrue(actual.get(0).equals(expected.get(2)));
-            assertTrue(actual.get(1).equals(expected.get(0)));
-            assertTrue(actual.get(2).equals(expected.get(1)));
+            assertEquals(actual.get(0), expected.get(2));
+            assertEquals(actual.get(1), expected.get(0));
+            assertEquals(actual.get(2), expected.get(1));
         }
     }
 
@@ -289,8 +301,115 @@ public class MovieDAOTest {
 
 
             assertEquals(actual.size(), 2);
-            assertTrue(actual.get(0).equals(expected.get(0)));
-            assertTrue(actual.get(1).equals(expected.get(1)));
+            assertEquals(actual.get(0), expected.get(0));
+            assertEquals(actual.get(1), expected.get(1));
+        }
+    }
+
+    @Test
+    public void testGetMostReviewedMovie() throws Exception {
+        Movie expected = new Movie(1, "test1", 2016, "genre_test");
+        List<Movie> movies = new LinkedList<>();
+        movies.add(expected);
+        movies.add(new Movie(2, "test2", 2016, "genre_test"));
+        movies.add(new Movie(3, "test3", 2016, "genre_test"));
+
+        try(Connection connection = dataSource.getConnection()){
+            connection.setAutoCommit(false);
+            for (Movie movie : movies) {
+                MovieDAO.submitMovie(connection, movie);
+            }
+            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(1, 3, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(1, 4, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", null, 5));
+
+            Movie actual = MovieDAO.getMostReviewedMovie(connection);
+
+            assertEquals(actual, expected);
+        }
+    }
+
+    @Test
+    public void testGetMostReviewedMovieWithMoreThanOne() throws Exception {
+        Movie expected = new Movie("test1", 2016, "genre_test");
+        List<Movie> movies = new LinkedList<>();
+        movies.add(new Movie("test2", 2016, "genre_test"));
+        movies.add(expected);
+        movies.add(new Movie("test3", 2015, "genre_test"));
+        movies.add(new Movie("test4", 2015, "genre_test"));
+
+        try(Connection connection = dataSource.getConnection()){
+            connection.setAutoCommit(false);
+            for (Movie movie : movies) {
+                MovieDAO.submitMovie(connection, movie);
+            }
+            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(3, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(3, 2, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(4, 1, "Nuno", "Kickass Movie", null, 5));
+
+            Movie actual = MovieDAO.getMostReviewedMovie(connection);
+
+            assertEquals(expected.getTitle(), actual.getTitle());
+            assertEquals(expected.getReleaseYear(), actual.getReleaseYear());
+        }
+    }
+
+    @Test
+    public void testGetMostReviewedMovies() throws Exception {
+        Movie expected1 = new Movie(2, "test1", 2016, "genre_test");
+        Movie expected2 = new Movie(3, "test3", 2016, "genre_test");
+        List<Movie> movies = new LinkedList<>();
+        movies.add(new Movie(1, "test2", 2015, "genre_test"));
+        movies.add(expected1);
+        movies.add(expected2);
+        movies.add(new Movie(4, "test4", 2015, "genre_test"));
+
+        List<Movie> expected = new LinkedList<>();
+        expected.add(expected1);
+        expected.add(expected2);
+
+        try(Connection connection = dataSource.getConnection()){
+            connection.setAutoCommit(false);
+            for (Movie movie : movies) {
+                MovieDAO.submitMovie(connection, movie);
+            }
+            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(4, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", null, 5));
+
+            List<Movie> actual = MovieDAO.getMostReviewedMovies(connection, 2);
+
+            assertEquals(2, actual.size());
+            assertEquals(expected1, actual.get(0));
+
+            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(3, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(3, 2, "Nuno", "Kickass Movie", null, 5));
+
+            actual = MovieDAO.getMostReviewedMovies(connection, 2);
+
+            assertEquals(2, actual.size());
+            assertTrue(actual.containsAll(expected));
+
+        }
+    }
+
+    @Test(expected = NoDataException.class)
+    public void testGetMostReviewedMoviesWithoutMovies() throws Exception {
+
+        try(Connection connection = dataSource.getConnection()){
+            connection.setAutoCommit(false);
+
+            List<Movie> list = MovieDAO.getMostReviewedMovies(connection, 0);
+
         }
     }
 }

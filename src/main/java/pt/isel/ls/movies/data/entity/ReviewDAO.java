@@ -29,7 +29,7 @@ public class ReviewDAO {
                         "insert into review(mid, id, reviewer_name, review_summary, review, rating) values (?, ?, ?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setInt(1, review.getMid());
-        preparedStatement.setInt(2, getReviewId(connection, review.getMid()));
+        preparedStatement.setInt(2, getNextReviewId(connection, review.getMid()));
         preparedStatement.setString(3, review.getReviewerName());
         preparedStatement.setString(4, review.getReviewSummary());
         preparedStatement.setString(5, review.getReview());
@@ -109,16 +109,16 @@ public class ReviewDAO {
         return getReview(connection, new Review.ReviewUID(mid, rid));
     }
 
-    private static int getReviewId(Connection connection, int mid) throws Exception {
+    private static int getNextReviewId(Connection connection, int mid) throws Exception {
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select count(*)+1 from review where mid=?");
+                connection.prepareStatement("select max(id) from review where mid=?");
         preparedStatement.setInt(1, mid);
 
         try(ResultSet resultSet = preparedStatement.executeQuery()){
             if(resultSet.next()){
-                return resultSet.getInt(1);
+                return resultSet.getInt(1)+1;
             }
         }
-        throw new NoDataException("Movie with that id does not exist");
+        throw new NoDataException("Movie with that id " + mid + " does not exist");
     }
 }

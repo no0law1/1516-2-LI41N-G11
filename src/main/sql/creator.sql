@@ -13,8 +13,10 @@ create table student(
 create table movie(
 	id serial primary key,
 	title varchar(128),
-	release_year int, --YYYY-MM-00 Ano e Mês
-	genre varchar(128)
+	release_year int,
+	genre varchar(128),
+
+	UNIQUE(title, release_year)
 );
 
 create table review(
