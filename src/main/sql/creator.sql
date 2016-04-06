@@ -1,9 +1,15 @@
 ﻿--CREATE DATABASE movies;
+--CREATE DATABASE movies_test;
 
 --Multiple movies can have the same title.
 --
 --However, no two movies released in the same year
 --	may have the same title.
+create table student(
+  number int primary key,
+  name varchar(128)
+);
+
 create table movie(
 	id serial primary key,
 	title varchar(128),
