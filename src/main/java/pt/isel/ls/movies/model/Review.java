@@ -41,6 +41,10 @@ public class Review {
         this.rating = rating;
     }
 
+    public Review(int mid, String reviewerName, String reviewSummary, String reviewExtended, int rating) {
+        this(mid, -1, reviewerName, reviewSummary, reviewExtended, rating);
+    }
+
     public int getMid() {
         return mid;
     }

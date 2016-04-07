@@ -35,12 +35,12 @@ public class ReviewView implements IView {
 
     @Override
     public void show() {
-        System.out.printf("%s: %s", "mid", mid);
-        System.out.printf("%s: %s", "id", id);
-        System.out.printf("%s: %s", "Reviewer Name", reviewerName);
-        System.out.printf("%s: %s", "Review Summary", reviewSummary);
-        System.out.printf("%s: %s", "Review", review);
-        System.out.printf("%s: %s", "Rating", rating);
+        System.out.printf("%s: %s\n", "mid", mid);
+        System.out.printf("%s: %s\n", "id", id);
+        System.out.printf("%s: %s\n", "Reviewer Name", reviewerName);
+        System.out.printf("%s: %s\n", "Review Summary", reviewSummary);
+        System.out.printf("%s: %s\n", "Review", review);
+        System.out.printf("%s: %s\n", "Rating", rating);
         System.out.println();
     }
 }

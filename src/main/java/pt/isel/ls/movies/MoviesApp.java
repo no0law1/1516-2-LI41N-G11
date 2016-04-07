@@ -4,6 +4,8 @@ import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Router;
 
+import java.util.Scanner;
+
 /**
  * Class whose instance represents the point of entry of the application.
  */
@@ -24,9 +26,27 @@ public class MoviesApp {
         }
     }
 
+    private void run() throws Exception {
+        try {
+            while (true) {
+                System.out.print("Enter Request: ");
+                String route = new Scanner(System.in).nextLine();
+                Request request = Request.create(route.split(" "));
+                router.get(request).execute(DataSourceFactory.createInstance(), request);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args){
         try {
-            new MoviesApp().run(args);
+            MoviesApp app = new MoviesApp();
+            if (args.length >= 2) {
+                app.run(args);
+            } else {
+                app.run();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -18,7 +18,7 @@ public class GetReview implements ICommand {
     public void execute(DataSource dataSource, Request request) throws Exception {
         Review review;
         int mid = Integer.parseInt(request.get("mid"));
-        int id = Integer.parseInt(request.get("mid"));
+        int id = Integer.parseInt(request.get("rid"));
 
         try (Connection connection = dataSource.getConnection()) {
             review = ReviewDAO.getReview(connection, new Review.ReviewUID(mid, id));

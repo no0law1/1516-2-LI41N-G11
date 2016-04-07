@@ -25,11 +25,13 @@ public class GetMovieRating implements ICommand{
         }
 
         float average = 0;
+        int count = 0;
         for (Rating rating : ratings) {
             average += rating.getVal() * rating.getCount();
+            count += rating.getCount();
             new RatingView(rating).show();
         }
         //TODO: Improve
-        System.out.printf("Average: %s", average / ratings.size());
+        System.out.printf("Average: %s\n", average / count);
     }
 }

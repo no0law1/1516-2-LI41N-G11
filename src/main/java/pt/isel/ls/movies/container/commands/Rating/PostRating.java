@@ -16,7 +16,7 @@ public class PostRating implements ICommand {
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         int mid = Integer.parseInt(request.get("mid"));
-        int val = Integer.parseInt(request.get("val"));
+        int val = Integer.parseInt(request.get("rating"));
 
         Rating rating = new Rating(mid, val);
 
@@ -24,6 +24,6 @@ public class PostRating implements ICommand {
             rating = RatingDAO.submitRating(connection, rating);
         }
 
-        System.out.printf("Rating mid: %d, val: %d", rating.getMid(), rating.getVal());
+        System.out.printf("Rating mid: %d, val: %d\n", rating.getMid(), rating.getVal());
     }
 }

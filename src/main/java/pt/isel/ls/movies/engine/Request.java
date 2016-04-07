@@ -44,6 +44,9 @@ public class Request {
     }
 
     public String get(String key) {
+        if (map == null) {
+            getQueryParams();
+        }
         return map.get(key);
     }
 

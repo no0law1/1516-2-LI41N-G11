@@ -26,6 +26,6 @@ public class PostMovie implements ICommand {
             mid = MovieDAO.submitMovie(connection, movie);
         }
 
-        System.out.printf("mid: %d", mid);
+        System.out.printf("mid: %d\n", mid);
     }
 }
