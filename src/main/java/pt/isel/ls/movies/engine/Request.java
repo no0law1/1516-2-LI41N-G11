@@ -1,5 +1,7 @@
 package pt.isel.ls.movies.engine;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,21 +31,21 @@ public class Request {
         return new Request(request[0], request[1], request.length >= 3 ? request[2] : null);
     }
 
-    public Map<String, String> getQueryParams(){
+    public Map<String, String> getQueryParams() throws UnsupportedEncodingException {
         if(map == null) {
             map = new HashMap<>();
             if(parameters != null && !parameters.isEmpty()) {
                 String[] splittedParameters = parameters.split("&");
                 for (String splittedParameter : splittedParameters) {
                     String[] keyValue = splittedParameter.split("=");
-                    map.put(keyValue[0], keyValue[1]);
+                    map.put(keyValue[0], URLDecoder.decode(keyValue[1], "UTF-8"));
                 }
             }
         }
         return map;
     }
 
-    public String get(String key) {
+    public String get(String key) throws UnsupportedEncodingException {
         if (map == null) {
             getQueryParams();
         }

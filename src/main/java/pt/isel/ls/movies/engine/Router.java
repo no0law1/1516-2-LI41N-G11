@@ -8,6 +8,7 @@ import pt.isel.ls.movies.container.commands.Review.GetMovieReviews;
 import pt.isel.ls.movies.container.commands.Review.GetReview;
 import pt.isel.ls.movies.container.commands.Review.PostReview;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,7 +91,7 @@ public class Router {
         return auxNode;
     }
 
-    public ICommand get(Request request){
+    public ICommand get(Request request) throws UnsupportedEncodingException {
         Node node = methods.get(request.getMethod());
         if(node == null){
             throw new UnsupportedOperationException("Method not found");
