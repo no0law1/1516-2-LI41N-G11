@@ -4,11 +4,11 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-
+/**
+ * Class to test {@link Ints}
+ */
 public class IntsTests {
 
     private static boolean isNonDecreasingOrder(int[] a, int l, int r) {

@@ -1,7 +1,7 @@
 package pt.isel.ls.movies.data.exceptions;
 
 /**
- * TODO: Commentary.
+ * Exception thrown when there is no data from the database.
  */
 public class NoDataException extends Exception {
 

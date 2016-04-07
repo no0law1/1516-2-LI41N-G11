@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**
- * TODO: Commentary.
+ * Command that gets the movie with the most reviews.
  */
 public class GetMostReviewedMovie implements ICommand {
 

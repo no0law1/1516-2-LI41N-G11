@@ -5,7 +5,7 @@ import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Router;
 
 /**
- * TODO: comment
+ * Class whose instance represents the point of entry of the application.
  */
 public class MoviesApp {
 

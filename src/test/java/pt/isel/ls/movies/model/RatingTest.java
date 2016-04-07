@@ -2,10 +2,11 @@ package pt.isel.ls.movies.model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
- * Testing class of model class Rating
+ * Testing class of model class {@link Rating}
  */
 public class RatingTest {
 
@@ -14,7 +15,7 @@ public class RatingTest {
         Rating expected = new Rating(1, 1, 1);
         Rating actual = new Rating(1, 1, 1);
 
-        assertTrue(expected.equals(actual));
+        assertEquals(expected, actual);
     }
 
     @Test

@@ -4,7 +4,7 @@ import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.movies.view.common.IView;
 
 /**
- * TODO: Commentary.
+ * Class whose instance represents a Review that knows how to draw itself.
  */
 public class ReviewView implements IView {
 

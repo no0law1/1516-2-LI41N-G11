@@ -8,7 +8,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test class for Parameter class
+ * Test class for {@link pt.isel.ls.movies.engine.Router.Parameter}
  */
 public class ParameterTest {
 

@@ -1,15 +1,12 @@
 package pt.isel.ls.movies.engine;
 
 import org.junit.Test;
-import pt.isel.ls.movies.container.commands.Movies.GetHighestRatedMovies;
-import pt.isel.ls.movies.container.commands.Movies.GetMovie;
-import pt.isel.ls.movies.container.commands.Movies.GetMovieList;
-import pt.isel.ls.movies.container.commands.Movies.PostMovie;
+import pt.isel.ls.movies.container.commands.Movies.*;
 
 import static org.junit.Assert.assertTrue;
 
 /**
- * TODO: comment
+ * Class to test {@link Router}
  */
 public class RouterTest {
 
@@ -27,8 +24,8 @@ public class RouterTest {
 
     @Test
     public void testGet2() throws Exception {
-//        Request request = Request.create(new String[]{"GET", "/tops/ratings/higher/average"});
-//        assertTrue(router.get(request) instanceof GetTopsRatingHigherAverage);
+        Request request = Request.create(new String[]{"GET", "/tops/ratings/higher/average"});
+        assertTrue(router.get(request) instanceof GetHighestRatedMovie);
     }
 
     @Test

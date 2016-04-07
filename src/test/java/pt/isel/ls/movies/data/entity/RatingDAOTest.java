@@ -13,10 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
- * Test class of model class Rating Data Access Object
+ * Test class of model class {@link RatingDAO}
  */
 public class RatingDAOTest {
 
@@ -80,7 +79,7 @@ public class RatingDAOTest {
             List<Rating> actual = RatingDAO.getMovieRatings(connection, id);
             assertEquals(expected.size(), actual.size());
             for (int i = 0; i < expected.size(); i++) {
-                assertTrue(expected.get(i).equals(actual.get(i)));
+                assertEquals(expected.get(i), actual.get(i));
             }
         }
     }

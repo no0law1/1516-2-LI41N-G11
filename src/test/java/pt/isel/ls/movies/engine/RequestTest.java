@@ -8,7 +8,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 /**
- * TODO: Commentary.
+ * Class to test {@link Request}
  */
 public class RequestTest {
 

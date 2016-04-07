@@ -1,7 +1,7 @@
 package pt.isel.ls.movies.data.exceptions;
 
 /**
- * TODO: Commentary.
+ * Exception thrown when the insertion to the database is not committed.
  */
 public class InsertException extends Exception {
 

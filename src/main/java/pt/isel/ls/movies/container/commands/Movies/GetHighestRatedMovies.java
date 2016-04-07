@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.util.List;
 
 /**
- * TODO: Commentary.
+ * Command that gets the n movies with the highest average rating.
  */
 public class GetHighestRatedMovies implements ICommand {
 

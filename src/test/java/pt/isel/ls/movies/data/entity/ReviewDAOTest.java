@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test class of model class Review Data Access Object
+ * Test class of model class {@link ReviewDAO}
  */
 public class ReviewDAOTest {
 
@@ -47,7 +47,7 @@ public class ReviewDAOTest {
             assertTrue(expectedReviewUID.equals(actualReviewUID));
 
             Review actual = ReviewDAO.getReview(connection, 1, 1);
-            assertTrue(expected.equals(actual));
+            assertEquals(expected, actual);
         }
     }
 
@@ -69,7 +69,7 @@ public class ReviewDAOTest {
             List<Review> actual = ReviewDAO.getReviews(connection, id);
             assertEquals(expected.size(), actual.size());
             for (int i = 0; i < expected.size(); i++) {
-                assertTrue(expected.get(i).equals(actual.get(i)));
+                assertEquals(expected.get(i), actual.get(i));
             }
         }
 
@@ -86,7 +86,7 @@ public class ReviewDAOTest {
 
             Review actual = ReviewDAO.getReview(connection, new Review.ReviewUID(1,1));
 
-            assertTrue(expected.equals(actual));
+            assertEquals(expected, actual);
         }
     }
 }

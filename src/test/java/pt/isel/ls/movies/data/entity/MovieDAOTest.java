@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test class of model class Movie Data Access Object
+ * Test class of model class {@link MovieDAO}
  */
 public class MovieDAOTest {
 

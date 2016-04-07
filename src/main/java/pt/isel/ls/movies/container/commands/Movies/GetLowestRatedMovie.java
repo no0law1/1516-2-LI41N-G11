@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**
- * TODO: Commentary.
+ * Command that gets the movie with the lowest average rating.
  */
 public class GetLowestRatedMovie implements ICommand {
 

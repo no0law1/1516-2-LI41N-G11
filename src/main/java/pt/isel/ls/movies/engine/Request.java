@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO: Comment
+ * Class whose instance represents a request of data.
  */
 public class Request {
 

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO: comment
+ * Class whose instance contains the routing for a set of Commands
  */
 public class Router {
     private Node methods;
