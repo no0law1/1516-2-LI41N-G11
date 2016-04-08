@@ -171,9 +171,9 @@ public class MovieDAOTest {
             List<Movie> actual = MovieDAO.getHighestRatingMovies(connection, 2);
 
 
-            assertEquals(actual.size(), 2);
-            assertEquals(actual.get(0), expected.get(1));
-            assertEquals(actual.get(1), expected.get(0));
+            assertEquals(2, actual.size());
+            assertEquals(expected.get(1), actual.get(0));
+            assertEquals(expected.get(0), actual.get(1));
         }
     }
 
@@ -197,10 +197,10 @@ public class MovieDAOTest {
             List<Movie> actual = MovieDAO.getHighestRatingMovies(connection, 5);
 
 
-            assertEquals(actual.size(), 3);
-            assertEquals(actual.get(0), expected.get(1));
-            assertEquals(actual.get(1), expected.get(0));
-            assertEquals(actual.get(2), expected.get(2));
+            assertEquals(3, actual.size());
+            assertEquals(expected.get(1), actual.get(0));
+            assertEquals(expected.get(0), actual.get(1));
+            assertEquals(expected.get(2), actual.get(2));
         }
     }
 
@@ -223,9 +223,9 @@ public class MovieDAOTest {
             List<Movie> actual = MovieDAO.getHighestRatingMovies(connection, 5);
 
 
-            assertEquals(actual.size(), 2);
-            assertEquals(actual.get(0), expected.get(1));
-            assertEquals(actual.get(1), expected.get(0));
+            assertEquals(2, actual.size());
+            assertEquals(expected.get(1), actual.get(0));
+            assertEquals(expected.get(0), actual.get(1));
         }
     }
 
@@ -248,9 +248,9 @@ public class MovieDAOTest {
             List<Movie> actual = MovieDAO.getLowestRatingMovies(connection, 2);
 
 
-            assertEquals(actual.size(), 2);
-            assertEquals(actual.get(0), expected.get(0));
-            assertEquals(actual.get(1), expected.get(1));
+            assertEquals(2, actual.size());
+            assertEquals(expected.get(0), actual.get(0));
+            assertEquals(expected.get(1), actual.get(1));
         }
     }
 
@@ -274,10 +274,10 @@ public class MovieDAOTest {
             List<Movie> actual = MovieDAO.getLowestRatingMovies(connection, 5);
 
 
-            assertEquals(actual.size(), 3);
-            assertEquals(actual.get(0), expected.get(2));
-            assertEquals(actual.get(1), expected.get(0));
-            assertEquals(actual.get(2), expected.get(1));
+            assertEquals(3, actual.size());
+            assertEquals(expected.get(2), actual.get(0));
+            assertEquals(expected.get(0), actual.get(1));
+            assertEquals(expected.get(1), actual.get(2));
         }
     }
 
@@ -300,9 +300,9 @@ public class MovieDAOTest {
             List<Movie> actual = MovieDAO.getLowestRatingMovies(connection, 5);
 
 
-            assertEquals(actual.size(), 2);
-            assertEquals(actual.get(0), expected.get(0));
-            assertEquals(actual.get(1), expected.get(1));
+            assertEquals(2, actual.size());
+            assertEquals(expected.get(0), actual.get(0));
+            assertEquals(expected.get(1), actual.get(1));
         }
     }
 
@@ -328,7 +328,7 @@ public class MovieDAOTest {
 
             Movie actual = MovieDAO.getMostReviewedMovie(connection);
 
-            assertEquals(actual, expected);
+            assertEquals(expected, actual);
         }
     }
 
@@ -407,9 +407,7 @@ public class MovieDAOTest {
 
         try(Connection connection = dataSource.getConnection()){
             connection.setAutoCommit(false);
-
-            List<Movie> list = MovieDAO.getMostReviewedMovies(connection, 0);
-
+            MovieDAO.getMostReviewedMovies(connection, 90);
         }
     }
 }

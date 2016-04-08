@@ -41,7 +41,7 @@ public class RatingDAOTest {
             connection.setAutoCommit(false);
             int id = MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
 
-            assertEquals(id, expected.getMid());
+            assertEquals(expected.getMid(), id);
             assertEquals(expected, RatingDAO.submitRating(connection, expected));
         }
     }
@@ -55,7 +55,7 @@ public class RatingDAOTest {
             int id = MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
             RatingDAO.submitRating(connection, expected);
 
-            assertEquals(id, expected.getMid());
+            assertEquals(expected.getMid(), id);
             assertEquals(expected, RatingDAO.submitRating(connection, expected));
         }
     }
