@@ -18,38 +18,11 @@ import java.util.Map;
 public class Router {
     private Node methods;
 
-    private Router(){
+    public Router(){
         methods = new Node();
     }
 
-    public static Router createRouter(){
-        /**  Where Commands should be added  **/
-        Router router = new Router();
-
-        /**  MOVIES  **/
-        router.add("POST", "/movies", new PostMovie());
-        router.add("GET", "/movies", new GetMovieList());
-        router.add("GET", "/movies/{mid}", new GetMovie());
-        router.add("GET", "/tops/ratings/higher/average", new GetHighestRatedMovie());
-        router.add("GET", "/tops/{n}/ratings/higher/average", new GetHighestRatedMovies());
-        router.add("GET", "/tops/ratings/lower/average", new GetLowestRatedMovie());
-        router.add("GET", "/tops/{n}/ratings/lower/average", new GetLowestRatedMovies());
-        router.add("GET", "/tops/reviews/higher/count", new GetMostReviewedMovie());
-        router.add("GET", "/tops/{n}/reviews/higher/count", new GetMostReviewedMovies());
-
-        /**  RATING  **/
-        router.add("POST", "/movies/{mid}/ratings", new PostRating());
-        router.add("GET", "/movies/{mid}/ratings", new GetMovieRating());
-
-        /**  REVIEW  **/
-        router.add("POST", "/movies/{mid}/reviews", new PostReview());
-        router.add("GET", "/movies/{mid}/reviews", new GetMovieReviews());
-        router.add("GET", "/movies/{mid}/reviews/{rid}", new GetReview());
-
-        return router;
-    }
-
-    private void add(String method, String path, ICommand ICommand){
+    public void add(String method, String path, ICommand ICommand){
         Node node = methods.get(method);
         if(node == null){
             node = new Node();
