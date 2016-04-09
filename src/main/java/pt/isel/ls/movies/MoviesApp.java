@@ -21,9 +21,11 @@ public class MoviesApp {
 
     public MoviesApp(){
         router = new Router();
+        createRouter();
     }
 
-    public void createRouter(){
+    //TODO: this method should disappear in order to create a new one on Router to load the Router info from a file.
+    public final void createRouter(){
         /**  Where Commands should be added  **/
 
         /**  MOVIES  **/

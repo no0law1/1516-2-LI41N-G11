@@ -3,6 +3,7 @@ package pt.isel.ls.movies.engine;
 import org.junit.Test;
 import pt.isel.ls.movies.container.commands.Movies.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -13,13 +14,22 @@ public class RouterTest {
     Router router;
 
     public RouterTest(){
-        router = Router.createRouter();
+        router = new Router();
+        createRouter();
+    }
+
+    public final void createRouter(){
+        router.add("POST", "/movies", new PostMovie());
+        router.add("GET", "/movies", new GetMovieList());
+        router.add("GET", "/movies/{mid}", new GetMovie());
+        router.add("GET", "/tops/ratings/higher/average", new GetHighestRatedMovie());
+        router.add("GET", "/tops/{n}/ratings/higher/average", new GetHighestRatedMovies());
     }
 
     @Test
     public void testGet() throws Exception {
-        Request request = Request.create(new String[]{"GET", "/movies"});
-        assertTrue(router.get(request) instanceof GetMovieList);
+        Request request = Request.create(new String[]{"GET", "/movies/12"});
+        assertTrue(router.get(request) instanceof GetMovie);
     }
 
     @Test
@@ -56,5 +66,14 @@ public class RouterTest {
     public void testGetNotExistingPath() throws Exception {
         Request request = Request.create(new String[]{"GET", "/movies/test/unholy"});
         router.get(request);
+    }
+
+    @Test
+    public void testGetPathParameter() throws Exception {
+        Request request = Request.create(new String[]{"GET", "/movies/12"});
+        router.get(request);
+
+        assertTrue(request.getPathParams().containsKey("mid"));
+        assertEquals("12", request.getPathParams().get("mid"));
     }
 }

@@ -1,12 +1,6 @@
 package pt.isel.ls.movies.engine;
 
 import pt.isel.ls.movies.container.commands.ICommand;
-import pt.isel.ls.movies.container.commands.Movies.*;
-import pt.isel.ls.movies.container.commands.Rating.GetMovieRating;
-import pt.isel.ls.movies.container.commands.Rating.PostRating;
-import pt.isel.ls.movies.container.commands.Review.GetMovieReviews;
-import pt.isel.ls.movies.container.commands.Review.GetReview;
-import pt.isel.ls.movies.container.commands.Review.PostReview;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -76,7 +70,7 @@ public class Router {
                 if(node.parameter == null) {
                     throw new UnsupportedOperationException("Path not found");
                 }
-                request.getQueryParams().put(node.parameter.getParameterName(), name);
+                request.getPathParams().put(node.parameter.getParameterName(), name);
                 node = node.parameter.node;
             }
             else {
@@ -127,4 +121,6 @@ public class Router {
             this.iCommand = iCommand;
         }
     }
+
+    //TODO create function to read Router data from file
 }

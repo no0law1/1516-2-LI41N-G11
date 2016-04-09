@@ -31,7 +31,7 @@ public class Request {
         return new Request(request[0], request[1], request.length >= 3 ? request[2] : null);
     }
 
-    public Map<String, String> getQueryParams() throws UnsupportedEncodingException {
+    public Map<String, String> getPathParams() throws UnsupportedEncodingException {
         if(map == null) {
             map = new HashMap<>();
             if(parameters != null && !parameters.isEmpty()) {
@@ -47,7 +47,7 @@ public class Request {
 
     public String get(String key) throws UnsupportedEncodingException {
         if (map == null) {
-            getQueryParams();
+            getPathParams();
         }
         return map.get(key);
     }
