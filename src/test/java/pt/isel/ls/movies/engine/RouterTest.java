@@ -73,7 +73,6 @@ public class RouterTest {
         Request request = Request.create(new String[]{"GET", "/movies/12"});
         router.get(request);
 
-        assertTrue(request.getPathParams().containsKey("mid"));
-        assertEquals("12", request.getPathParams().get("mid"));
+        assertEquals("12", request.getParameter("mid"));
     }
 }

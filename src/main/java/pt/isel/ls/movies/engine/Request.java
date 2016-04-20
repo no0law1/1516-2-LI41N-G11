@@ -37,6 +37,13 @@ public class Request implements IRequest {
         return path;
     }
 
+    public Map<String, String> getParametersMap() throws UnsupportedEncodingException {
+        if (parametersMap == null) {
+            parametersMap = resolve(parameters, "&", "=");
+        }
+        return parametersMap;
+    }
+
     public String getParameter(String key) throws UnsupportedEncodingException {
         if (parametersMap == null) {
             parametersMap = resolve(parameters, "&", "=");

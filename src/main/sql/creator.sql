@@ -16,7 +16,7 @@ create table movie(
 	release_year int,
 	genre varchar(128),
 
-	UNIQUE(title, release_year)
+	unique(title, release_year)
 );
 
 create table review(
@@ -39,4 +39,20 @@ create table rating(
 	
 	primary key(mid, val),
 	foreign key (mid) references movie(id)
+);
+
+create table collection(
+    id serial,
+    name varchar(128),
+    description varchar(256),
+
+    unique(name),
+    primary key (id)
+);
+
+create table movie_collection(
+    cid int,
+    mid int,
+
+    primary key(cid, mid)
 );

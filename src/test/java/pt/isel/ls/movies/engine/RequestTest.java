@@ -21,11 +21,8 @@ public class RequestTest {
         String[] args = new String[]{"POST", "/movies/123", "name=Avengers&rating=5"};
         Request request = Request.create(args);
 
-        Map<String, String> actual = request.getPathParams();
-
-        assertEquals(expected.size(), actual.size());
-        assertEquals(expected.get("name"), actual.get("name"));
-        assertEquals(expected.get("rating"), actual.get("rating"));
+        assertEquals(expected.get("name"), request.getParameter("name"));
+        assertEquals(expected.get("rating"), request.getParameter("rating"));
     }
 
     @Test

@@ -70,7 +70,7 @@ public class Router {
                 if(node.parameter == null) {
                     throw new UnsupportedOperationException("Path not found");
                 }
-                request.getPathParams().put(node.parameter.getParameterName(), name);
+                request.getParametersMap().put(node.parameter.getParameterName(), name);
                 node = node.parameter.node;
             }
             else {

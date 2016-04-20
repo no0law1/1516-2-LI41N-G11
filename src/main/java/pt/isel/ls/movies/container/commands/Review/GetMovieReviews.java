@@ -18,7 +18,7 @@ public class GetMovieReviews implements ICommand {
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         List<Review> reviews;
-        int mid = Integer.parseInt(request.getPathParams().get("mid"));
+        int mid = Integer.parseInt(request.getParameter("mid"));
 
         try (Connection connection = dataSource.getConnection()) {
             reviews = ReviewDAO.getReviews(connection, mid);
