@@ -18,7 +18,7 @@ public class GetMovieRating implements ICommand{
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         List<Rating> ratings;
-        int mid = Integer.parseInt(request.get("mid"));
+        int mid = Integer.parseInt(request.getParameter("mid"));
 
         try (Connection connection = dataSource.getConnection()) {
             ratings = RatingDAO.getMovieRatings(connection, mid);

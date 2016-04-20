@@ -8,48 +8,25 @@ import java.util.Map;
 /**
  * Class whose instance represents a request of data.
  */
-public class Request {
+public class Request implements IRequest {
 
     private String method;
 
     private String path;
 
+    private String headers;
+
     private String parameters;
 
-    private Map<String, String> map;
+    private Map<String, String> parametersMap;
 
-    public Request(String method, String path, String parameters) {
+    private Map<String, String> headersMap;
+
+    public Request(String method, String path, String headers, String parameters) {
         this.method = method;
         this.path = path;
+        this.headers = headers;
         this.parameters = parameters;
-    }
-
-    public static Request create(String[] request){
-        if(request.length < 2){
-            throw new IllegalArgumentException("Bad request");
-        }
-        return new Request(request[0], request[1], request.length >= 3 ? request[2] : null);
-    }
-
-    public Map<String, String> getPathParams() throws UnsupportedEncodingException {
-        if(map == null) {
-            map = new HashMap<>();
-            if(parameters != null && !parameters.isEmpty()) {
-                String[] splittedParameters = parameters.split("&");
-                for (String splittedParameter : splittedParameters) {
-                    String[] keyValue = splittedParameter.split("=");
-                    map.put(keyValue[0], URLDecoder.decode(keyValue[1], "UTF-8"));
-                }
-            }
-        }
-        return map;
-    }
-
-    public String get(String key) throws UnsupportedEncodingException {
-        if (map == null) {
-            getPathParams();
-        }
-        return map.get(key);
     }
 
     public String getMethod() {
@@ -58,5 +35,48 @@ public class Request {
 
     public String getPath() {
         return path;
+    }
+
+    public String getParameter(String key) throws UnsupportedEncodingException {
+        if (parametersMap == null) {
+            parametersMap = resolve(parameters, "&", "=");
+        }
+        return parametersMap.get(key);
+    }
+
+    public String getHeader(String key) throws UnsupportedEncodingException {
+        if (headersMap == null) {
+            headersMap = resolve(headers, "\\|", ":");
+        }
+        return headersMap.get(key);
+    }
+
+    private static Map<String, String> resolve(String toBeResolved, String sequenceSeparator, String keyValueSeparator)
+            throws UnsupportedEncodingException {
+        Map<String, String> map = new HashMap<>();
+        if (toBeResolved != null && !toBeResolved.isEmpty()) {
+            String[] splitted = toBeResolved.split(sequenceSeparator);
+            for (String splittedKeyValue : splitted) {
+                String[] keyValue = splittedKeyValue.split(keyValueSeparator);
+                map.put(keyValue[0], URLDecoder.decode(keyValue[1], "UTF-8"));
+            }
+        }
+        return map;
+    }
+
+    public static Request create(String[] request) {
+        if (request.length < 2) {
+            throw new IllegalArgumentException("Bad request");
+        }
+        if (request.length == 2) {
+            return new Request(request[0], request[1], null, null);
+        }
+        if (request.length == 3) {
+            if (request[2].contains("=")) {
+                return new Request(request[0], request[1], null, request[2]);
+            }
+            return new Request(request[0], request[1], request[2], null);
+        }
+        return new Request(request[0], request[1], request[2], request[3]);
     }
 }

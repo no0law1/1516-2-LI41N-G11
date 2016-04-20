@@ -16,11 +16,11 @@ public class PostReview implements ICommand {
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         Review.ReviewUID reviewUID;
-        int mid = Integer.parseInt(request.get("mid"));
-        String reviewerName = request.get("reviewerName");
-        String reviewSummary = request.get("reviewSummary");
-        String reviewExtended = request.get("review");
-        int rating = Integer.parseInt(request.get("rating"));
+        int mid = Integer.parseInt(request.getParameter("mid"));
+        String reviewerName = request.getParameter("reviewerName");
+        String reviewSummary = request.getParameter("reviewSummary");
+        String reviewExtended = request.getParameter("review");
+        int rating = Integer.parseInt(request.getParameter("rating"));
         Review review = new Review(mid, reviewerName, reviewSummary, reviewExtended, rating);
 
         try (Connection connection = dataSource.getConnection()) {

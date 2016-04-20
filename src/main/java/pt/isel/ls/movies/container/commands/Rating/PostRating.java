@@ -15,8 +15,8 @@ public class PostRating implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
-        int mid = Integer.parseInt(request.get("mid"));
-        int val = Integer.parseInt(request.get("rating"));
+        int mid = Integer.parseInt(request.getParameter("mid"));
+        int val = Integer.parseInt(request.getParameter("rating"));
 
         Rating rating = new Rating(mid, val);
 

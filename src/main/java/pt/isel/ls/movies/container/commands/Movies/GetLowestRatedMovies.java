@@ -18,7 +18,7 @@ public class GetLowestRatedMovies implements ICommand {
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         List<Movie> movies;
-        int n = Integer.parseInt(request.get("n"));
+        int n = Integer.parseInt(request.getParameter("n"));
 
         try (Connection connection = dataSource.getConnection()) {
             movies = MovieDAO.getLowestRatingMovies(connection, n);

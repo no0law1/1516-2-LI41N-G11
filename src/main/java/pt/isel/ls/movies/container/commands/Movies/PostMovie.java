@@ -17,9 +17,9 @@ public class PostMovie implements ICommand {
     public void execute(DataSource dataSource, Request request) throws Exception {
         int mid;
 
-        String title = request.get("title");
-        int releaseYear = Integer.parseInt(request.get("releaseYear"));
-        String genre = request.get("genre");
+        String title = request.getParameter("title");
+        int releaseYear = Integer.parseInt(request.getParameter("releaseYear"));
+        String genre = request.getParameter("genre");
         Movie movie = new Movie(title, releaseYear, genre);
 
         try (Connection connection = dataSource.getConnection()) {
