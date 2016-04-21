@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.container.commands.Movies;
+package pt.isel.ls.movies.container.commands.movies;
 
 import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.data.entity.MovieDAO;
@@ -11,22 +11,20 @@ import java.sql.Connection;
 import java.util.List;
 
 /**
- * Command that gets the n movies with the most reviews.
+ * Gets all movie instances from the database
  */
-public class GetMostReviewedMovies implements ICommand {
+public class GetMovieList implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         List<Movie> movies;
-        int n = Integer.parseInt(request.getParameter("n"));
 
         try (Connection connection = dataSource.getConnection()) {
-            movies = MovieDAO.getMostReviewedMovies(connection, n);
+            movies = MovieDAO.getMovies(connection);
         }
 
         for (Movie movie : movies) {
             new MovieView(movie).show();
         }
     }
-
 }

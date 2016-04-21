@@ -1,7 +1,9 @@
 package pt.isel.ls.movies.engine;
 
 import org.junit.Test;
-import pt.isel.ls.movies.container.commands.Movies.*;
+import pt.isel.ls.movies.container.commands.common.Exit;
+import pt.isel.ls.movies.container.commands.common.Option;
+import pt.isel.ls.movies.container.commands.movies.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -24,6 +26,8 @@ public class RouterTest {
         router.add("GET", "/movies/{mid}", new GetMovie());
         router.add("GET", "/tops/ratings/higher/average", new GetHighestRatedMovie());
         router.add("GET", "/tops/{n}/ratings/higher/average", new GetHighestRatedMovies());
+        router.add("EXIT", "/", new Exit());
+        router.add("OPTION", "/", new Option());
     }
 
     @Test
@@ -74,5 +78,17 @@ public class RouterTest {
         router.get(request);
 
         assertEquals("12", request.getParameter("mid"));
+    }
+
+    @Test
+    public void testGetCommonCommand() throws Exception {
+        Request request = Request.create(new String[]{"EXIT", "/"});
+        assertTrue(router.get(request) instanceof Exit);
+    }
+
+    @Test
+    public void testGetCommonCommandOption() throws Exception {
+        Request request = Request.create(new String[]{"OPTION", "/"});
+        assertTrue(router.get(request) instanceof Option);
     }
 }

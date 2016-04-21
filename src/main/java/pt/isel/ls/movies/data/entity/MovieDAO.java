@@ -61,7 +61,7 @@ public class MovieDAO {
         if(!movies.isEmpty()) {
             return movies;
         }
-        throw new NoDataException("There is no Movies");
+        throw new NoDataException("There is no movies");
     }
 
     /**
@@ -127,7 +127,7 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         if(movies.isEmpty()) {
-            throw new NoDataException("There is no Movies");
+            throw new NoDataException("There is no movies");
         }
         return movies;
     }
@@ -157,7 +157,7 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         if(movies.isEmpty()) {
-            throw new NoDataException("There is no Movies");
+            throw new NoDataException("There is no movies");
         }
         return movies;
     }
@@ -196,7 +196,7 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         if (movies.isEmpty()) {
-            throw new NoDataException("There is no Movies");
+            throw new NoDataException("There is no movies");
         }
         return movies;
     }

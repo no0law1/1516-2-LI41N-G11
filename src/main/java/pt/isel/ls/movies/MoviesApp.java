@@ -1,11 +1,14 @@
 package pt.isel.ls.movies;
 
-import pt.isel.ls.movies.container.commands.Movies.*;
-import pt.isel.ls.movies.container.commands.Rating.GetMovieRating;
-import pt.isel.ls.movies.container.commands.Rating.PostRating;
-import pt.isel.ls.movies.container.commands.Review.GetMovieReviews;
-import pt.isel.ls.movies.container.commands.Review.GetReview;
-import pt.isel.ls.movies.container.commands.Review.PostReview;
+import pt.isel.ls.movies.container.commands.collections.*;
+import pt.isel.ls.movies.container.commands.common.Exit;
+import pt.isel.ls.movies.container.commands.common.Option;
+import pt.isel.ls.movies.container.commands.movies.*;
+import pt.isel.ls.movies.container.commands.rating.GetMovieRating;
+import pt.isel.ls.movies.container.commands.rating.PostRating;
+import pt.isel.ls.movies.container.commands.review.GetMovieReviews;
+import pt.isel.ls.movies.container.commands.review.GetReview;
+import pt.isel.ls.movies.container.commands.review.PostReview;
 import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Router;
@@ -47,6 +50,17 @@ public class MoviesApp {
         router.add("POST", "/movies/{mid}/reviews", new PostReview());
         router.add("GET", "/movies/{mid}/reviews", new GetMovieReviews());
         router.add("GET", "/movies/{mid}/reviews/{rid}", new GetReview());
+
+        /**  COLLECTION  **/
+        router.add("POST", "/collections", new CreateCollection());
+        router.add("POST", "/collections/{cid}/movies", new PostMovieToCollection());
+        router.add("GET", "/collections", new GetCollections());
+        router.add("GET", "/collections/{cid}", new GetCollection());
+        router.add("DELETE", "/collections/{cid}/movies/{mid}", new RemoveMovieFromCollection());
+
+        /**  COMMON  **/
+        router.add("EXIT", "/", new Exit());
+        router.add("OPTION", "/", new Option());
     }
 
     private void run(String[] args) throws Exception {

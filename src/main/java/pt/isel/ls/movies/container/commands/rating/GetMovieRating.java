@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.container.commands.Rating;
+package pt.isel.ls.movies.container.commands.rating;
 
 import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.data.entity.RatingDAO;
@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.util.List;
 
 /**
- * Gets the average Rating and the count to every rating of a Movie
+ * Gets the average rating and the count to every rating of a Movie
  */
 public class GetMovieRating implements ICommand{
 

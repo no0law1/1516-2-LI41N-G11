@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.container.commands.Movies;
+package pt.isel.ls.movies.container.commands.movies;
 
 import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.data.entity.MovieDAO;
@@ -10,17 +10,16 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**
- * Get a single movie instance from the database
+ * Command that gets the movie with the highest average rating.
  */
-public class GetMovie implements ICommand {
+public class GetHighestRatedMovie implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         Movie movie;
-        int mid = Integer.parseInt(request.getParameter("mid"));
 
-        try(Connection connection = dataSource.getConnection()){
-            movie = MovieDAO.getMovie(connection, mid);
+        try (Connection connection = dataSource.getConnection()) {
+            movie = MovieDAO.getHighestRatingMovie(connection);
         }
 
         new MovieView(movie).show();
