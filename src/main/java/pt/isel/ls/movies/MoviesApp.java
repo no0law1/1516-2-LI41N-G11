@@ -93,8 +93,8 @@ public class MoviesApp {
             if (args.length >= 2) {
                 app.run(args);
             } else {
-                //app.run();
-                System.out.println("usage: ./prog {method} {path} {parameters}");
+                app.run();
+                //System.out.println("usage: ./prog {method} {path} {parameters}");
             }
         } catch (Exception e) {
             e.printStackTrace();

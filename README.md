@@ -24,8 +24,8 @@
 #### Comandos
 1. **OPTION/** - presents a list of available commands and their characteristics.
 2. **EXIT/** - ends the application.
-3. **POST /colletions name=?&description=?** - creates a new collection and returns its identifier
-4. **GET /collections** - returns the list of collections, using the insertion order.
-5. **GET /collections/{cid}** - returns the details for the cid collection, namely all the movies in that collection.
-6. **POST /collections/{cid}/movies** - adds a movie to the cid collection
-7. **DELETE /collections/{cid}/movies/{mid}** - removes the movie mid from the collections cid.
+3. **POST /colletions name=?&description=?** - creates a new collection and returns its identifier &#10003;
+4. **GET /collections** - returns the list of collections, using the insertion order. &#10003;
+5. **GET /collections/{cid}** - returns the details for the cid collection, namely all the movies in that collection. &#10003;
+6. **POST /collections/{cid}/movies** - adds a movie to the cid collection &#10003;
+7. **DELETE /collections/{cid}/movies/{mid}** - removes the movie mid from the collections cid. &#10003;

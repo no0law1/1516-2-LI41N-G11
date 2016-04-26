@@ -104,7 +104,7 @@ public class CollectionDAOTest {
             MovieDAO.submitMovie(connection, new Movie(1, "title2", 2016, "genre"));
             MovieDAO.submitMovie(connection, movie);
 
-            actual = CollectionDAO.postMovieToCollection(connection, id, movie);
+            actual = CollectionDAO.postMovieToCollection(connection, id, movie.getId());
         }
         assertEquals(expected, actual);
     }
@@ -120,10 +120,10 @@ public class CollectionDAOTest {
             MovieDAO.submitMovie(connection, movie);
             MovieDAO.submitMovie(connection, movie1);
 
-            CollectionDAO.postMovieToCollection(connection, id, movie);
-            CollectionDAO.postMovieToCollection(connection, id, movie1);
+            CollectionDAO.postMovieToCollection(connection, id, movie.getId());
+            CollectionDAO.postMovieToCollection(connection, id, movie1.getId());
 
-            assertTrue(CollectionDAO.removeMovieFromCollection(connection, id, movie1));
+            assertTrue(CollectionDAO.removeMovieFromCollection(connection, id, movie1.getId()));
         }
     }
 }

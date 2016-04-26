@@ -3,7 +3,6 @@ package pt.isel.ls.movies.data.entity;
 import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Collection;
-import pt.isel.ls.movies.model.Movie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,13 +86,13 @@ public class CollectionDAO {
         throw new NoDataException("There are no collection");
     }
 
-    public static Collection.MovieCollectionUID postMovieToCollection(Connection connection, int id, Movie movie) throws Exception {
+    public static Collection.MovieCollectionUID postMovieToCollection(Connection connection, int cid, int mid) throws Exception {
         PreparedStatement preparedStatement =
                 connection.prepareStatement(
                         "insert into movie_collection(cid, mid) values (?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setInt(1, id);
-        preparedStatement.setInt(2, movie.getId());
+        preparedStatement.setInt(1, cid);
+        preparedStatement.setInt(2, mid);
 
         if (preparedStatement.executeUpdate() != 0) {
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -101,14 +100,14 @@ public class CollectionDAO {
                 return new Collection.MovieCollectionUID(resultSet.getInt(1), resultSet.getInt(2));
             }
         }
-        throw new InsertException("Cannot insert movie with id:" + movie.getId() + "to collection with id:" + id);
+        throw new InsertException("Cannot insert movie with id:" + mid + "to collection with id:" + cid);
     }
 
-    public static boolean removeMovieFromCollection(Connection connection, int id, Movie movie) throws Exception {
+    public static boolean removeMovieFromCollection(Connection connection, int cid, int mid) throws Exception {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("delete from movie_collection where cid = ? and mid = ?");
-        preparedStatement.setInt(1, id);
-        preparedStatement.setInt(2, movie.getId());
+        preparedStatement.setInt(1, cid);
+        preparedStatement.setInt(2, mid);
 
         if (preparedStatement.executeUpdate() != 0) {
             return true;
