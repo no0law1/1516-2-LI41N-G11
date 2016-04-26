@@ -1,6 +1,7 @@
 package pt.isel.ls.movies.engine;
 
 import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.utils.FileUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -10,6 +11,49 @@ import java.util.Map;
  * Class whose instance contains the routing for a set of Commands
  */
 public class Router {
+
+    private class Parameter {
+        private final String name;
+        private final Node node;
+
+        private Parameter(String name, Node node) {
+            this.name = name;
+            this.node = node;
+        }
+
+        private String getParameterName() {
+            return name.substring(1, name.length() - 1);
+        }
+    }
+
+    private class Node {
+        private ICommand iCommand;
+        private Map<String, Node> nodes;
+        private Router.Parameter parameter;
+
+        public Node() {
+            this(null);
+        }
+
+        public Node(ICommand iCommand) {
+            this.iCommand = iCommand;
+            nodes = new HashMap<>();
+        }
+
+        public Node get(String key) {
+            return nodes.get(key);
+        }
+
+        public ICommand getCommand() {
+            return iCommand;
+        }
+
+
+        public void setCommand(ICommand iCommand) {
+            this.iCommand = iCommand;
+        }
+    }
+
     private Node methods;
 
     public Router(){
@@ -80,47 +124,19 @@ public class Router {
         return node.getCommand();
     }
 
-    private class Parameter{
-        private final String name;
-        private final Node node;
-
-        private Parameter(String name, Node node) {
-            this.name = name;
-            this.node = node;
-        }
-
-        private String getParameterName(){
-            return name.substring(1, name.length()-1);
-        }
+    public static Router createRouter() throws Exception {
+        Router router = new Router();
+        populate(router);
+        return router;
     }
 
-    private class Node {
-        private ICommand iCommand;
-        private Map<String, Node> nodes;
-        private Router.Parameter parameter;
-
-        public Node(){
-            this(null);
-        }
-
-        public Node(ICommand iCommand){
-            this.iCommand = iCommand;
-            nodes = new HashMap<>();
-        }
-
-        public Node get(String key){
-            return nodes.get(key);
-        }
-
-        public ICommand getCommand(){
-            return iCommand;
-        }
-
-
-        public void setCommand(ICommand iCommand){
-            this.iCommand = iCommand;
+    private static void populate(Router router) throws Exception {
+        String prefix = "pt.isel.ls.movies.container.commands.";
+        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", ";");
+        for (String key : map.keySet()) {
+            String[] pathAndMethod = key.split(" ");
+            ICommand command = (ICommand) Class.forName(prefix + map.get(key)).newInstance();
+            router.add(pathAndMethod[0], pathAndMethod[1], command);
         }
     }
-
-    //TODO create function to read Router data from file
 }

@@ -6,13 +6,14 @@ import pt.isel.ls.movies.engine.Request;
 import javax.sql.DataSource;
 
 /**
- * TODO: Commentary.
+ * Used to exit the application
  */
 public class Exit implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
-        throw new UnsupportedOperationException();
+        System.out.println("Closing your application...");
+        System.exit(0);
     }
 
 }
