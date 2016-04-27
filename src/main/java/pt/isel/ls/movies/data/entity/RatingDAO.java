@@ -11,15 +11,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Rating's Data Access Object
+ * rating's Data Access Object
  */
 public class RatingDAO {
 
     /**
-     * Submit a Movie Rating to the database.
+     * Submit a Movie rating to the database.
      *
-     * @param rating Rating
-     * @return Unique identifier of the Rating
+     * @param rating rating
+     * @return Unique identifier of the rating
      */
     public static Rating submitRating(Connection connection, Rating rating) throws Exception {
         PreparedStatement preparedStatement =

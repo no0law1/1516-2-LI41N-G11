@@ -1,7 +1,7 @@
 package pt.isel.ls.movies.model;
 
 /**
- * Class whose instance represent a Movie Review
+ * Class whose instance represent a Movie review
  */
 public class Review {
 

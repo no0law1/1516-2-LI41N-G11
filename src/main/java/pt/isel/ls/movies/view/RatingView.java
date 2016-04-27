@@ -4,7 +4,7 @@ import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.view.common.IView;
 
 /**
- * Class whose instance represents a Rating that knows how to draw itself.
+ * Class whose instance represents a rating that knows how to draw itself.
  */
 public class RatingView implements IView {
 

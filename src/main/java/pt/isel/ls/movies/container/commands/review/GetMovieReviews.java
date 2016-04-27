@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.container.commands.Review;
+package pt.isel.ls.movies.container.commands.review;
 
 import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.data.entity.ReviewDAO;

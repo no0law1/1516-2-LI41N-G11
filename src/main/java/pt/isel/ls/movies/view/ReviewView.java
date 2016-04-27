@@ -4,7 +4,7 @@ import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.movies.view.common.IView;
 
 /**
- * Class whose instance represents a Review that knows how to draw itself.
+ * Class whose instance represents a review that knows how to draw itself.
  */
 public class ReviewView implements IView {
 
@@ -38,9 +38,9 @@ public class ReviewView implements IView {
         System.out.printf("%s: %s\n", "mid", mid);
         System.out.printf("%s: %s\n", "id", id);
         System.out.printf("%s: %s\n", "Reviewer Name", reviewerName);
-        System.out.printf("%s: %s\n", "Review Summary", reviewSummary);
-        System.out.printf("%s: %s\n", "Review", review);
-        System.out.printf("%s: %s\n", "Rating", rating);
+        System.out.printf("%s: %s\n", "review Summary", reviewSummary);
+        System.out.printf("%s: %s\n", "review", review);
+        System.out.printf("%s: %s\n", "rating", rating);
         System.out.println();
     }
 }

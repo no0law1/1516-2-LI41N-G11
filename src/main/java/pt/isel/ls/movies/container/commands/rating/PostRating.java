@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.container.commands.Rating;
+package pt.isel.ls.movies.container.commands.rating;
 
 import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.data.entity.RatingDAO;
@@ -24,6 +24,6 @@ public class PostRating implements ICommand {
             rating = RatingDAO.submitRating(connection, rating);
         }
 
-        System.out.printf("Rating mid: %d, val: %d\n", rating.getMid(), rating.getVal());
+        System.out.printf("rating mid: %d, val: %d\n", rating.getMid(), rating.getVal());
     }
 }

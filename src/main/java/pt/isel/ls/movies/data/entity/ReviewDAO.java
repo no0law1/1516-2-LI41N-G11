@@ -13,14 +13,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Review's Data Access Object
+ * review's Data Access Object
  */
 public class ReviewDAO {
 
     /**
      * Submit a review of a specific movie to the database
      *
-     * @param review Review to be added
+     * @param review review to be added
      * @return Unique identifier for the review added
      */
     public static Review.ReviewUID submitReview(Connection connection, Review review) throws Exception {
@@ -95,14 +95,14 @@ public class ReviewDAO {
             int rating = resultSet.getInt(6);
             return new Review(reviewUID.mid, reviewUID.id, reviewerName, reviewSummary, review, rating);
         }
-        throw new NoDataException("There is no Review with mid: " + reviewUID.mid + " and id: " + reviewUID.id);
+        throw new NoDataException("There is no review with mid: " + reviewUID.mid + " and id: " + reviewUID.id);
     }
 
     /**
      * Gets the specific review from a specific movie
      *
      * @param mid Unique identifier of a Movie
-     * @param rid Unique identifier of a Review
+     * @param rid Unique identifier of a review
      * @return one review
      */
     public static Review getReview(Connection connection, int mid, int rid) throws Exception {

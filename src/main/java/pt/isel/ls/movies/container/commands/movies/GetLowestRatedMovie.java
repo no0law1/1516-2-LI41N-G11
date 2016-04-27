@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.container.commands.Movies;
+package pt.isel.ls.movies.container.commands.movies;
 
 import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.data.entity.MovieDAO;
@@ -8,23 +8,21 @@ import pt.isel.ls.movies.view.MovieView;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.util.List;
 
 /**
- * Gets all movie instances from the database
+ * Command that gets the movie with the lowest average rating.
  */
-public class GetMovieList implements ICommand {
+public class GetLowestRatedMovie implements ICommand {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
-        List<Movie> movies;
+        Movie movie;
 
         try (Connection connection = dataSource.getConnection()) {
-            movies = MovieDAO.getMovies(connection);
+            movie = MovieDAO.getLowestRatingMovie(connection);
         }
 
-        for (Movie movie : movies) {
-            new MovieView(movie).show();
-        }
+        new MovieView(movie).show();
     }
+
 }
