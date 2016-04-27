@@ -7,6 +7,9 @@ insert into movie(title, release_year, genre)
 			('movie2', 1993, 'action'),
 			('movie3', 1993, 'action');
 
+insert into movie(title, release_year, genre) 
+	values ('movie4', 2016, 'action');
+
 -- Ratings
 insert into rating(mid, val, count)
 	values (1, 1, 1),

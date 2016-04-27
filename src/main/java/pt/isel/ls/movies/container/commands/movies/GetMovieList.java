@@ -20,7 +20,11 @@ public class GetMovieList implements ICommand {
         List<Movie> movies;
 
         try (Connection connection = dataSource.getConnection()) {
-            movies = MovieDAO.getMovies(connection);
+            movies = MovieDAO.getMovies(
+                    connection,
+                    Integer.valueOf(request.getParameterOrDefault("top", "-1")),
+                    Integer.valueOf(request.getParameterOrDefault("skip", "0"))
+            );
         }
 
         for (Movie movie : movies) {

@@ -14,7 +14,7 @@
 
 #### Paginamento
 1. Suportado por **GET /movies** e **GET /collections**
-2. top=length e skip=indice inicial
+2. top=length e skip=indice inicial &#10003;
 <br>**DEFAULT:** top=full length e skip=0</br>
 
 #### Sorting

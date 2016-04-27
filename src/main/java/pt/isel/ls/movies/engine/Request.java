@@ -45,10 +45,14 @@ public class Request implements IRequest {
     }
 
     public String getParameter(String key) throws UnsupportedEncodingException {
+        return getParameterOrDefault(key, null);
+    }
+
+    public String getParameterOrDefault(String key, String defaultValue) throws UnsupportedEncodingException {
         if (parametersMap == null) {
             parametersMap = resolve(parameters, "&", "=");
         }
-        return parametersMap.get(key);
+        return parametersMap.getOrDefault(key, defaultValue);
     }
 
     public String getHeader(String key) throws UnsupportedEncodingException {
