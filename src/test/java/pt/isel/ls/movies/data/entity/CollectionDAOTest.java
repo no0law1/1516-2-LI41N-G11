@@ -93,6 +93,35 @@ public class CollectionDAOTest {
     }
 
     @Test
+    public void testGetCollections1() throws Exception {
+        List<Collection> expected = new LinkedList<>();
+        expected.add(new Collection(1, "name1", "description1"));
+        expected.add(new Collection(2, "name2", "description2"));
+        expected.add(new Collection(3, "name3", "description3"));
+        expected.add(new Collection(4, "name4", "description4"));
+
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            for (Collection collection : expected) {
+                CollectionDAO.createCollection(connection, collection);
+            }
+            List<Collection> actual = CollectionDAO.getCollections(connection, 2, 0);
+            assertEquals(2, actual.size());
+            for (int i = 0; i < 2; i++) {
+                assertEquals(actual.get(i), expected.get(i));
+            }
+
+            actual = CollectionDAO.getCollections(connection, 2, 2);
+            assertEquals(2, actual.size());
+            for (int i = 0; i < 2; i++) {
+                assertEquals(actual.get(i), expected.get(2+i));
+            }
+        }
+
+
+    }
+
+    @Test
     public void postMovieToCollection() throws Exception {
         Collection.MovieCollectionUID actual;
         Movie movie = new Movie(2, "title", 2016, "genre");

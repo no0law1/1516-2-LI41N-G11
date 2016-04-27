@@ -42,15 +42,32 @@ public class MovieDAO {
 
     /**
      * Gets from the database all the movies
+     *
+     * @param connection {@code Connection} to be used to fecth the results
      * @return an array of all movies
      */
     public static List<Movie> getMovies(Connection connection) throws Exception {
+        return getMovies(connection, -1, 0);
+    }
+
+    /**
+     * Gets from the database all {@param top} movies from {@param line} line
+     *
+     * @param connection {@code Connection} to be used to fecth the results
+     * @param top number of rows, -1 if all
+     * @param skip number of rows to skip
+     * @return an array of {@param top} movies from {@param line} line
+     * @throws Exception
+     */
+    public static List<Movie> getMovies(Connection connection, int top, int skip) throws Exception {
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select * from movie");
+                connection.prepareStatement("select * from movie ORDER BY id ASC");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<Movie> movies = new LinkedList<>();
-        while(resultSet.next()){
+        //resultSet.absolute(skip);
+        for (int i=0; i<skip; i++) if(!resultSet.next()) throw new NoDataException("There are no collection");
+        for (int i=0; resultSet.next() && (top < 0 || i < top); i++) {
             int id = resultSet.getInt(1);
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
@@ -111,9 +128,9 @@ public class MovieDAO {
     public static List<Movie> getHighestRatingMovies(Connection connection, int n) throws Exception {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select id, title, release_year, genre\n" +
-                        "\tfrom movie join rating on id=mid\n" +
+                        "\tfrom movie left join rating on id=mid\n" +
                         "\tgroup by id\n" +
-                        "\torder by SUM(val*count)::float/SUM(count) desc, release_year desc, title asc\n" +
+                        "\torder by COALESCE(SUM(val*count)::float/SUM(count), 0) desc, release_year desc, title asc\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -141,9 +158,9 @@ public class MovieDAO {
     public static List<Movie> getLowestRatingMovies(Connection connection, int n) throws Exception {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select id, title, release_year, genre\n" +
-                        "\tfrom movie join rating on id=mid\n" +
+                        "\tfrom movie left join rating on id=mid\n" +
                         "\tgroup by id\n" +
-                        "\torder by SUM(val*count)::float/SUM(count) asc, release_year desc, title asc\n" +
+                        "\torder by COALESCE(SUM(val*count)::float/SUM(count), 0) asc, release_year desc, title asc\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();

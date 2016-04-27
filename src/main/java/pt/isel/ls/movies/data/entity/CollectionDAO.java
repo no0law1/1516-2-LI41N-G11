@@ -70,11 +70,17 @@ public class CollectionDAO {
      * @throws Exception if there is no data, or an error to the connection
      */
     public static List<Collection> getCollections(Connection connection) throws Exception {
+        return getCollections(connection, -1, 0);
+    }
+
+    public static List<Collection> getCollections(Connection connection, int top, int skip) throws Exception {
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select * from collection");
+                connection.prepareStatement("select * from collection ORDER BY id ASC");
         ResultSet resultSet = preparedStatement.executeQuery();
         List<Collection> collections = new LinkedList<>();
-        while (resultSet.next()) {
+        //resultSet.absolute(skip);
+        for (int i=0; i<skip; i++) if(!resultSet.next()) throw new NoDataException("There are no collection");
+        for (int i=0; resultSet.next() && (top < 0 || i < top); i++) {
             int id = resultSet.getInt(1);
             String name = resultSet.getString(2);
             String description = resultSet.getString(3);

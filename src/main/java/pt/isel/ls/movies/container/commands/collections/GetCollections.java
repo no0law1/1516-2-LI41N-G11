@@ -19,7 +19,11 @@ public class GetCollections implements ICommand {
         List<Collection> collections;
 
         try (Connection connection = dataSource.getConnection()) {
-            collections = CollectionDAO.getCollections(connection);
+            collections = CollectionDAO.getCollections(
+                    connection,
+                    Integer.valueOf(request.getParameterOrDefault("top", "-1")),
+                    Integer.valueOf(request.getParameterOrDefault("skip", "0"))
+            );
         }
 
         for (Collection collection : collections) {

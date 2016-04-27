@@ -47,7 +47,7 @@ public class MovieDAOTest {
     }
 
     @Test
-    public void testInsertMovie() throws Exception {
+    public void testSubmitMovie() throws Exception {
         try(Connection connection = dataSource.getConnection()){
             connection.setAutoCommit(false);
             Movie expected = new Movie(1, "test", 2016, "genre_test");
@@ -70,10 +70,36 @@ public class MovieDAOTest {
             }
             List<Movie> expected = MovieDAO.getMovies(connection);
 
-
             assertEquals(expected.size(), actual.size());
             for (int i = 0; i < expected.size(); i++) {
                 assertEquals(expected, actual);
+            }
+        }
+    }
+
+    @Test
+    public void testGetMovies1() throws Exception {
+        try(Connection connection = dataSource.getConnection()){
+            connection.setAutoCommit(false);
+            List<Movie> expected = new LinkedList<>();
+            expected.add(new Movie(1, "test1", 2016, "genre_test"));
+            expected.add(new Movie(2, "test2", 2016, "genre_test"));
+            expected.add(new Movie(3, "test3", 2016, "genre_test"));
+            expected.add(new Movie(4, "test4", 2016, "genre_test"));
+            for (Movie movie : expected) {
+                MovieDAO.submitMovie(connection, movie);
+            }
+
+            List<Movie> actual = MovieDAO.getMovies(connection, 2, 0);
+            assertEquals(2, actual.size());
+            for (int i = 0; i < 2; i++) {
+                assertEquals(actual.get(i), expected.get(i));
+            }
+
+            actual = MovieDAO.getMovies(connection, 2, 2);
+            assertEquals(2, actual.size());
+            for (int i = 0; i < 2; i++) {
+                assertEquals(actual.get(i), expected.get(2+i));
             }
         }
     }
@@ -122,7 +148,7 @@ public class MovieDAOTest {
     }
 
     @Test
-    public void testGetLowestRatingMovieWithNoRating() throws Exception {
+    public void testGetLowestRatingMovie() throws Exception {
         Movie expected = new Movie(2, "test2", 2016, "genre1");
         try(Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
@@ -205,31 +231,6 @@ public class MovieDAOTest {
     }
 
     @Test
-    public void testGetHighestRatingMoviesWithNoRating() throws Exception {
-        List<Movie> expected = new LinkedList<>();
-        expected.add(new Movie(1, "test1", 2016, "genre_test"));
-        expected.add(new Movie(2, "test2", 2016, "genre_test"));
-        expected.add(new Movie(3, "test3", 2016, "genre_test"));
-
-        try(Connection connection = dataSource.getConnection()){
-            connection.setAutoCommit(false);
-            for (Movie movie : expected) {
-                MovieDAO.submitMovie(connection, movie);
-            }
-            RatingDAO.submitRating(connection, new Rating(1, 4));
-            RatingDAO.submitRating(connection, new Rating(1, 1));
-            RatingDAO.submitRating(connection, new Rating(2, 4));
-
-            List<Movie> actual = MovieDAO.getHighestRatingMovies(connection, 5);
-
-
-            assertEquals(2, actual.size());
-            assertEquals(expected.get(1), actual.get(0));
-            assertEquals(expected.get(0), actual.get(1));
-        }
-    }
-
-    @Test
     public void testGetLowestRatingMovies() throws Exception {
         List<Movie> expected = new LinkedList<>();
         expected.add(new Movie(1, "test1", 2016, "genre_test"));
@@ -249,8 +250,8 @@ public class MovieDAOTest {
 
 
             assertEquals(2, actual.size());
-            assertEquals(expected.get(0), actual.get(0));
-            assertEquals(expected.get(1), actual.get(1));
+            assertEquals(expected.get(2), actual.get(0));
+            assertEquals(expected.get(0), actual.get(1));
         }
     }
 
@@ -278,31 +279,6 @@ public class MovieDAOTest {
             assertEquals(expected.get(2), actual.get(0));
             assertEquals(expected.get(0), actual.get(1));
             assertEquals(expected.get(1), actual.get(2));
-        }
-    }
-
-    @Test
-    public void testGetLowestRatingMoviesWithNoRating() throws Exception {
-        List<Movie> expected = new LinkedList<>();
-        expected.add(new Movie(1, "test1", 2016, "genre_test"));
-        expected.add(new Movie(2, "test2", 2016, "genre_test"));
-        expected.add(new Movie(3, "test3", 2016, "genre_test"));
-
-        try(Connection connection = dataSource.getConnection()){
-            connection.setAutoCommit(false);
-            for (Movie movie : expected) {
-                MovieDAO.submitMovie(connection, movie);
-            }
-            RatingDAO.submitRating(connection, new Rating(1, 4));
-            RatingDAO.submitRating(connection, new Rating(1, 1));
-            RatingDAO.submitRating(connection, new Rating(2, 4));
-
-            List<Movie> actual = MovieDAO.getLowestRatingMovies(connection, 5);
-
-
-            assertEquals(2, actual.size());
-            assertEquals(expected.get(0), actual.get(0));
-            assertEquals(expected.get(1), actual.get(1));
         }
     }
 
