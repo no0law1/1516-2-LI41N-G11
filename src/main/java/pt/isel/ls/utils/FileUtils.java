@@ -12,22 +12,33 @@ import java.util.Scanner;
  */
 public class FileUtils {
 
+    public enum Option {
+        OPTIONS,
+        COMMANDS
+    }
+
     /**
      * Retrieves from a file, a set key value pairs to a map
      *
      * @param filePath  the path to the file
-     * @param separator the separator of key and value
      * @return mapped key value from file
      * @throws FileNotFoundException if file does not exist
      */
-    public static Map<String, String> getFromFile(String filePath, String separator) throws FileNotFoundException {
+    public static Map<String, String> getFromFile(String filePath, Option option) throws FileNotFoundException {
         Map<String, String> map = new HashMap<>();
 
         Scanner scanner = new Scanner(new FileReader(new File(filePath)));
 
         while (scanner.hasNext()) {
-            String[] args = scanner.nextLine().split(separator);
-            map.put(args[0], args[1]);
+            String line = scanner.nextLine();
+            if (!line.startsWith("#")) {
+                String[] args = line.split(";");
+                if (option.equals(Option.COMMANDS)) {
+                    map.put(args[0], args[1]);
+                } else {
+                    map.put(args[0].concat(" " + args[2]), args[3]);
+                }
+            }
         }
 
         return map;

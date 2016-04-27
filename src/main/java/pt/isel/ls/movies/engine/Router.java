@@ -132,7 +132,7 @@ public class Router {
 
     private static void populate(Router router) throws Exception {
         String prefix = "pt.isel.ls.movies.container.commands.";
-        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", ";");
+        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.COMMANDS);
         for (String key : map.keySet()) {
             String[] pathAndMethod = key.split(" ");
             ICommand command = (ICommand) Class.forName(prefix + map.get(key)).newInstance();

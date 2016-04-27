@@ -4,7 +4,7 @@ import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.view.common.IView;
 
 /**
- * TODO: Commentary.
+ * Class whose instance represents a {@link Collection} that knows how to draw itself.
  */
 public class CollectionView implements IView {
 

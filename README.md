@@ -22,8 +22,8 @@
 2. sortBy=... várias maneiras ascendentes e descendentes
 
 #### Comandos
-1. **OPTION/** - presents a list of available commands and their characteristics.
-2. **EXIT/** - ends the application.
+1. **OPTION/** - presents a list of available commands and their characteristics. &#10003;
+2. **EXIT/** - ends the application. &#10003;
 3. **POST /colletions name=?&description=?** - creates a new collection and returns its identifier &#10003;
 4. **GET /collections** - returns the list of collections, using the insertion order. &#10003;
 5. **GET /collections/{cid}** - returns the details for the cid collection, namely all the movies in that collection. &#10003;
