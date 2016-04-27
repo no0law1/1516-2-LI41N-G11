@@ -1,6 +1,7 @@
-ALTER SEQUENCE movie_id_seq RESTART WITH 1
+﻿ALTER SEQUENCE movie_id_seq RESTART WITH 1;
 
 -- Movies
+
 insert into movie(title, release_year, genre) 
 	values ('movie1', 1993, 'action'),
 			('movie2', 1993, 'action'),
