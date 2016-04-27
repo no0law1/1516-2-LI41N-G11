@@ -13,6 +13,8 @@ public class MovieView implements IView {
     private int releaseYear;
     private String genre;
 
+    private StringBuffer view;
+
     public MovieView(int id, String title, int releaseYear, String genre) {
         this.id = id;
         this.title = title;
@@ -25,12 +27,14 @@ public class MovieView implements IView {
     }
 
     @Override
-    public void show() {
-        System.out.printf("%s: %s\n", "id", id);
-        System.out.printf("%s: %s\n", "title", title);
-        System.out.printf("%s: %s\n", "release year", releaseYear);
-        System.out.printf("%s: %s\n", "genre", genre);
-        System.out.println();
+    public String getView() {
+        view = new StringBuffer();
+        view.append(String.format("%s: %s\n", "id", id));
+        view.append(String.format("%s: %s\n", "title", title));
+        view.append(String.format("%s: %s\n", "release year", releaseYear));
+        view.append(String.format("%s: %s\n", "genre", genre));
+        view.append("\n");
+        return view.toString();
     }
 
 }

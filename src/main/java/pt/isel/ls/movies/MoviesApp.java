@@ -26,18 +26,16 @@ public class MoviesApp {
         }
     }
 
-    private void run() throws Exception {
-        try {
-            //TODO: Must exit the application only on exit
-            while (true) {
+    private void run() {
+        while (true) {
+            try {
                 System.out.print("Enter Request: ");
                 String route = new Scanner(System.in).nextLine();
                 Request request = Request.create(route.split(" "));
                 router.get(request).execute(DataSourceFactory.createInstance(), request);
-                //TODO: Handle exceptions here
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -48,7 +46,6 @@ public class MoviesApp {
                 app.run(args);
             } else {
                 app.run();
-                //System.out.println("usage: ./prog {method} {path} {parameters}");
             }
         } catch (Exception e) {
             e.printStackTrace();

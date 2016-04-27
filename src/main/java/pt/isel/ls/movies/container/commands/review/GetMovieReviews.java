@@ -25,7 +25,7 @@ public class GetMovieReviews implements ICommand {
         }
 
         for (Review review : reviews) {
-            new ReviewView(review).show();
+            System.out.println(new ReviewView(review).getView());
         }
     }
 }

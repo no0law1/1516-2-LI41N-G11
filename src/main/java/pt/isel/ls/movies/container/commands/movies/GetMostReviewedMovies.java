@@ -25,7 +25,7 @@ public class GetMostReviewedMovies implements ICommand {
         }
 
         for (Movie movie : movies) {
-            new MovieView(movie).show();
+            System.out.println(new MovieView(movie).getView());
         }
     }
 

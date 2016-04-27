@@ -22,6 +22,6 @@ public class GetHighestRatedMovie implements ICommand {
             movie = MovieDAO.getHighestRatingMovie(connection);
         }
 
-        new MovieView(movie).show();
+        System.out.println(new MovieView(movie).getView());
     }
 }

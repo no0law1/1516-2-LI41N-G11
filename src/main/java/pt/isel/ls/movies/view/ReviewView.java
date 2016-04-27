@@ -15,6 +15,8 @@ public class ReviewView implements IView {
     private String review;
     private int rating;
 
+    private StringBuffer view;
+
     public ReviewView(int mid, int id, String reviewerName, String reviewSummary, String review, int rating) {
         this.mid = mid;
         this.id = id;
@@ -34,13 +36,15 @@ public class ReviewView implements IView {
     }
 
     @Override
-    public void show() {
-        System.out.printf("%s: %s\n", "mid", mid);
-        System.out.printf("%s: %s\n", "id", id);
-        System.out.printf("%s: %s\n", "Reviewer Name", reviewerName);
-        System.out.printf("%s: %s\n", "review Summary", reviewSummary);
-        System.out.printf("%s: %s\n", "review", review);
-        System.out.printf("%s: %s\n", "rating", rating);
-        System.out.println();
+    public String getView() {
+        view = new StringBuffer();
+        view.append(String.format("%s: %s\n", "mid", mid));
+        view.append(String.format("%s: %s\n", "id", id));
+        view.append(String.format("%s: %s\n", "Reviewer Name", reviewerName));
+        view.append(String.format("%s: %s\n", "review Summary", reviewSummary));
+        view.append(String.format("%s: %s\n", "review", review));
+        view.append(String.format("%s: %s\n", "rating", rating));
+        view.append("\n");
+        return view.toString();
     }
 }

@@ -23,7 +23,7 @@ public class GetCollections implements ICommand {
         }
 
         for (Collection collection : collections) {
-            new CollectionView(collection).show();
+            System.out.println(new CollectionView(collection).getView());
         }
     }
 }

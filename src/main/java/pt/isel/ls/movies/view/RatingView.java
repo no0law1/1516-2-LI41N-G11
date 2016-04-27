@@ -14,6 +14,8 @@ public class RatingView implements IView {
 
     private int count;
 
+    private StringBuffer view;
+
     public RatingView(int mid, int val) {
         this(mid, val, 1);
     }
@@ -29,10 +31,12 @@ public class RatingView implements IView {
     }
 
     @Override
-    public void show() {
-        System.out.printf("%s: %s\n", "mid", mid);
-        System.out.printf("%s: %s\n", "val", val);
-        System.out.printf("%s: %s\n", "count", count);
-        System.out.println();
+    public String getView() {
+        view = new StringBuffer();
+        view.append(String.format("%s: %s\n", "mid", mid));
+        view.append(String.format("%s: %s\n", "val", val));
+        view.append(String.format("%s: %s\n", "count", count));
+        view.append("\n");
+        return view.toString();
     }
 }

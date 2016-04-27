@@ -22,6 +22,6 @@ public class GetCollection implements ICommand {
             collection = CollectionDAO.getCollection(connection, cid);
         }
 
-        new CollectionView(collection).show();
+        System.out.println(new CollectionView(collection).getView());
     }
 }

@@ -12,6 +12,8 @@ public class CollectionView implements IView {
     private String name;
     private String description;
 
+    private StringBuffer view;
+
     public CollectionView(int id, String name, String description) {
         this.id = id;
         this.name = name;
@@ -24,10 +26,12 @@ public class CollectionView implements IView {
 
 
     @Override
-    public void show() {
-        System.out.printf("%s: %s\n", "id", id);
-        System.out.printf("%s: %s\n", "name", name);
-        System.out.printf("%s: %s\n", "description", description);
-        System.out.println();
+    public String getView() {
+        view = new StringBuffer();
+        view.append(String.format("%s: %s\n", "id", id));
+        view.append(String.format("%s: %s\n", "name", name));
+        view.append(String.format("%s: %s\n", "description", description));
+        view.append("\n");
+        return view.toString();
     }
 }

@@ -24,6 +24,6 @@ public class GetReview implements ICommand {
             review = ReviewDAO.getReview(connection, new Review.ReviewUID(mid, id));
         }
 
-        new ReviewView(review).show();
+        System.out.println(new ReviewView(review).getView());
     }
 }

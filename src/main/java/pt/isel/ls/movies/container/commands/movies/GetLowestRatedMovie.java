@@ -22,7 +22,7 @@ public class GetLowestRatedMovie implements ICommand {
             movie = MovieDAO.getLowestRatingMovie(connection);
         }
 
-        new MovieView(movie).show();
+        System.out.println(new MovieView(movie).getView());
     }
 
 }

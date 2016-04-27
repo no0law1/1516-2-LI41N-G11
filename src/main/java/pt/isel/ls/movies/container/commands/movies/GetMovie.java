@@ -23,6 +23,7 @@ public class GetMovie implements ICommand {
             movie = MovieDAO.getMovie(connection, mid);
         }
 
-        new MovieView(movie).show();
+        System.out.println(request.getHeader("accept"));
+        System.out.println(new MovieView(movie).getView());
     }
 }

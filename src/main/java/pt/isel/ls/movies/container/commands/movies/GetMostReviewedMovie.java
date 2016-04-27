@@ -22,7 +22,7 @@ public class GetMostReviewedMovie implements ICommand {
             movie = MovieDAO.getMostReviewedMovie(connection);
         }
 
-        new MovieView(movie).show();
+        System.out.println(new MovieView(movie).getView());
     }
 
 }

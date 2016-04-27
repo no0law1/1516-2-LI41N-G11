@@ -123,11 +123,11 @@ public class MovieDAOTest {
 
     @Test
     public void testGetLowestRatingMovieWithNoRating() throws Exception {
-        Movie expected = new Movie(1, "test1", 2016, "genre1");
+        Movie expected = new Movie(2, "test2", 2016, "genre1");
         try(Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
+            MovieDAO.submitMovie(connection, new Movie(1, "test1", 2016, "genre1"));
             MovieDAO.submitMovie(connection, expected);
-            MovieDAO.submitMovie(connection, new Movie(2, "test2", 2016, "genre1"));
             RatingDAO.submitRating(connection, new Rating(1, 4, 1));
 
             Movie actual = MovieDAO.getLowestRatingMovie(connection);
