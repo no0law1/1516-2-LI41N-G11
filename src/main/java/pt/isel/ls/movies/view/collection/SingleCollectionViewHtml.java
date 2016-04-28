@@ -8,8 +8,10 @@ import pt.isel.ls.movies.view.common.IView;
  */
 public class SingleCollectionViewHtml implements IView {
 
-    public SingleCollectionViewHtml(Collection collection) {
+    private Collection collection;
 
+    public SingleCollectionViewHtml(Collection collection) {
+        this.collection = collection;
     }
 
     @Override

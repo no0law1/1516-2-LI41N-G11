@@ -10,8 +10,10 @@ import java.util.List;
  */
 public class CollectionsView implements IView {
 
-    public CollectionsView(List<Collection> collections) {
+    private List<Collection> collections;
 
+    public CollectionsView(List<Collection> collections) {
+        this.collections = collections;
     }
 
     @Override
