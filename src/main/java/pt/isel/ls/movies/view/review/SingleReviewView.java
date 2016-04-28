@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.view;
+package pt.isel.ls.movies.view.review;
 
 import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.movies.view.common.IView;
@@ -6,7 +6,7 @@ import pt.isel.ls.movies.view.common.IView;
 /**
  * Class whose instance represents a review that knows how to draw itself.
  */
-public class ReviewView implements IView {
+public class SingleReviewView implements IView {
 
     private int mid;
     private int id;
@@ -17,7 +17,7 @@ public class ReviewView implements IView {
 
     private StringBuffer view;
 
-    public ReviewView(int mid, int id, String reviewerName, String reviewSummary, String review, int rating) {
+    public SingleReviewView(int mid, int id, String reviewerName, String reviewSummary, String review, int rating) {
         this.mid = mid;
         this.id = id;
         this.reviewerName = reviewerName;
@@ -26,7 +26,7 @@ public class ReviewView implements IView {
         this.rating = rating;
     }
 
-    public ReviewView(Review review) {
+    public SingleReviewView(Review review) {
         this(review.getMid(),
                 review.getId(),
                 review.getReviewerName(),

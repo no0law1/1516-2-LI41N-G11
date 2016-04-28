@@ -1,6 +1,6 @@
 package pt.isel.ls.movies.container.commands.collections;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Collection;
@@ -11,7 +11,7 @@ import java.sql.Connection;
 /**
  * Posts a relation of movie and collection to the database
  */
-public class PostMovieToCollection implements ICommand {
+public class PostMovieToCollection extends Command {
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         Collection.MovieCollectionUID movieCollectionUID;

@@ -1,6 +1,6 @@
 package pt.isel.ls.movies.container.commands.movies;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Movie;
@@ -11,7 +11,7 @@ import java.sql.Connection;
 /**
  * Submits a Movie to the database
  */
-public class PostMovie implements ICommand {
+public class PostMovie extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {

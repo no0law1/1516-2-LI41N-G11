@@ -1,6 +1,6 @@
 package pt.isel.ls.movies.container.commands.rating;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.RatingDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Rating;
@@ -11,7 +11,7 @@ import java.sql.Connection;
 /**
  * Submits a rating of a Movie to the database
  */
-public class PostRating implements ICommand {
+public class PostRating extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {

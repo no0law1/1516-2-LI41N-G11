@@ -56,10 +56,14 @@ public class Request implements IRequest {
     }
 
     public String getHeader(String key) throws UnsupportedEncodingException {
+        return getHeaderOrDefault(key, null);
+    }
+
+    public String getHeaderOrDefault(String key, String defaultValue) throws UnsupportedEncodingException {
         if (headersMap == null) {
             headersMap = resolve(headers, "\\|", ":");
         }
-        return headersMap.get(key);
+        return headersMap.getOrDefault(key, defaultValue);
     }
 
     private static Map<String, String> resolve(String toBeResolved, String sequenceSeparator, String keyValueSeparator)

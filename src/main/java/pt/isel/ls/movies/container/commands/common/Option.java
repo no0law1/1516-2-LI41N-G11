@@ -1,6 +1,6 @@
 package pt.isel.ls.movies.container.commands.common;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.utils.FileUtils;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Lists all the commands available and their description
  */
-public class Option implements ICommand {
+public class Option extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {

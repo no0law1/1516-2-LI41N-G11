@@ -1,10 +1,10 @@
 package pt.isel.ls.movies.container.commands.review;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.ReviewDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Review;
-import pt.isel.ls.movies.view.ReviewView;
+import pt.isel.ls.movies.view.review.SingleReviewView;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.sql.Connection;
 /**
  * Gets a single review of a Movie from the database
  */
-public class GetReview implements ICommand {
+public class GetReview extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
@@ -24,6 +24,6 @@ public class GetReview implements ICommand {
             review = ReviewDAO.getReview(connection, new Review.ReviewUID(mid, id));
         }
 
-        System.out.println(new ReviewView(review).getView());
+        System.out.println(new SingleReviewView(review).getView());
     }
 }

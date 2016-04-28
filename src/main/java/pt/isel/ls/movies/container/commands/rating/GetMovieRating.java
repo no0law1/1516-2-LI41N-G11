@@ -1,10 +1,11 @@
 package pt.isel.ls.movies.container.commands.rating;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.RatingDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Rating;
-import pt.isel.ls.movies.view.RatingView;
+import pt.isel.ls.movies.view.rating.RatingsView;
+import pt.isel.ls.movies.view.rating.RatingsViewHtml;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Gets the average rating and the count to every rating of a Movie
  */
-public class GetMovieRating implements ICommand{
+public class GetMovieRating extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
@@ -24,14 +25,11 @@ public class GetMovieRating implements ICommand{
             ratings = RatingDAO.getMovieRatings(connection, mid);
         }
 
-        float average = 0;
-        int count = 0;
-        for (Rating rating : ratings) {
-            average += rating.getVal() * rating.getCount();
-            count += rating.getCount();
-            System.out.println(new RatingView(rating).getView());
-        }
-        //TODO: Improve
-        System.out.printf("Average: %s\n", average / count);
+        views.put("text/html", new RatingsViewHtml(ratings));
+        views.put("text/plain", new RatingsView(ratings));
+
+        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
+        //System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        System.out.println(getView(request.getHeaderOrDefault("accept", "text/plain")));
     }
 }

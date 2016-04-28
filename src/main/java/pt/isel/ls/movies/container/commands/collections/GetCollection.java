@@ -1,10 +1,11 @@
 package pt.isel.ls.movies.container.commands.collections;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Collection;
-import pt.isel.ls.movies.view.CollectionView;
+import pt.isel.ls.movies.view.collection.SingleCollectionView;
+import pt.isel.ls.movies.view.collection.SingleCollectionViewHtml;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.sql.Connection;
 /**
  * Get a single collection instance from the database
  */
-public class GetCollection implements ICommand {
+public class GetCollection extends Command {
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         Collection collection;
@@ -22,6 +23,11 @@ public class GetCollection implements ICommand {
             collection = CollectionDAO.getCollection(connection, cid);
         }
 
-        System.out.println(new CollectionView(collection).getView());
+        views.put("text/html", new SingleCollectionViewHtml(collection));
+        views.put("text/plain", new SingleCollectionView(collection));
+
+        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
+        //System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        System.out.println(getView(request.getHeaderOrDefault("accept", "text/plain")));
     }
 }

@@ -1,6 +1,6 @@
 package pt.isel.ls.movies.container.commands.review;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.ReviewDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Review;
@@ -11,7 +11,7 @@ import java.sql.Connection;
 /**
  * Submits a review of a Movie in the database
  */
-public class PostReview implements ICommand {
+public class PostReview extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {

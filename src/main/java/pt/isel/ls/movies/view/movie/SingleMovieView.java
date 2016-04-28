@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.view;
+package pt.isel.ls.movies.view.movie;
 
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.common.IView;
@@ -6,7 +6,7 @@ import pt.isel.ls.movies.view.common.IView;
 /**
  * Class whose instance represents a Movie that knows how to draw itself.
  */
-public class MovieView implements IView {
+public class SingleMovieView implements IView {
 
     private int id;
     private String title;
@@ -15,16 +15,17 @@ public class MovieView implements IView {
 
     private StringBuffer view;
 
-    public MovieView(int id, String title, int releaseYear, String genre) {
+    public SingleMovieView(int id, String title, int releaseYear, String genre) {
         this.id = id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.genre = genre;
     }
 
-    public MovieView(Movie movie) {
+    public SingleMovieView(Movie movie) {
         this(movie.getId(), movie.getTitle(), movie.getReleaseYear(), movie.getGenre());
     }
+
 
     @Override
     public String getView() {
@@ -36,5 +37,4 @@ public class MovieView implements IView {
         view.append("\n");
         return view.toString();
     }
-
 }

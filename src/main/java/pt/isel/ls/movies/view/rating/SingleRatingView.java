@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.view;
+package pt.isel.ls.movies.view.rating;
 
 import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.view.common.IView;
@@ -6,7 +6,7 @@ import pt.isel.ls.movies.view.common.IView;
 /**
  * Class whose instance represents a rating that knows how to draw itself.
  */
-public class RatingView implements IView {
+public class SingleRatingView implements IView {
 
     private int mid;
 
@@ -16,19 +16,20 @@ public class RatingView implements IView {
 
     private StringBuffer view;
 
-    public RatingView(int mid, int val) {
+    public SingleRatingView(int mid, int val) {
         this(mid, val, 1);
     }
 
-    public RatingView(int mid, int val, int count) {
+    public SingleRatingView(int mid, int val, int count) {
         this.mid = mid;
         this.val = val;
         this.count = count;
     }
 
-    public RatingView(Rating rating) {
+    public SingleRatingView(Rating rating) {
         this(rating.getMid(), rating.getVal(), rating.getCount());
     }
+
 
     @Override
     public String getView() {

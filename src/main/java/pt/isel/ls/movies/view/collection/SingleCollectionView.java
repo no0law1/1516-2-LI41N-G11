@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.view;
+package pt.isel.ls.movies.view.collection;
 
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.view.common.IView;
@@ -6,7 +6,7 @@ import pt.isel.ls.movies.view.common.IView;
 /**
  * Class whose instance represents a {@link Collection} that knows how to draw itself.
  */
-public class CollectionView implements IView {
+public class SingleCollectionView implements IView {
 
     private int id;
     private String name;
@@ -14,16 +14,15 @@ public class CollectionView implements IView {
 
     private StringBuffer view;
 
-    public CollectionView(int id, String name, String description) {
+    public SingleCollectionView(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
-    public CollectionView(Collection collection) {
+    public SingleCollectionView(Collection collection) {
         this(collection.getId(), collection.getName(), collection.getDescription());
     }
-
 
     @Override
     public String getView() {

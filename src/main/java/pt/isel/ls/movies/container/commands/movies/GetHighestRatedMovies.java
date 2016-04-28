@@ -1,10 +1,11 @@
 package pt.isel.ls.movies.container.commands.movies;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Movie;
-import pt.isel.ls.movies.view.MovieView;
+import pt.isel.ls.movies.view.movie.MoviesView;
+import pt.isel.ls.movies.view.movie.MoviesViewHtml;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Command that gets the n movies with the highest average rating.
  */
-public class GetHighestRatedMovies implements ICommand {
+public class GetHighestRatedMovies extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
@@ -24,8 +25,11 @@ public class GetHighestRatedMovies implements ICommand {
             movies = MovieDAO.getHighestRatingMovies(connection, n);
         }
 
-        for (Movie movie : movies) {
-            System.out.println(new MovieView(movie).getView());
-        }
+        views.put("text/html", new MoviesViewHtml(movies));
+        views.put("text/plain", new MoviesView(movies));
+
+        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
+        //System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        System.out.println(getView(request.getHeaderOrDefault("accept", "text/plain")));
     }
 }

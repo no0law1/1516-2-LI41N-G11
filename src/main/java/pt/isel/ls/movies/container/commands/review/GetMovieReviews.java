@@ -1,10 +1,11 @@
 package pt.isel.ls.movies.container.commands.review;
 
-import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.ReviewDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Review;
-import pt.isel.ls.movies.view.ReviewView;
+import pt.isel.ls.movies.view.review.ReviewsView;
+import pt.isel.ls.movies.view.review.ReviewsViewHtml;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Gets all reviews of a Movie from the database
  */
-public class GetMovieReviews implements ICommand {
+public class GetMovieReviews extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
@@ -24,8 +25,11 @@ public class GetMovieReviews implements ICommand {
             reviews = ReviewDAO.getReviews(connection, mid);
         }
 
-        for (Review review : reviews) {
-            System.out.println(new ReviewView(review).getView());
-        }
+        views.put("text/html", new ReviewsViewHtml(reviews));
+        views.put("text/plain", new ReviewsView(reviews));
+
+        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
+        //System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        System.out.println(getView(request.getHeaderOrDefault("accept", "text/plain")));
     }
 }
