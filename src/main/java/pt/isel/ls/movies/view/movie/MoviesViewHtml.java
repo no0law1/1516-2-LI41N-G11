@@ -7,7 +7,7 @@ import pt.isel.ls.movies.view.utils.HtmlUtils;
 import java.util.List;
 
 /**
- * TODO: Commentary.
+ * Html view of a set of {@link Movie}
  */
 public class MoviesViewHtml implements IView {
 

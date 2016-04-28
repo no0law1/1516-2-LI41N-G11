@@ -5,6 +5,7 @@ import pt.isel.ls.movies.data.entity.ReviewDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.movies.view.review.SingleReviewView;
+import pt.isel.ls.movies.view.review.SingleReviewViewHtml;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -24,6 +25,9 @@ public class GetReview extends Command {
             review = ReviewDAO.getReview(connection, new Review.ReviewUID(mid, id));
         }
 
-        System.out.println(new SingleReviewView(review).getView());
+        views.put("text/html", new SingleReviewViewHtml(review));
+        views.put("text/plain", new SingleReviewView(review));
+
+        System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 }

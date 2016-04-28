@@ -6,16 +6,22 @@ import pt.isel.ls.movies.view.common.IView;
 import java.util.List;
 
 /**
- * TODO: Commentary.
+ * Plain text view of a set of {@link Review}
  */
 public class ReviewsView implements IView {
 
-    public ReviewsView(List<Review> reviews) {
+    private List<Review> reviews;
 
+    public ReviewsView(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @Override
     public String getView() {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        reviews.forEach(review -> builder.append(new SingleReviewView(review).getView()));
+
+        return builder.toString();
     }
 }

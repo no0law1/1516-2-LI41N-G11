@@ -4,7 +4,7 @@ import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.view.common.IView;
 
 /**
- * TODO: Commentary.
+ * Html view of a {@link Collection}
  */
 public class SingleCollectionViewHtml implements IView {
 

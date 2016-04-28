@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO: Commentary.
+ * Abstract class that represents a command
  */
 public abstract class Command implements ICommand {
 
@@ -16,7 +16,7 @@ public abstract class Command implements ICommand {
         views = new HashMap<>();
     }
 
-    public IView getView(String option) {
-        return views.get(option);
+    public String getView(String option) {
+        return views.get(option).getView();
     }
 }

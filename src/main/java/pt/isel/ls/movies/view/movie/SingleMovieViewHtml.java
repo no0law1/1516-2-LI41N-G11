@@ -4,7 +4,7 @@ import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.common.IView;
 
 /**
- * TODO: Commentary.
+ * Html view of a {@link Movie}
  */
 public class SingleMovieViewHtml implements IView {
 

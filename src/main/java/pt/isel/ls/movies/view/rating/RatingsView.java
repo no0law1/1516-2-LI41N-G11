@@ -6,7 +6,7 @@ import pt.isel.ls.movies.view.common.IView;
 import java.util.List;
 
 /**
- * TODO: Commentary.
+ * Plain text view of a set of {@link Rating}
  */
 public class RatingsView implements IView {
 

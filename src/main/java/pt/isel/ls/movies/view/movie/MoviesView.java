@@ -6,16 +6,22 @@ import pt.isel.ls.movies.view.common.IView;
 import java.util.List;
 
 /**
- * TODO: Commentary.
+ * Plain text view of a set of {@link Movie}
  */
 public class MoviesView implements IView {
 
-    public MoviesView(List<Movie> movies) {
+    private List<Movie> movies;
 
+    public MoviesView(List<Movie> movies) {
+        this.movies = movies;
     }
 
     @Override
     public String getView() {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        movies.forEach(movie -> builder.append(new SingleMovieView(movie).getView()));
+
+        return builder.toString();
     }
 }

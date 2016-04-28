@@ -6,7 +6,7 @@ import pt.isel.ls.movies.view.common.IView;
 import java.util.List;
 
 /**
- * TODO: Commentary.
+ * Plain text view of a set of {@link Collection}
  */
 public class CollectionsView implements IView {
 
@@ -18,6 +18,10 @@ public class CollectionsView implements IView {
 
     @Override
     public String getView() {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        collections.forEach(collection -> builder.append(new SingleCollectionView(collection).getView()));
+
+        return builder.toString();
     }
 }
