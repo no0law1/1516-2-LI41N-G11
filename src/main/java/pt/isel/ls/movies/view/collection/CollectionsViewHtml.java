@@ -22,7 +22,9 @@ public class CollectionsViewHtml implements IView {
         return new StringBuilder()
                 .append("<html>\n")
                 .append(HtmlUtils.makeHeader("Collections"))
+                .append("<body>\n")
                 .append(body())
+                .append("</body>\n")
                 .append("</html>\n")
                 .toString();
     }

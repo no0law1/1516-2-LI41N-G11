@@ -22,7 +22,9 @@ public class MoviesViewHtml implements IView {
         return new StringBuilder()
                 .append("<html>\n")
                 .append(HtmlUtils.makeHeader("Movies"))
+                .append("<body>\n")
                 .append(body())
+                .append("</body>\n")
                 .append("</html>\n")
                 .toString();
     }
