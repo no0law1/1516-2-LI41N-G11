@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.movies;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.movie.MoviesView;
 import pt.isel.ls.movies.view.movie.MoviesViewHtml;
@@ -18,6 +19,7 @@ public class GetLowestRatedMovies extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        Response response = Response.create(request.getHeader("file-name"));
         List<Movie> movies;
         int n = Integer.parseInt(request.getParameter("n"));
 
@@ -29,7 +31,7 @@ public class GetLowestRatedMovies extends Command {
         views.put("text/plain", new MoviesView(movies));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 
 }

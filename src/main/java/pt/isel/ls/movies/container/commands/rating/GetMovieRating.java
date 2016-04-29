@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.rating;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.RatingDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.view.rating.RatingsView;
 import pt.isel.ls.movies.view.rating.RatingsViewHtml;
@@ -18,6 +19,7 @@ public class GetMovieRating extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        Response response = Response.create(request.getHeader("file-name"));
         List<Rating> ratings;
         int mid = Integer.parseInt(request.getParameter("mid"));
 
@@ -29,6 +31,6 @@ public class GetMovieRating extends Command {
         views.put("text/plain", new RatingsView(ratings));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 }

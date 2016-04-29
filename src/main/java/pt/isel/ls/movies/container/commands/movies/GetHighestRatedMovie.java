@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.movies;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.movie.SingleMovieView;
 import pt.isel.ls.movies.view.movie.SingleMovieViewHtml;
@@ -17,6 +18,7 @@ public class GetHighestRatedMovie extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        Response response = Response.create(request.getHeader("file-name"));
         Movie movie;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -27,6 +29,6 @@ public class GetHighestRatedMovie extends Command {
         views.put("text/plain", new SingleMovieView(movie));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 }

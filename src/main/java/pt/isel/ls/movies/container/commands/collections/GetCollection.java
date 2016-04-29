@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.collections;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.view.collection.SingleCollectionView;
 import pt.isel.ls.movies.view.collection.SingleCollectionViewHtml;
@@ -16,6 +17,8 @@ import java.sql.Connection;
 public class GetCollection extends Command {
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        Response response = Response.create(request.getHeader("file-name"));
+
         Collection collection;
         int cid = Integer.parseInt(request.getParameter("cid"));
 
@@ -27,6 +30,6 @@ public class GetCollection extends Command {
         views.put("text/plain", new SingleCollectionView(collection));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 }

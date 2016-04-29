@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.collections;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Collection;
 
 import javax.sql.DataSource;
@@ -15,6 +16,7 @@ public class CreateCollection extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        Response response = Response.create(request.getHeader("file-name"));
         int id;
 
         String name = request.getParameter("name");

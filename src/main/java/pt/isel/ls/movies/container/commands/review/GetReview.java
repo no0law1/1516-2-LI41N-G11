@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.review;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.ReviewDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.movies.view.review.SingleReviewView;
 import pt.isel.ls.movies.view.review.SingleReviewViewHtml;
@@ -17,6 +18,8 @@ public class GetReview extends Command {
 
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
+        Response response = Response.create(request.getHeader("file-name"));
+
         Review review;
         int mid = Integer.parseInt(request.getParameter("mid"));
         int id = Integer.parseInt(request.getParameter("rid"));
@@ -28,6 +31,6 @@ public class GetReview extends Command {
         views.put("text/html", new SingleReviewViewHtml(review));
         views.put("text/plain", new SingleReviewView(review));
 
-        System.out.println(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 }

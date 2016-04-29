@@ -5,8 +5,8 @@
 #### Headers
 
 1. Add headers to request &#10003;
-2. Criar uma view para html de todas as entidades.
-3. Implementar as views de forma a poder serem vistas no standard output ou num ficheiro, ou qualquer outra coisa
+2. Criar uma view para html de todas as entidades. &#10003;
+3. Implementar as views de forma a poder serem vistas no standard output ou num ficheiro, ou qualquer outra coisa &#10003;
 <br>**DEFAULT:** accept:text/html e file-name:standard+output</br>
 
 #### Collections
