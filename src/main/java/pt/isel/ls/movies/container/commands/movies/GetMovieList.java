@@ -17,6 +17,21 @@ import java.util.List;
  */
 public class GetMovieList extends Command {
 
+    private Movie.Sort wrapSortParameter(String sortBy){
+        if(sortBy == null) return null;
+        switch(sortBy){
+            case "addedData": return Movie.Sort.ADDED_DATE;
+            case "addedDateDesc": return Movie.Sort.ADDED_DATE_DESC;
+            case "year": return Movie.Sort.YEAR;
+            case "yearDesc": return Movie.Sort.YEAR_DESC;
+            case "title": return Movie.Sort.TITLE;
+            case "titleDesc": return Movie.Sort.TITLE_DESC;
+            case "rating": return Movie.Sort.RATING;
+            case "ratingDesc": return Movie.Sort.RATING_DESC;
+            default: throw new IllegalArgumentException("sortBy value not recognized");
+        }
+    }
+
     @Override
     public void execute(DataSource dataSource, Request request) throws Exception {
         Response response = Response.create(request.getHeader("file-name"));
@@ -26,7 +41,8 @@ public class GetMovieList extends Command {
             movies = MovieDAO.getMovies(
                     connection,
                     Integer.valueOf(request.getParameterOrDefault("top", "-1")),
-                    Integer.valueOf(request.getParameterOrDefault("skip", "0"))
+                    Integer.valueOf(request.getParameterOrDefault("skip", "0")),
+                    wrapSortParameter(request.getParameterOrDefault("sortBy", null))
             );
         }
 

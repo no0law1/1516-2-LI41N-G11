@@ -49,4 +49,15 @@ public class Movie {
         }
         return false;
     }
+
+    public enum Sort{
+        ADDED_DATE,
+        ADDED_DATE_DESC,
+        YEAR,
+        YEAR_DESC,
+        TITLE,
+        TITLE_DESC,
+        RATING,
+        RATING_DESC
+    }
 }

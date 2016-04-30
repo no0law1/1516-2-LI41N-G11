@@ -47,7 +47,7 @@ public class MovieDAO {
      * @return an array of all movies
      */
     public static List<Movie> getMovies(Connection connection) throws Exception {
-        return getMovies(connection, -1, 0);
+        return getMovies(connection, -1, 0, null);
     }
 
     /**
@@ -60,8 +60,11 @@ public class MovieDAO {
      * @throws Exception
      */
     public static List<Movie> getMovies(Connection connection, int top, int skip) throws Exception {
-        PreparedStatement preparedStatement =
-                connection.prepareStatement("select * from movie ORDER BY id ASC");
+        return getMovies(connection, top, skip, null);
+    }
+
+    public static List<Movie> getMovies(Connection connection, int top, int skip, Movie.Sort sort) throws Exception {
+        PreparedStatement preparedStatement = connection.prepareStatement(getQuery(sort));
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<Movie> movies = new LinkedList<>();
@@ -79,6 +82,25 @@ public class MovieDAO {
             return movies;
         }
         throw new NoDataException("There is no movies");
+    }
+
+    private static String getQuery(Movie.Sort sort){
+        StringBuilder query = new StringBuilder("select movie.* from movie");
+        if(sort == null){
+            sort = Movie.Sort.ADDED_DATE;
+        }
+        switch(sort){
+            case ADDED_DATE: return query.append(" ORDER BY id ASC").toString();
+            case ADDED_DATE_DESC: return query.append(" ORDER BY id DESC").toString();
+            case YEAR: return query.append(" ORDER BY release_year ASC").toString();
+            case YEAR_DESC: return query.append(" ORDER BY release_year DESC").toString();
+            case TITLE: return query.append(" ORDER BY title ASC").toString();
+            case TITLE_DESC: return query.append(" ORDER BY title DESC").toString();
+        }
+
+        query.append(" LEFT JOIN rating ON id=mid GROUP BY id ORDER BY COALESCE(SUM(val*count)::float/SUM(count), 0) ");
+        query.append(sort == Movie.Sort.RATING ? "ASC" : "DESC");
+        return query.toString();
     }
 
     /**
