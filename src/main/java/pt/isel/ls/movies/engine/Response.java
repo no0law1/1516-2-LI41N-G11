@@ -18,6 +18,10 @@ public class Response {
         writer.flush();
     }
 
+    public void close() throws IOException {
+        writer.close();
+    }
+
     public static Response create(String file) throws IOException {
         return new Response(file == null ? new PrintWriter(System.out) : new FileWriter(new File(file)));
     }

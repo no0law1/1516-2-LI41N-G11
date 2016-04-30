@@ -16,6 +16,7 @@ public class ResponseTest {
         Response response = Response.create(file);
 
         response.write("This a txt file");
+        response.close();
 
         assertTrue(file.exists());
         assertTrue(file.delete());
