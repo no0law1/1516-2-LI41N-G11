@@ -42,7 +42,7 @@ public class MoviesApp {
     public static void main(String[] args){
         try {
             MoviesApp app = new MoviesApp();
-            if (args.length >= 2) {
+            if (args.length >= 1) {
                 app.run(args);
             } else {
                 app.run();

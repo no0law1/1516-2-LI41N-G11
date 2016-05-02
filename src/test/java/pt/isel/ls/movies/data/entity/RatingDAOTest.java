@@ -9,6 +9,7 @@ import pt.isel.ls.movies.model.Rating;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,6 +58,17 @@ public class RatingDAOTest {
 
             assertEquals(expected.getMid(), id);
             assertEquals(expected, RatingDAO.submitRating(connection, expected));
+        }
+    }
+
+    @Test(expected = SQLException.class)
+    public void testSubmitBadRating() throws Exception {
+        Rating expected = new Rating(1, 7, 2);
+
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
+            RatingDAO.submitRating(connection, expected);
         }
     }
 

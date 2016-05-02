@@ -52,6 +52,7 @@ public class CollectionDAO {
     public static Collection getCollection(Connection connection, int id) throws Exception {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select * from collection where id = ?");
+        //TODO: get movies referenced by the collection
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {

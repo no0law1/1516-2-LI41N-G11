@@ -1,4 +1,5 @@
 ﻿ALTER SEQUENCE movie_id_seq RESTART WITH 1;
+ALTER SEQUENCE collection_id_seq RESTART WITH 1;
 
 -- Movies
 
