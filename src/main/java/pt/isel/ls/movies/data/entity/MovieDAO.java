@@ -4,10 +4,7 @@ import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Movie;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -218,6 +215,22 @@ public class MovieDAO {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<Movie> movies = new LinkedList<>();
+        while (resultSet.next()) {
+            int id = resultSet.getInt(1);
+            String title = resultSet.getString(2);
+            int releaseYear = resultSet.getInt(3);
+            String genre = resultSet.getString(4);
+            movies.add(new Movie(id, title, releaseYear, genre));
+        }
+        return movies;
+    }
+
+    public static List<Movie> getMoviesOfCollection(Connection connection, int cid) throws SQLException {
+        List<Movie> movies = new LinkedList<>();
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select movie.* from movie_collection join movie on mid=movie.id where cid=?");
+        preparedStatement.setInt(1, cid);
+        ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             int id = resultSet.getInt(1);
             String title = resultSet.getString(2);

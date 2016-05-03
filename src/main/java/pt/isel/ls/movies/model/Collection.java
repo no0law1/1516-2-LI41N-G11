@@ -1,5 +1,6 @@
 package pt.isel.ls.movies.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -39,6 +40,7 @@ public class Collection {
         this.id = id;
         this.name = name;
         this.description = description;
+        movies = new LinkedList<>();
     }
 
     public Collection(String name, String description) {
@@ -63,6 +65,10 @@ public class Collection {
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
+    }
+
+    public void addMovie(Movie movie) {
+        movies.add(movie);
     }
 
     @Override

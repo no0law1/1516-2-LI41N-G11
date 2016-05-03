@@ -28,10 +28,22 @@ public class SingleCollectionViewHtml implements IView {
     }
 
     private String body() {
-        return new StringBuilder()
+        StringBuilder builder = new StringBuilder();
+        builder
                 .append("\t<h1>Collection " + collection.getId() + "</h1>\n")
                 .append("\t<h2>" + collection.getName() + "</h2>\n")
                 .append("\t<p>" + collection.getDescription() + "</p>\n")
-                .toString();
+                .append("<table style=\"width:50%\" border=\"5\">\n")
+                .append("<tr>\n<th>ID</th>\n<th>Title</th>\n<th>Release Year</th>\n<th>Genre</th>\n</tr>\n");
+        collection.getMovies().forEach(
+                movie -> builder.append("<tr>\n")
+                        .append("\t<td>" + movie.getId() + "</td>\n")
+                        .append("\t<td>" + movie.getTitle() + "</td>\n")
+                        .append("\t<td>" + movie.getReleaseYear() + "</td>\n")
+                        .append("\t<td>" + movie.getGenre() + "</td>\n")
+                        .append("</tr>\n"));
+        builder.append("</table>\n");
+
+        return builder.toString();
     }
 }

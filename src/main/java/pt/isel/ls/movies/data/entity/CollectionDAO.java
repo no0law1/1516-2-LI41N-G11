@@ -51,14 +51,15 @@ public class CollectionDAO {
      */
     public static Collection getCollection(Connection connection, int id) throws Exception {
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select * from collection where id = ?");
-        //TODO: get movies referenced by the collection
+                connection.prepareStatement("select * from collection where id=?");
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             String name = resultSet.getString(2);
             String description = resultSet.getString(3);
-            return new Collection(id, name, description);
+            Collection collection = new Collection(id, name, description);
+            collection.setMovies(MovieDAO.getMoviesOfCollection(connection, collection.getId()));
+            return collection;
         }
         throw new NoDataException("There is no such collection with the id: " + id);
     }

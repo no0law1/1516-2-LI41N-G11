@@ -2,34 +2,28 @@ package pt.isel.ls.movies.view.collection;
 
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.view.common.IView;
+import pt.isel.ls.movies.view.movie.MoviesView;
 
 /**
  * Class whose instance represents a {@link Collection} that knows how to draw itself.
  */
 public class SingleCollectionView implements IView {
 
-    private int id;
-    private String name;
-    private String description;
+    private Collection collection;
 
     private StringBuffer view;
 
-    public SingleCollectionView(int id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
     public SingleCollectionView(Collection collection) {
-        this(collection.getId(), collection.getName(), collection.getDescription());
+        this.collection = collection;
     }
 
     @Override
     public String getView() {
         view = new StringBuffer();
-        view.append(String.format("%s: %s\n", "id", id));
-        view.append(String.format("%s: %s\n", "name", name));
-        view.append(String.format("%s: %s\n", "description", description));
+        view.append(String.format("%s: %s\n", "id", collection.getId()));
+        view.append(String.format("%s: %s\n", "name", collection.getName()));
+        view.append(String.format("%s: %s\n", "description", collection.getDescription()));
+        view.append(new MoviesView(collection.getMovies()).getView());
         view.append("\n");
         return view.toString();
     }
