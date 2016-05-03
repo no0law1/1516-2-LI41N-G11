@@ -18,6 +18,9 @@ public class CollectionsView implements IView {
 
     @Override
     public String getView() {
+        if (collections.isEmpty()) {
+            return "There are no Collections\n";
+        }
         StringBuilder builder = new StringBuilder();
 
         collections.forEach(collection -> builder.append(new SingleCollectionView(collection).getView()));

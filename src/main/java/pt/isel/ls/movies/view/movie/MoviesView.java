@@ -18,6 +18,9 @@ public class MoviesView implements IView {
 
     @Override
     public String getView() {
+        if (movies.isEmpty()) {
+            return "There are no Movies\n";
+        }
         StringBuilder builder = new StringBuilder();
 
         movies.forEach(movie -> builder.append(new SingleMovieView(movie).getView()));

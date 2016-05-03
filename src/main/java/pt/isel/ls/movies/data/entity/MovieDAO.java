@@ -78,10 +78,7 @@ public class MovieDAO {
             Movie movie = new Movie(id, title, releaseYear, genre);
             movies.add(movie);
         }
-        if(!movies.isEmpty()) {
-            return movies;
-        }
-        throw new NoDataException("There is no movies");
+        return movies;
     }
 
     private static String getQuery(Movie.Sort sort){
@@ -165,9 +162,6 @@ public class MovieDAO {
             String genre = resultSet.getString(4);
             movies.add(new Movie(id, title, releaseYear, genre));
         }
-        if(movies.isEmpty()) {
-            throw new NoDataException("There is no movies");
-        }
         return movies;
     }
 
@@ -194,9 +188,6 @@ public class MovieDAO {
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
             movies.add(new Movie(id, title, releaseYear, genre));
-        }
-        if(movies.isEmpty()) {
-            throw new NoDataException("There is no movies");
         }
         return movies;
     }
@@ -233,9 +224,6 @@ public class MovieDAO {
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
             movies.add(new Movie(id, title, releaseYear, genre));
-        }
-        if (movies.isEmpty()) {
-            throw new NoDataException("There is no movies");
         }
         return movies;
     }

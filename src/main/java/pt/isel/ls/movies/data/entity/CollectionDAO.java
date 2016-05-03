@@ -87,10 +87,7 @@ public class CollectionDAO {
             String description = resultSet.getString(3);
             collections.add(new Collection(id, name, description));
         }
-        if (!collections.isEmpty()) {
-            return collections;
-        }
-        throw new NoDataException("There are no collection");
+        return collections;
     }
 
     public static Collection.MovieCollectionUID postMovieToCollection(Connection connection, int cid, int mid) throws Exception {

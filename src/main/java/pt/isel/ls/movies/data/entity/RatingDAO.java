@@ -1,7 +1,6 @@
 package pt.isel.ls.movies.data.entity;
 
 import pt.isel.ls.movies.data.exceptions.InsertException;
-import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Rating;
 
 import java.sql.Connection;
@@ -61,9 +60,6 @@ public class RatingDAO {
                 Rating rating = new Rating(mid, val, count);
                 ratings.add(rating);
             }
-        }
-        if(ratings.isEmpty()){
-            throw new NoDataException("There is no Ratings for the movie with the id: " + mid);
         }
         return ratings;
     }

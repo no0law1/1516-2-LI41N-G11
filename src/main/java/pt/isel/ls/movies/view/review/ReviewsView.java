@@ -18,6 +18,9 @@ public class ReviewsView implements IView {
 
     @Override
     public String getView() {
+        if (reviews.isEmpty()) {
+            return "There are no Reviews\n";
+        }
         StringBuilder builder = new StringBuilder();
 
         reviews.forEach(review -> builder.append(new SingleReviewView(review).getView()));

@@ -18,6 +18,9 @@ public class RatingsView implements IView {
 
     @Override
     public String getView() {
+        if (ratings.isEmpty()) {
+            return "There are no Ratings\n";
+        }
         StringBuilder view = new StringBuilder();
         float average = 0;
         int count = 0;

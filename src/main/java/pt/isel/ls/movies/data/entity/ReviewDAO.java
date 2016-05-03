@@ -68,9 +68,6 @@ public class ReviewDAO {
             int rating = resultSet.getInt(6);
             reviews.add(new Review(mid, id, reviewerName, reviewSummary, review, rating));
         }
-        if(reviews.isEmpty()){
-            throw new NoDataException("There are no Reviews to Movie");
-        }
         return reviews;
     }
 
