@@ -3,6 +3,7 @@ package pt.isel.ls.movies.data.entity;
 import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Collection;
+import pt.isel.ls.movies.model.Movie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,6 +40,26 @@ public class CollectionDAO {
             }
         }
         throw new InsertException("Cannot insert collection");
+    }
+
+    /**
+     * Creates a new {@link Collection} with all the movies reviewed by the specified reviewer
+     *
+     * @param connection connection to the database
+     * @param reviewer the name of the reviewer
+     * @return the unique id of the collection
+     * @throws Exception if it was not possible to insert, or an error to the connection
+     */
+    public static int createCollectionWithMoviesReviewedBy(Connection connection, String reviewer) throws Exception {
+        List<Movie> movies = MovieDAO.getMoviesReviewedBy(connection, reviewer);
+        if(movies.isEmpty()){
+            throw new NoDataException("There was no movies reviewed by "+ reviewer);
+        }
+        int id = createCollection(connection, new Collection(reviewer+" Reviewed Movies", "The movies reviewed by "+reviewer));
+        for (Movie movie : movies) {
+            postMovieToCollection(connection, id, movie.getId());
+        }
+        return id;
     }
 
     /**

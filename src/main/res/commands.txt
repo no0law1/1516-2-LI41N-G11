@@ -14,6 +14,7 @@ POST /movies/{mid}/reviews;review.PostReview;reviewerName=?&reviewSummary=?&revi
 GET /movies/{mid}/reviews;review.GetMovieReviews;;Gets all reviews of a movie
 GET /movies/{mid}/reviews/{rid};review.GetReview;;Gets a specific review from a movie
 POST /collections;collections.CreateCollection;name=?&description=?;Creates a collection
+POST /collections/from/reviewer;collections.CreateReviewedMoviesFromSpecifiedUserCollection;reviewerName=?;Creates a new collection with all the movies reviewed by the specified reviewer
 POST /collections/{cid}/movies;collections.PostMovieToCollection;mid=?;Adds a movie to a collection
 GET /collections;collections.GetCollections;;Get al of the collections
 GET /collections/{cid};collections.GetCollection;;Get a specific collection

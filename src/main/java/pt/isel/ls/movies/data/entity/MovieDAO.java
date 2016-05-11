@@ -4,10 +4,7 @@ import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Movie;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -241,4 +238,21 @@ public class MovieDAO {
     }
 
 
+    public static List<Movie> getMoviesReviewedBy(Connection connection, String reviewer) throws SQLException {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select distinct movie.* from movie join review on movie.id=mid\n" +
+                        "where reviewer_name=?");
+        preparedStatement.setString(1, reviewer);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<Movie> movies = new LinkedList<>();
+        while (resultSet.next()) {
+            int id = resultSet.getInt(1);
+            String title = resultSet.getString(2);
+            int releaseYear = resultSet.getInt(3);
+            String genre = resultSet.getString(4);
+            movies.add(new Movie(id, title, releaseYear, genre));
+        }
+        return movies;
+    }
 }
