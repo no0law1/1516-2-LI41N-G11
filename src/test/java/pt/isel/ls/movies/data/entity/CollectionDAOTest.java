@@ -4,8 +4,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import pt.isel.ls.movies.data.DataSourceFactory;
+import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.model.Movie;
+import pt.isel.ls.movies.model.Review;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -155,4 +157,58 @@ public class CollectionDAOTest {
             assertTrue(CollectionDAO.removeMovieFromCollection(connection, id, movie1.getId()));
         }
     }
+
+    @Test(expected = InsertException.class)
+    public void createReviewerCollectionNoReviewerMovies() throws Exception {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            CollectionDAO.createReviewerCollection(connection, "eu");
+        }
+    }
+
+    @Test
+    public void createReviewerCollection() throws Exception {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
+            MovieDAO.submitMovie(connection, new Movie(2, "test2", 2016, "genre_test"));
+            MovieDAO.submitMovie(connection, new Movie(3, "test3", 2016, "genre_test"));
+            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "KickAss Movie", "review1", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "KickAss Movie", "review1", 5));
+            ReviewDAO.submitReview(connection, new Review(3, 1, "Nuno", "KickAss Movie", "review1", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 2, "eu", "KickAss Movie", "review1", 5));
+            ReviewDAO.submitReview(connection, new Review(3, 2, "eu", "KickAss Movie", "review1", 5));
+            int cid = CollectionDAO.createReviewerCollection(connection, "eu");
+            List<Integer> revmids = CollectionDAO.getMovies(connection, cid);
+            assertEquals(2, revmids.size());
+            assertTrue(revmids.contains(2));
+            assertTrue(revmids.contains(3));
+        }
+    }
+
+    @Test
+    public void createReviewerCollectionAfterCreate() throws Exception {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
+            MovieDAO.submitMovie(connection, new Movie(2, "test2", 2016, "genre_test"));
+            MovieDAO.submitMovie(connection, new Movie(3, "test3", 2016, "genre_test"));
+            MovieDAO.submitMovie(connection, new Movie(4, "test4", 2016, "genre_test"));
+            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "KickAss Movie", "review1", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "KickAss Movie", "review1", 5));
+            ReviewDAO.submitReview(connection, new Review(3, 1, "Nuno", "KickAss Movie", "review1", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 2, "eu", "KickAss Movie", "review1", 5));
+            ReviewDAO.submitReview(connection, new Review(3, 2, "eu", "KickAss Movie", "review1", 5));
+            int fcid = CollectionDAO.createReviewerCollection(connection, "eu");
+            ReviewDAO.submitReview(connection, new Review(1, 2, "eu", "KickAss Movie", "review1", 5));
+            int cid = CollectionDAO.createReviewerCollection(connection, "eu");
+            assertEquals(fcid, cid);
+            List<Integer> revmids = CollectionDAO.getMovies(connection, cid);
+            assertEquals(3, revmids.size());
+            assertTrue(revmids.contains(1));
+            assertTrue(revmids.contains(2));
+            assertTrue(revmids.contains(3));
+        }
+    }
+
 }

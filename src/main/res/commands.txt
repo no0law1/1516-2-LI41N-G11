@@ -20,3 +20,4 @@ GET /collections/{cid};collections.GetCollection;;Get a specific collection
 DELETE /collections/{cid}/movies/{mid};collections.RemoveMovieFromCollection;;Removes a movie from a collection
 EXIT /;common.Exit;;Exits the application
 OPTION /;common.Option;;Lists all the available options
+POST /collections/from/reviewer;collections.CreateCollectionFromReviewer;reviewerName=?;Creates a new collection with the movies reviewed by a reviewer

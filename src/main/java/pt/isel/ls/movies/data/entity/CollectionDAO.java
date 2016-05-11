@@ -63,6 +63,25 @@ public class CollectionDAO {
     }
 
     /**
+     * Retrieves a {@link Collection} from the database with the specified {@code id}
+     *
+     * @param connection connection to the database
+     * @param name         name of the specified collection
+     * @return the collection with th {@code id} specified
+     * @throws Exception if there is no data, or an error to the connection
+     */
+    public static Collection getCollection(Connection connection, String name) throws Exception {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select id, name, description from collection where name = ?");
+        preparedStatement.setString(1, name);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return new Collection(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3));
+        }
+        throw new NoDataException("There is no such collection with the name: " + name);
+    }
+
+    /**
      * Retrieves all the collections from the database
      *
      * @param connection connection to the database
@@ -119,6 +138,52 @@ public class CollectionDAO {
             return true;
         }
         throw new NoDataException("There was no data to delete");
+    }
+
+    public static List<Integer> getMovies(Connection connection, int cid) throws Exception{
+        PreparedStatement preparedStatement = connection.prepareStatement("select mid from movie_collection where cid=?");
+        preparedStatement.setInt(1, cid);
+
+        List<Integer> mids = new LinkedList<>();
+
+        try(ResultSet resultSet = preparedStatement.executeQuery()){
+            while(resultSet.next()){
+                mids.add(resultSet.getInt(1));
+            }
+        }
+        return mids;
+    }
+
+    /**
+     * Creates a collection with the movies reviewed by {@param reviewerName}, if exists
+     * In case of a collection with the name of a reviewer already exists the new movies reviewed by
+     * {@param reviewerName} will be added
+     *
+     * @param connection
+     * @param reviewerName
+     * @return the created collection unique id
+     * @throws Exception if it was not possible to insert, or an error with the connection occurs
+     */
+    public static int createReviewerCollection(Connection connection, String reviewerName) throws Exception{
+        List<Integer> revmids = ReviewDAO.getMoviesReviewedBy(connection, reviewerName);
+        if(revmids.isEmpty()) throw new InsertException("No movies for the given reviewer");
+
+        int cid;
+        List<Integer> collmids;
+        try {
+            cid = CollectionDAO.getCollection(connection, reviewerName).getId();
+            collmids = getMovies(connection, cid);
+        }
+        catch(NoDataException ex) {
+            cid = createCollection(connection, new Collection(reviewerName, "A collection with the movies reviewed by: " + reviewerName));
+            collmids = null;
+        }
+
+        for (Integer mid: revmids ) {
+            if(collmids == null || !collmids.contains(mid)) postMovieToCollection(connection, cid, mid);
+        }
+
+        return cid;
     }
 
 }

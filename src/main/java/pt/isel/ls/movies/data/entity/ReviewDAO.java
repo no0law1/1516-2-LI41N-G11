@@ -121,4 +121,18 @@ public class ReviewDAO {
         }
         throw new NoDataException("Movie with that id " + mid + " does not exist");
     }
+
+    public static List<Integer> getMoviesReviewedBy(Connection connection, String reviewerName)  throws Exception{
+        PreparedStatement preparedStatement = connection.prepareStatement("select mid from review where reviewer_name=?");
+        preparedStatement.setString(1, reviewerName);
+
+        List<Integer> mids = new LinkedList<>();
+
+        try(ResultSet resultSet = preparedStatement.executeQuery()){
+            while(resultSet.next()){
+                mids.add(resultSet.getInt(1));
+            }
+        }
+        return mids;
+    }
 }
