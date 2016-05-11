@@ -39,7 +39,7 @@ create table rating(
 	
 	primary key(mid, val),
 	foreign key (mid) references movie(id),
-	constraint chk_rating check (rating>=1 AND rating<=5)
+	constraint chk_rating check (val>=1 AND val<=5)
 );
 
 create table collection(
