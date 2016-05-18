@@ -4,8 +4,13 @@ import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.utils.FileUtils;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.xml.crypto.Data;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -141,5 +146,22 @@ public class Router {
             ICommand command = (ICommand) Class.forName(prefix + map.get(key)).getDeclaredConstructor(DataSource.class).newInstance(ds);
             router.add(pathAndMethod[0], pathAndMethod[1], command);
         }
+    }
+
+    public class RouterHttpServlet extends HttpServlet{
+        protected Router router;
+
+        public RouterHttpServlet(Router router){
+            this.router = router;
+        }
+
+        @Override
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        }
+    }
+
+    public HttpServlet createHttpServlet(){
+        return new RouterHttpServlet(this);
     }
 }

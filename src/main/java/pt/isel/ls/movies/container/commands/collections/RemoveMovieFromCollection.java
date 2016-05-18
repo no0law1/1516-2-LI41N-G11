@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.collections;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class RemoveMovieFromCollection extends Command {
     }
 
     @Override
-    public void execute(Request request) throws Exception {
+    public void execute(Request request, Response response) throws Exception {
         int cid = Integer.parseInt(request.getParameter("cid"));
         int mid = Integer.parseInt(request.getParameter("mid"));
 

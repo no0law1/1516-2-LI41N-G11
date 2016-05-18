@@ -2,6 +2,7 @@ package pt.isel.ls.movies.container.commands.common;
 
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.utils.FileUtils;
 
 import javax.sql.DataSource;
@@ -17,7 +18,7 @@ public class Option extends Command {
     }
 
     @Override
-    public void execute(Request request) throws Exception {
+    public void execute(Request request, Response response) throws Exception {
         Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.OPTIONS);
 
         for (String s : map.keySet()) {

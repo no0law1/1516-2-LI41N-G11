@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Abstract class that represents a command
  */
-public abstract class Command extends HttpServlet implements ICommand {
+public abstract class Command implements ICommand {
 
     protected Map<String, IView> views;
     protected DataSource dataSource;
@@ -25,20 +25,5 @@ public abstract class Command extends HttpServlet implements ICommand {
 
     public String getView(String option) {
         return views.get(option).getView();
-    }
-
-    //TODO change this method
-    public String getAcceptType(HttpServletRequest req, String defaultValue) throws Exception {
-        String value = req.getHeader("accept");
-        if(value == null){
-            return defaultValue;
-        }
-        for (String acceptType: views.keySet()) {
-            if(value.contains(acceptType)){
-                return acceptType;
-            }
-        }
-        //TODO change this exception
-        throw new Exception("Not supported acceptType");
     }
 }

@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.review;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.ReviewDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Review;
 
 import javax.sql.DataSource;
@@ -18,7 +19,7 @@ public class PostReview extends Command {
     }
 
     @Override
-    public void execute(Request request) throws Exception {
+    public void execute(Request request, Response response) throws Exception {
         Review.ReviewUID reviewUID;
         int mid = Integer.parseInt(request.getParameter("mid"));
         String reviewerName = request.getParameter("reviewerName");

@@ -2,6 +2,7 @@ package pt.isel.ls.movies;
 
 import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.engine.Router;
 
 import java.util.Scanner;
@@ -20,7 +21,8 @@ public class MoviesApp {
     private void run(String[] args) throws Exception {
         try {
             Request request = Request.create(args);
-            router.get(request).execute(request);
+            Response response = Response.create(request.getHeader("file-name"));
+            router.get(request).execute(request, response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -32,7 +34,8 @@ public class MoviesApp {
                 System.out.print("Enter Request: ");
                 String route = new Scanner(System.in).nextLine();
                 Request request = Request.create(route.split(" "));
-                router.get(request).execute(request);
+                Response response = Response.create(request.getHeader("file-name"));
+                router.get(request).execute(request, response);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

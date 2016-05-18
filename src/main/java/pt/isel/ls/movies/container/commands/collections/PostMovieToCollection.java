@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.collections;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Collection;
 
 import javax.sql.DataSource;
@@ -17,7 +18,7 @@ public class PostMovieToCollection extends Command {
     }
 
     @Override
-    public void execute(Request request) throws Exception {
+    public void execute(Request request, Response response) throws Exception {
         Collection.MovieCollectionUID movieCollectionUID;
         int cid = Integer.parseInt(request.getParameter("cid"));
         int mid = Integer.parseInt(request.getParameter("mid"));

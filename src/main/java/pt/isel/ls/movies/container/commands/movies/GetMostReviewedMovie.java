@@ -21,8 +21,7 @@ public class GetMostReviewedMovie extends Command {
     }
 
     @Override
-    public void execute(Request request) throws Exception {
-        Response response = Response.create(request.getHeader("file-name"));
+    public void execute(Request request, Response response) throws Exception {
         Movie movie;
 
         try (Connection connection = dataSource.getConnection()) {

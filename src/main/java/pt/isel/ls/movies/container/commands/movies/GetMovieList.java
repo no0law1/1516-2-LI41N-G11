@@ -45,8 +45,7 @@ public class GetMovieList extends Command{
     }
 
     @Override
-    public void execute(Request request) throws Exception {
-        Response response = Response.create(request.getHeader("file-name"));
+    public void execute(Request request, Response response) throws Exception {
         List<Movie> movies;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -63,49 +62,5 @@ public class GetMovieList extends Command{
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
         response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
-    }
-
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<Movie> movies;
-        try (Connection connection = DataSourceFactory.createInstance().getConnection()) {
-
-            movies = MovieDAO.getMovies(
-                    connection,
-                    Integer.valueOf(req.getParameterMap().getOrDefault("top", new String[]{"-1"})[0]),
-                    Integer.valueOf(req.getParameterMap().getOrDefault("skip", new String[]{"0"})[0]),
-                    wrapSortParameter(req.getParameter("sortBy"))
-            );
-        } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO handle exception
-            return;
-        } catch (Exception e) {
-            e.printStackTrace();
-            //TODO handle exception
-            return;
-        }
-
-        views.put("text/html", new MoviesViewHtml(movies));
-        views.put("text/plain", new MoviesView(movies));
-
-        String contentType = null;
-        try {
-            contentType = getAcceptType(req, "text/html");
-        } catch (Exception e) {
-            e.printStackTrace();
-            //TODO handle exception
-            return;
-        }
-
-        Charset utf8 = Charset.forName("utf-8");
-
-        resp.setStatus(200);
-        resp.setContentType(String.format("%s; charset=%s", contentType, utf8.name()));
-        String content = getView(contentType);
-        resp.setContentLength(content.length());
-        OutputStream os = resp.getOutputStream();
-        os.write(content.getBytes(utf8));
-        os.close();
     }
 }

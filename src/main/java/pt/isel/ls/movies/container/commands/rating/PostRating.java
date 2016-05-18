@@ -3,6 +3,7 @@ package pt.isel.ls.movies.container.commands.rating;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.RatingDAO;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Rating;
 
 import javax.sql.DataSource;
@@ -18,7 +19,7 @@ public class PostRating extends Command {
     }
 
     @Override
-    public void execute(Request request) throws Exception {
+    public void execute(Request request, Response response) throws Exception {
         int mid = Integer.parseInt(request.getParameter("mid"));
         int val = Integer.parseInt(request.getParameter("rating"));
 

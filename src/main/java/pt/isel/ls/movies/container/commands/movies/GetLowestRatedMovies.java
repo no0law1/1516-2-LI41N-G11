@@ -22,8 +22,7 @@ public class GetLowestRatedMovies extends Command {
     }
 
     @Override
-    public void execute(Request request) throws Exception {
-        Response response = Response.create(request.getHeader("file-name"));
+    public void execute(Request request, Response response) throws Exception {
         List<Movie> movies;
         int n = Integer.parseInt(request.getParameter("n"));
 

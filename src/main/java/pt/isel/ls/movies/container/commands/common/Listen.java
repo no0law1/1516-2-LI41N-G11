@@ -6,19 +6,18 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.container.commands.movies.GetMovieList;
 import pt.isel.ls.movies.engine.Request;
+import pt.isel.ls.movies.engine.Response;
+import pt.isel.ls.movies.engine.Router;
 
 import javax.sql.DataSource;
 
-/**
- * Created by rcacheira on 11/05/16.
- */
-public class Listen  extends Command {
+public class Listen extends Command {
     public Listen(DataSource dataSource) {
         super(dataSource);
     }
 
     @Override
-    public void execute(Request request) throws Exception {
+    public void execute(Request request, Response response) throws Exception {
         int port = 8080;
         if(request.getParameter("port") != null){
             port = Integer.valueOf(request.getParameter("port"));
@@ -28,7 +27,7 @@ public class Listen  extends Command {
         Server server = new Server(port);
         ServletHandler handler = new ServletHandler();
         server.setHandler(handler);
-        handler.addServletWithMapping(new ServletHolder(new GetMovieList(dataSource)), "/movies");
+        handler.addServletWithMapping(new ServletHolder(new Router().createHttpServlet()), "/*");
         server.start();
         System.out.println("Server is started");
 

@@ -11,15 +11,10 @@ import java.util.Map;
 public class Request implements IRequest {
 
     private String method;
-
     private String path;
-
     private String headers;
-
     private String parameters;
-
     private Map<String, String> parametersMap;
-
     private Map<String, String> headersMap;
 
     public Request(String method, String path, String headers, String parameters) {

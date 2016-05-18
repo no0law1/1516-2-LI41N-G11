@@ -21,8 +21,7 @@ public class GetMovie extends Command {
     }
 
     @Override
-    public void execute(Request request) throws Exception {
-        Response response = Response.create(request.getHeader("file-name"));
+    public void execute(Request request, Response response) throws Exception {
         Movie movie;
         int mid = Integer.parseInt(request.getParameter("mid"));
 
