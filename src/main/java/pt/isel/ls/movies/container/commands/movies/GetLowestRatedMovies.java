@@ -17,8 +17,12 @@ import java.util.List;
  */
 public class GetLowestRatedMovies extends Command {
 
+    public GetLowestRatedMovies(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         Response response = Response.create(request.getHeader("file-name"));
         List<Movie> movies;
         int n = Integer.parseInt(request.getParameter("n"));

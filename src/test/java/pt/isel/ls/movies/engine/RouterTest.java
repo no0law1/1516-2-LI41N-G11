@@ -4,6 +4,9 @@ import org.junit.Test;
 import pt.isel.ls.movies.container.commands.common.Exit;
 import pt.isel.ls.movies.container.commands.common.Option;
 import pt.isel.ls.movies.container.commands.movies.*;
+import pt.isel.ls.movies.data.DataSourceFactory;
+
+import javax.sql.DataSource;
 
 import static org.junit.Assert.*;
 
@@ -16,17 +19,17 @@ public class RouterTest {
 
     public RouterTest(){
         router = new Router();
-        createRouter();
+        createRouter(DataSourceFactory.createTestInstance());
     }
 
-    public final void createRouter(){
-        router.add("POST", "/movies", new PostMovie());
-        router.add("GET", "/movies", new GetMovieList());
-        router.add("GET", "/movies/{mid}", new GetMovie());
-        router.add("GET", "/tops/ratings/higher/average", new GetHighestRatedMovie());
-        router.add("GET", "/tops/{n}/ratings/higher/average", new GetHighestRatedMovies());
-        router.add("EXIT", "/", new Exit());
-        router.add("OPTION", "/", new Option());
+    public final void createRouter(DataSource ds){
+        router.add("POST", "/movies", new PostMovie(ds));
+        router.add("GET", "/movies", new GetMovieList(ds));
+        router.add("GET", "/movies/{mid}", new GetMovie(ds));
+        router.add("GET", "/tops/ratings/higher/average", new GetHighestRatedMovie(ds));
+        router.add("GET", "/tops/{n}/ratings/higher/average", new GetHighestRatedMovies(ds));
+        router.add("EXIT", "/", new Exit(ds));
+        router.add("OPTION", "/", new Option(ds));
     }
 
     @Test
@@ -93,7 +96,7 @@ public class RouterTest {
 
     @Test
     public void testCreateRouter() throws Exception {
-        Router router = Router.createRouter();
+        Router router = Router.createRouter(DataSourceFactory.createTestInstance());
         Request request1 = Request.create(new String[]{"OPTION", "/"});
         Request request2 = Request.create(new String[]{"GET", "/movies/12"});
         Request request3 = Request.create(new String[]{"GET", "/tops/{n}/ratings/higher/average"});

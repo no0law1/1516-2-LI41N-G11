@@ -16,8 +16,12 @@ import java.util.List;
  * Get all collection instances from the database
  */
 public class GetCollections extends Command {
+    public GetCollections(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         Response response = Response.create(request.getHeader("file-name"));
         List<Collection> collections;
 

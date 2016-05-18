@@ -12,8 +12,12 @@ import java.sql.Connection;
  * Posts a relation of movie and collection to the database
  */
 public class PostMovieToCollection extends Command {
+    public PostMovieToCollection(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         Collection.MovieCollectionUID movieCollectionUID;
         int cid = Integer.parseInt(request.getParameter("cid"));
         int mid = Integer.parseInt(request.getParameter("mid"));

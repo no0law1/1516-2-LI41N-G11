@@ -15,8 +15,12 @@ import java.sql.Connection;
  * Get a single collection instance from the database
  */
 public class GetCollection extends Command {
+    public GetCollection(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         Response response = Response.create(request.getHeader("file-name"));
 
         Collection collection;

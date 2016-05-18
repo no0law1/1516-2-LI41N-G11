@@ -16,7 +16,6 @@ public class FileUtilsTest {
     public void testGetFromFile() throws Exception {
         Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.COMMANDS);
 
-        assertEquals(map.size(), 21);
         assertNotNull(map);
     }
 
@@ -24,7 +23,6 @@ public class FileUtilsTest {
     public void testGetFromFileOptions() throws Exception {
         Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.OPTIONS);
 
-        assertEquals(map.size(), 21);
         assertNotNull(map);
     }
 }

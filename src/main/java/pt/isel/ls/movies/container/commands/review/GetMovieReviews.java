@@ -17,8 +17,12 @@ import java.util.List;
  */
 public class GetMovieReviews extends Command {
 
+    public GetMovieReviews(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         Response response = Response.create(request.getHeader("file-name"));
         List<Review> reviews;
         int mid = Integer.parseInt(request.getParameter("mid"));

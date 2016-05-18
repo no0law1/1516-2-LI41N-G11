@@ -10,8 +10,12 @@ import javax.sql.DataSource;
  */
 public class Exit extends Command {
 
+    public Exit(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         System.out.println("Closing your application...");
         System.exit(0);
     }

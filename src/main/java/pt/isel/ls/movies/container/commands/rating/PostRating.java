@@ -13,8 +13,12 @@ import java.sql.Connection;
  */
 public class PostRating extends Command {
 
+    public PostRating(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         int mid = Integer.parseInt(request.getParameter("mid"));
         int val = Integer.parseInt(request.getParameter("rating"));
 

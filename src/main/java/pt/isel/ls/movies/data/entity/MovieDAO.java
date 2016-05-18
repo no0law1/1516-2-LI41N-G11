@@ -66,7 +66,7 @@ public class MovieDAO {
 
         List<Movie> movies = new LinkedList<>();
         //resultSet.absolute(skip);
-        for (int i=0; i<skip; i++) if(!resultSet.next()) throw new NoDataException("There are no collection");
+        for (int i=0; i<skip; i++) if(!resultSet.next()) return movies;
         for (int i=0; resultSet.next() && (top < 0 || i < top); i++) {
             int id = resultSet.getInt(1);
             String title = resultSet.getString(2);
@@ -159,9 +159,6 @@ public class MovieDAO {
             String genre = resultSet.getString(4);
             movies.add(new Movie(id, title, releaseYear, genre));
         }
-        if(movies.isEmpty()){
-            throw new NoDataException("There is no movies");
-        }
         return movies;
     }
 
@@ -188,9 +185,6 @@ public class MovieDAO {
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
             movies.add(new Movie(id, title, releaseYear, genre));
-        }
-        if(movies.isEmpty()){
-            throw new NoDataException("There is no movies");
         }
         return movies;
     }
@@ -227,9 +221,6 @@ public class MovieDAO {
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
             movies.add(new Movie(id, title, releaseYear, genre));
-        }
-        if(movies.isEmpty()){
-            throw new NoDataException("There is no movies");
         }
         return movies;
     }

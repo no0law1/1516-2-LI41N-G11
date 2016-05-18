@@ -499,12 +499,12 @@ public class MovieDAOTest {
         }
     }
 
-    @Test(expected = NoDataException.class)
+    @Test
     public void testGetMostReviewedMoviesWithoutMovies() throws Exception {
 
         try(Connection connection = dataSource.getConnection()){
             connection.setAutoCommit(false);
-            MovieDAO.getMostReviewedMovies(connection, 90);
+            assertTrue(MovieDAO.getMostReviewedMovies(connection, 90).isEmpty());
         }
     }
 }

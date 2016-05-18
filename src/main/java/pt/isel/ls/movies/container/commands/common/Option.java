@@ -12,8 +12,12 @@ import java.util.Map;
  */
 public class Option extends Command {
 
+    public Option(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.OPTIONS);
 
         for (String s : map.keySet()) {

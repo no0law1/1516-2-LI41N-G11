@@ -1,8 +1,11 @@
 package pt.isel.ls.movies.engine;
 
 import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.utils.FileUtils;
 
+import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -124,18 +127,18 @@ public class Router {
         return node.getCommand();
     }
 
-    public static Router createRouter() throws Exception {
+    public static Router createRouter(DataSource ds) throws Exception {
         Router router = new Router();
-        populate(router);
+        populate(router, ds);
         return router;
     }
 
-    private static void populate(Router router) throws Exception {
+    private static void populate(Router router, DataSource ds) throws Exception {
         String prefix = "pt.isel.ls.movies.container.commands.";
         Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.COMMANDS);
         for (String key : map.keySet()) {
             String[] pathAndMethod = key.split(" ");
-            ICommand command = (ICommand) Class.forName(prefix + map.get(key)).newInstance();
+            ICommand command = (ICommand) Class.forName(prefix + map.get(key)).getDeclaredConstructor(DataSource.class).newInstance(ds);
             router.add(pathAndMethod[0], pathAndMethod[1], command);
         }
     }

@@ -14,13 +14,13 @@ public class MoviesApp {
     private final Router router;
 
     public MoviesApp() throws Exception {
-        router = Router.createRouter();
+        router = Router.createRouter(DataSourceFactory.createInstance());
     }
 
     private void run(String[] args) throws Exception {
         try {
             Request request = Request.create(args);
-            router.get(request).execute(DataSourceFactory.createInstance(), request);
+            router.get(request).execute(request);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -32,7 +32,7 @@ public class MoviesApp {
                 System.out.print("Enter Request: ");
                 String route = new Scanner(System.in).nextLine();
                 Request request = Request.create(route.split(" "));
-                router.get(request).execute(DataSourceFactory.createInstance(), request);
+                router.get(request).execute(request);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

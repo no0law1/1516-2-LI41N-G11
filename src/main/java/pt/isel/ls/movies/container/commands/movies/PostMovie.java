@@ -13,8 +13,12 @@ import java.sql.Connection;
  */
 public class PostMovie extends Command {
 
+    public PostMovie(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         int mid;
 
         String title = request.getParameter("title");

@@ -14,8 +14,12 @@ import java.sql.Connection;
  */
 public class CreateCollection extends Command {
 
+    public CreateCollection(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         Response response = Response.create(request.getHeader("file-name"));
         int id;
 

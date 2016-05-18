@@ -13,8 +13,12 @@ import java.sql.Connection;
  */
 public class PostReview extends Command {
 
+    public PostReview(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
-    public void execute(DataSource dataSource, Request request) throws Exception {
+    public void execute(Request request) throws Exception {
         Review.ReviewUID reviewUID;
         int mid = Integer.parseInt(request.getParameter("mid"));
         String reviewerName = request.getParameter("reviewerName");
