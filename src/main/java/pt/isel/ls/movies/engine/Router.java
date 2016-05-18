@@ -1,7 +1,6 @@
 package pt.isel.ls.movies.engine;
 
 import pt.isel.ls.movies.container.commands.ICommand;
-import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.utils.FileUtils;
 
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -157,7 +155,18 @@ public class Router {
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+            Request request = Request.create(req);
+            Response response = Response.create((String)null);
+            try {
+                router.get(request).execute(request, response);
+                resp.setContentLength(response.getContent().length());
+                //TODO set response content type
+                //TODO set response charset
+                resp.getOutputStream().write(response.getContent().getBytes());
+                resp.setStatus(200);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

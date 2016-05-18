@@ -7,14 +7,32 @@ import java.io.*;
  */
 public class Response {
 
+    private String content;
+    private String contentType;
     private Writer writer;
 
     private Response(Writer writer) {
         this.writer = writer;
     }
 
-    public void write(String response) throws IOException {
-        writer.write(response);
+    public void setContent(String content){
+        this.content = content;
+    }
+
+    public String getContent(){
+        return content;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void write() throws IOException {
+        writer.write(content);
         writer.flush();
     }
 

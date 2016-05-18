@@ -34,6 +34,6 @@ public class GetReview extends Command {
         views.put("text/html", new SingleReviewViewHtml(review));
         views.put("text/plain", new SingleReviewView(review));
 
-        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.setContent(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 }
