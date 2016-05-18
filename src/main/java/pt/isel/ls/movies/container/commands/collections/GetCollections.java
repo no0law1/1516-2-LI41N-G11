@@ -36,6 +36,6 @@ public class GetCollections extends Command {
         views.put("text/plain", new CollectionsView(collections));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        response.setContent(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 }

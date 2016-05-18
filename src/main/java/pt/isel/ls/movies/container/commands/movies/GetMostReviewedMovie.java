@@ -32,7 +32,7 @@ public class GetMostReviewedMovie extends Command {
         views.put("text/plain", new SingleMovieView(movie));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        response.setContent(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 
 }

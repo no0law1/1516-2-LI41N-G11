@@ -7,7 +7,6 @@ import java.io.*;
  */
 public class Response {
 
-    private String content;
     private String contentType;
     private Writer writer;
 
@@ -15,12 +14,13 @@ public class Response {
         this.writer = writer;
     }
 
-    public void setContent(String content){
-        this.content = content;
+    public Writer getWriter() {
+        return writer;
     }
 
-    public String getContent(){
-        return content;
+    public void write(String content) throws IOException {
+        writer.write(content);
+        writer.flush();
     }
 
     public void setContentType(String contentType) {
@@ -29,11 +29,6 @@ public class Response {
 
     public String getContentType() {
         return contentType;
-    }
-
-    public void write() throws IOException {
-        writer.write(content);
-        writer.flush();
     }
 
     public void close() throws IOException {
@@ -46,5 +41,9 @@ public class Response {
 
     public static Response create(File file) throws IOException {
         return new Response(new FileWriter(file));
+    }
+
+    public static Response create(Writer writer) throws IOException {
+        return new Response(writer);
     }
 }

@@ -34,6 +34,6 @@ public class GetMovieRating extends Command {
         views.put("text/plain", new RatingsView(ratings));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        response.setContent(getView(request.getHeaderOrDefault("accept", "text/html")));
+        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
     }
 }

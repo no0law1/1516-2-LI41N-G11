@@ -23,7 +23,6 @@ public class MoviesApp {
             Request request = Request.create(args);
             Response response = Response.create(request.getHeader("file-name"));
             router.get(request).execute(request, response);
-            response.write();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -37,7 +36,6 @@ public class MoviesApp {
                 Request request = Request.create(route.split(" "));
                 Response response = Response.create(request.getHeader("file-name"));
                 router.get(request).execute(request, response);
-                response.write();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

@@ -15,7 +15,7 @@ public class ResponseTest {
         File file = new File("src/test/java/test.txt");
         Response response = Response.create(file);
 
-        response.setContent("This a txt file");
+        response.write("This a txt file");
         response.write();
         response.close();
 
