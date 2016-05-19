@@ -19,7 +19,7 @@ public class PostReview extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         Review.ReviewUID reviewUID;
         int mid = Integer.parseInt(request.getParameter("mid"));
         String reviewerName = request.getParameter("reviewerName");
@@ -33,5 +33,11 @@ public class PostReview extends Command {
         }
 
         System.out.printf("mid: %d, id: %d\n", reviewUID.mid, reviewUID.id);
+    }
+
+    //TODO remove execute method and create views
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        doWork(request);
     }
 }

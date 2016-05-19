@@ -22,7 +22,7 @@ public class GetHighestRatedMovies extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         List<Movie> movies;
         int n = Integer.parseInt(request.getParameter("n"));
 
@@ -32,8 +32,5 @@ public class GetHighestRatedMovies extends Command {
 
         views.put("text/html", new MoviesViewHtml(movies));
         views.put("text/plain", new MoviesView(movies));
-
-        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 }

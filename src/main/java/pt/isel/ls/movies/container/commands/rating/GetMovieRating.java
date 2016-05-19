@@ -22,7 +22,7 @@ public class GetMovieRating extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         List<Rating> ratings;
         int mid = Integer.parseInt(request.getParameter("mid"));
 
@@ -32,8 +32,5 @@ public class GetMovieRating extends Command {
 
         views.put("text/html", new RatingsViewHtml(ratings));
         views.put("text/plain", new RatingsView(ratings));
-
-        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 }

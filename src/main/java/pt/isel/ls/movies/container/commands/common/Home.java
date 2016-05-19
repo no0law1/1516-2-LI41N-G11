@@ -17,8 +17,8 @@ public class Home extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
+        views.put("text/html", new HomeView());
         //TODO: accept plain text?
-        new HomeView().writeTo(response.getWriter());
     }
 }

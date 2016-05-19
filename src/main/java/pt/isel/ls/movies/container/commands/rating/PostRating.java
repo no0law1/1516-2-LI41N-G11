@@ -19,7 +19,7 @@ public class PostRating extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         int mid = Integer.parseInt(request.getParameter("mid"));
         int val = Integer.parseInt(request.getParameter("rating"));
 
@@ -30,5 +30,11 @@ public class PostRating extends Command {
         }
 
         System.out.printf("rating mid: %d, val: %d\n", rating.getMid(), rating.getVal());
+    }
+
+    //TODO remove execute method and create views
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        doWork(request);
     }
 }

@@ -16,9 +16,14 @@ public class Exit extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         System.out.println("Closing your application...");
         System.exit(0);
     }
 
+
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        doWork(request);
+    }
 }

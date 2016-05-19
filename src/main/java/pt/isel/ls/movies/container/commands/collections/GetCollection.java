@@ -20,7 +20,7 @@ public class GetCollection extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         Collection collection;
         int cid = Integer.parseInt(request.getParameter("cid"));
 
@@ -31,7 +31,5 @@ public class GetCollection extends Command {
         views.put("text/html", new SingleCollectionViewHtml(collection));
         views.put("text/plain", new SingleCollectionView(collection));
 
-        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 }

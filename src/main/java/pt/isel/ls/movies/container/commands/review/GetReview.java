@@ -21,7 +21,7 @@ public class GetReview extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
 
         Review review;
         int mid = Integer.parseInt(request.getParameter("mid"));
@@ -33,7 +33,5 @@ public class GetReview extends Command {
 
         views.put("text/html", new SingleReviewViewHtml(review));
         views.put("text/plain", new SingleReviewView(review));
-
-        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 }

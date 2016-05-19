@@ -19,7 +19,7 @@ public class PostMovie extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         int mid;
 
         String title = request.getParameter("title");
@@ -32,5 +32,11 @@ public class PostMovie extends Command {
         }
 
         System.out.printf("mid: %d\n", mid);
+    }
+
+    //TODO remove execute method and create views
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        doWork(request);
     }
 }

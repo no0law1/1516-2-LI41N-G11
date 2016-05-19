@@ -18,12 +18,18 @@ public class RemoveMovieFromCollection extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         int cid = Integer.parseInt(request.getParameter("cid"));
         int mid = Integer.parseInt(request.getParameter("mid"));
 
         try (Connection connection = dataSource.getConnection()) {
             CollectionDAO.removeMovieFromCollection(connection, cid, mid);
         }
+    }
+
+    //TODO remove execute method and create views
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        doWork(request);
     }
 }
