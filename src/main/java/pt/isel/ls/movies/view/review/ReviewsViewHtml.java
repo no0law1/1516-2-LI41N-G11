@@ -18,7 +18,7 @@ public class ReviewsViewHtml extends Html {
         reviews.forEach(
                 review -> div.withContent(
                         tr(
-                                td(text(String.valueOf(review.getId()))),
+                                td(a("/movies/" + review.getMid() + "/reviews/" + review.getId(), "Review: " + review.getId())),
                                 td(text(review.getReviewerName())),
                                 td(text(String.valueOf(review.getReview()))),
                                 td(text(String.valueOf(review.getRating())))

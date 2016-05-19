@@ -15,7 +15,7 @@ public class SingleCollectionViewHtml extends Html {
         collection.getMovies().forEach(
                 movie -> div.withContent(
                         tr(
-                                td(text(String.valueOf(movie.getId()))),
+                                td(a("/movies/" + movie.getId(), "Movie: " + movie.getId())),
                                 td(text(movie.getTitle())),
                                 td(text(String.valueOf(movie.getReleaseYear()))),
                                 td(text(movie.getGenre()))

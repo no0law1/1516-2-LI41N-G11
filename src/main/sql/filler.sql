@@ -41,3 +41,17 @@ insert into review(mid, id, reviewer_name, review_summary, review, rating)
 			(2, 1, 'Nuno', 'Not Worthy to see Movie', 'review', 1),
 			(2, 2, 'Andre', 'Normal Movie', 'review', 3),
 			(3, 1, 'Paulo', 'Kickass Movie', 'review', 5);
+
+insert into collection(name, description)
+	values ('Collection 1', 'collections are awesome'),
+		('Collection 2', 'collections are beautiful'),
+		('Collection 3', 'not that great');
+
+insert into movie_collection(cid, mid)
+	values (1, 1),
+		(1, 2),
+		(1, 3),
+		(2, 1),
+		(2, 3),
+		(2, 4),
+		(3, 2);

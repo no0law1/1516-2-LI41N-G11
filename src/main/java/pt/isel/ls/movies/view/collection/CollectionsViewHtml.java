@@ -18,6 +18,7 @@ public class CollectionsViewHtml extends Html {
         collections.forEach(
                 collection -> div.withContent(
                         tr(
+                                td(a("/collections/" + collection.getId(), "Collection: " + collection.getId())),
                                 td(text(String.valueOf(collection.getId()))),
                                 td(text(collection.getName())),
                                 td(text(collection.getDescription()))
