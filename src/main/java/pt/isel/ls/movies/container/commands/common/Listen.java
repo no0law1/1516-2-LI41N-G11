@@ -26,7 +26,7 @@ public class Listen extends Command {
         Server server = new Server(port);
         ServletHandler handler = new ServletHandler();
         server.setHandler(handler);
-        handler.addServletWithMapping(new ServletHolder(new Router().createHttpServlet()), "/*");
+        handler.addServletWithMapping(new ServletHolder(Router.createRouter(dataSource).createHttpServlet()), "/*");
         server.start();
         System.out.println("Server is started");
 

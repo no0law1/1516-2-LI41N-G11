@@ -155,7 +155,16 @@ public class Router {
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+            Request request = Request.create(req);
+            Response response = Response.create(resp.getWriter());
+            try {
+                router.get(request).execute(request, response);
+                //TODO set response content type
+                //TODO set response charset
+                resp.setStatus(200);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

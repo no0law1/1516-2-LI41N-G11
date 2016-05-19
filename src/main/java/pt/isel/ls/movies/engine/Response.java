@@ -7,19 +7,28 @@ import java.io.*;
  */
 public class Response {
 
+    private String contentType;
     private Writer writer;
 
     private Response(Writer writer) {
         this.writer = writer;
     }
 
-    public void write(String response) throws IOException {
-        writer.write(response);
+    public Writer getWriter() {
+        return writer;
+    }
+
+    public void write(String content) throws IOException {
+        writer.write(content);
         writer.flush();
     }
 
-    public Writer getWriter() {
-        return writer;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getContentType() {
+        return contentType;
     }
 
     public void close() throws IOException {
@@ -32,5 +41,9 @@ public class Response {
 
     public static Response create(File file) throws IOException {
         return new Response(new FileWriter(file));
+    }
+
+    public static Response create(Writer writer) throws IOException {
+        return new Response(writer);
     }
 }
