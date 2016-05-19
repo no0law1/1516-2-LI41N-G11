@@ -1,42 +1,19 @@
 package pt.isel.ls.movies.view.review;
 
 import pt.isel.ls.movies.model.Review;
-import pt.isel.ls.movies.view.common.IView;
+import pt.isel.ls.utils.common.Writable;
+
+import java.io.IOException;
+import java.io.Writer;
 
 /**
  * Class whose instance represents a review that knows how to draw itself.
  */
-public class SingleReviewView implements IView {
-
-    private int mid;
-    private int id;
-    private String reviewerName;
-    private String reviewSummary;
-    private String review;
-    private int rating;
+public class SingleReviewView implements Writable {
 
     private StringBuffer view;
 
     public SingleReviewView(int mid, int id, String reviewerName, String reviewSummary, String review, int rating) {
-        this.mid = mid;
-        this.id = id;
-        this.reviewerName = reviewerName;
-        this.reviewSummary = reviewSummary;
-        this.review = review;
-        this.rating = rating;
-    }
-
-    public SingleReviewView(Review review) {
-        this(review.getMid(),
-                review.getId(),
-                review.getReviewerName(),
-                review.getReviewSummary(),
-                review.getReview(),
-                review.getRating());
-    }
-
-    @Override
-    public String getView() {
         view = new StringBuffer();
         view.append(String.format("%s: %s\n", "mid", mid));
         view.append(String.format("%s: %s\n", "id", id));
@@ -45,6 +22,19 @@ public class SingleReviewView implements IView {
         view.append(String.format("%s: %s\n", "review", review));
         view.append(String.format("%s: %s\n", "rating", rating));
         view.append("\n");
+    }
+
+    public SingleReviewView(Review review) {
+        this(review.getMid(), review.getId(), review.getReviewerName(),
+                review.getReviewSummary(), review.getReview(), review.getRating());
+    }
+
+    public String getView() {
         return view.toString();
+    }
+
+    @Override
+    public void writeTo(Writer w) throws IOException {
+        w.write(getView());
     }
 }

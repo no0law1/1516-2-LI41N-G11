@@ -1,45 +1,34 @@
 package pt.isel.ls.movies.view.collection;
 
 import pt.isel.ls.movies.model.Collection;
-import pt.isel.ls.movies.view.common.IView;
-import pt.isel.ls.movies.view.utils.HtmlUtils;
+import pt.isel.ls.utils.common.CompositeWritable;
+import pt.isel.ls.utils.html.Html;
+import pt.isel.ls.utils.html.HtmlElem;
+import pt.isel.ls.utils.html.HtmlPage;
 
 import java.util.List;
 
 /**
  * Html view of a set of {@link Collection}
  */
-public class CollectionsViewHtml implements IView {
-
-    private List<Collection> collections;
+public class CollectionsViewHtml extends Html {
 
     public CollectionsViewHtml(List<Collection> collections) {
-        this.collections = collections;
-    }
-
-    @Override
-    public String getView() {
-        return new StringBuilder()
-                .append("<html>\n")
-                .append(HtmlUtils.makeHeader("Collections"))
-                .append("<body>\n")
-                .append(body())
-                .append("</body>\n")
-                .append("</html>\n")
-                .toString();
-    }
-
-    private String body() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("<table style=\"width:50%\" border=\"5\">\n");
-        builder.append("<tr>\n<th>ID</th>\n<th>Name</th>\n<th>Description</th>\n</tr>\n");
+        HtmlElem div = new HtmlElem("div");
         collections.forEach(
-                collection -> builder.append("<tr>\n")
-                        .append("\t<td>" + collection.getId() + "</td>\n")
-                        .append("\t<td>" + collection.getName() + "</td>\n")
-                        .append("\t<td>" + collection.getDescription() + "</td>\n")
-                        .append("</tr>\n"));
-        builder.append("</table>\n");
-        return builder.toString();
+                collection -> div.withContent(
+                        tr(
+                                td(text(String.valueOf(collection.getId()))),
+                                td(text(collection.getName())),
+                                td(text(collection.getDescription()))
+                        ))
+        );
+        HtmlPage page = new HtmlPage("Movies",
+                table(tr(
+                        th(text("ID")), th(text("Name")), th(text("Description"))
+                        ), div
+                )
+        );
+        _content = new CompositeWritable(page);
     }
 }

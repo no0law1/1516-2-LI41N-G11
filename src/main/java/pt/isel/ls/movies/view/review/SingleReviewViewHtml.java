@@ -1,38 +1,21 @@
 package pt.isel.ls.movies.view.review;
 
 import pt.isel.ls.movies.model.Review;
-import pt.isel.ls.movies.view.common.IView;
-import pt.isel.ls.movies.view.utils.HtmlUtils;
+import pt.isel.ls.utils.html.Html;
+import pt.isel.ls.utils.html.HtmlPage;
 
 /**
  * Html view of a {@link Review}
  */
-public class SingleReviewViewHtml implements IView {
-
-    private Review review;
+public class SingleReviewViewHtml extends Html {
 
     public SingleReviewViewHtml(Review review) {
-        this.review = review;
+        super(new HtmlPage("Review",
+                h1(text("Movie " + review.getMid())),
+                h2(text(review.getReviewerName())),
+                p(text(review.getReview())),
+                h5(text(String.valueOf(review.getRating())))
+        ));
     }
 
-    @Override
-    public String getView() {
-        return new StringBuilder()
-                .append("<html>\n")
-                .append(HtmlUtils.makeHeader("Review"))
-                .append("<body>\n")
-                .append(body())
-                .append("</body>\n")
-                .append("</html>\n")
-                .toString();
-    }
-
-    private String body() {
-        return new StringBuilder()
-                .append("\t<h1>Movie " + review.getMid() + "</h1>\n")
-                .append("\t<h2>" + review.getReviewerName() + "</h2>\n")
-                .append("\t<p>" + review.getReview() + "</p>\n")
-                .append("\t<h5>" + review.getRating() + "/5</h5>\n")
-                .toString();
-    }
 }

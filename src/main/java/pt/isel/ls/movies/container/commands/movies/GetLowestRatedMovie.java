@@ -32,7 +32,7 @@ public class GetLowestRatedMovie extends Command {
         views.put("text/plain", new SingleMovieView(movie));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
+        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 
 }

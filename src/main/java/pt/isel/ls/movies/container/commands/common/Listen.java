@@ -4,7 +4,6 @@ import org.eclipse.jetty.plus.servlet.ServletHandler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHolder;
 import pt.isel.ls.movies.container.commands.Command;
-import pt.isel.ls.movies.container.commands.movies.GetMovieList;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.engine.Router;

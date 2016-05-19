@@ -1,7 +1,6 @@
 package pt.isel.ls.movies.engine;
 
 import pt.isel.ls.movies.container.commands.ICommand;
-import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.utils.FileUtils;
 
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;

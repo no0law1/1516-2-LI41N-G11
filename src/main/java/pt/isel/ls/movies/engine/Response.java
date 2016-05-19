@@ -18,6 +18,10 @@ public class Response {
         writer.flush();
     }
 
+    public Writer getWriter() {
+        return writer;
+    }
+
     public void close() throws IOException {
         writer.close();
     }

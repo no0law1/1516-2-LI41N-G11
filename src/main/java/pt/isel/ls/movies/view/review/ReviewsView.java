@@ -1,30 +1,33 @@
 package pt.isel.ls.movies.view.review;
 
 import pt.isel.ls.movies.model.Review;
-import pt.isel.ls.movies.view.common.IView;
+import pt.isel.ls.utils.common.Writable;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 
 /**
  * Plain text view of a set of {@link Review}
  */
-public class ReviewsView implements IView {
+public class ReviewsView implements Writable {
 
-    private List<Review> reviews;
+    private StringBuilder builder;
 
     public ReviewsView(List<Review> reviews) {
-        this.reviews = reviews;
+        builder = new StringBuilder();
+        if (reviews.isEmpty()) {
+            builder.append("There are no Reviews\n");
+        }
+        reviews.forEach(review -> builder.append(new SingleReviewView(review).getView()));
+    }
+
+    public String getView() {
+        return builder.toString();
     }
 
     @Override
-    public String getView() {
-        if (reviews.isEmpty()) {
-            return "There are no Reviews\n";
-        }
-        StringBuilder builder = new StringBuilder();
-
-        reviews.forEach(review -> builder.append(new SingleReviewView(review).getView()));
-
-        return builder.toString();
+    public void writeTo(Writer w) throws IOException {
+        w.write(getView());
     }
 }

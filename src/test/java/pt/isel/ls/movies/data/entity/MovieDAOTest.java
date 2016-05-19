@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import pt.isel.ls.movies.data.DataSourceFactory;
-import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.model.Review;

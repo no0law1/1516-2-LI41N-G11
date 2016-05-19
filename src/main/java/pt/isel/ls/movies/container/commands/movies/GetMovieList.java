@@ -1,8 +1,6 @@
 package pt.isel.ls.movies.container.commands.movies;
 
-import org.eclipse.jetty.servlet.ServletHolder;
 import pt.isel.ls.movies.container.commands.Command;
-import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
@@ -10,14 +8,8 @@ import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.movie.MoviesView;
 import pt.isel.ls.movies.view.movie.MoviesViewHtml;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -61,6 +53,6 @@ public class GetMovieList extends Command{
         views.put("text/plain", new MoviesView(movies));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        response.write(getView(request.getHeaderOrDefault("accept", "text/html")));
+        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 }

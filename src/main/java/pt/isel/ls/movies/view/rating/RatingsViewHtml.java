@@ -1,51 +1,43 @@
 package pt.isel.ls.movies.view.rating;
 
 import pt.isel.ls.movies.model.Rating;
-import pt.isel.ls.movies.view.common.IView;
-import pt.isel.ls.movies.view.utils.HtmlUtils;
+import pt.isel.ls.utils.common.CompositeWritable;
+import pt.isel.ls.utils.html.Html;
+import pt.isel.ls.utils.html.HtmlElem;
+import pt.isel.ls.utils.html.HtmlPage;
 
 import java.util.List;
 
 /**
  * Html view of a set of {@link Rating}
  */
-public class RatingsViewHtml implements IView {
+public class RatingsViewHtml extends Html {
 
-    private List<Rating> ratings;
+    private float average = 0;
+    private int count = 0;
 
     public RatingsViewHtml(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    @Override
-    public String getView() {
-        return new StringBuilder()
-                .append("<html>\n")
-                .append(HtmlUtils.makeHeader("Ratings"))
-                .append("<body>\n")
-                .append(body())
-                .append("</body>\n")
-                .append("</html>\n")
-                .toString();
-    }
-
-    private String body() {
-        float average = 0;
-        int count = 0;
-        StringBuilder builder = new StringBuilder();
-        builder.append("<table style=\"width:50%\" border=\"5\">\n");
-        builder.append("<tr>\n<th>Movie ID</th>\n<th>Value</th>\n<th>Count</th>\n</tr>\n");
-        for (Rating rating : ratings) {
-            average += rating.getVal() * rating.getCount();
-            count += rating.getCount();
-            builder.append("<tr>\n")
-                    .append("\t<td>" + rating.getMid() + "</td>\n")
-                    .append("\t<td>" + rating.getVal() + "</td>\n")
-                    .append("\t<td>" + rating.getCount() + "</td>\n")
-                    .append("</tr>\n");
-        }
-        builder.append("</table>\n");
-        builder.append("<h2>\nAverage = " + average / count + "\n</h2>\n");
-        return builder.toString();
+        HtmlElem div = new HtmlElem("div");
+        ratings.forEach(
+                rating -> {
+                    average += rating.getVal() * rating.getCount();
+                    count += rating.getCount();
+                    div.withContent(
+                            tr(
+                                    td(text(String.valueOf(rating.getMid()))),
+                                    td(text(String.valueOf(rating.getVal()))),
+                                    td(text(String.valueOf(rating.getCount())))
+                            ));
+                }
+        );
+        HtmlPage page = new HtmlPage("Ratings",
+                table(tr(
+                        th(text("Movie ID")), th(text("Value")), th(text("Count"))
+                        ),
+                        div,
+                        h2(text("Average = " + average / count))
+                )
+        );
+        _content = new CompositeWritable(page);
     }
 }

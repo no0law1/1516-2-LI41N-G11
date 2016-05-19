@@ -1,4 +1,9 @@
-﻿ALTER SEQUENCE movie_id_seq RESTART WITH 1;
+﻿delete from review;
+delete from rating;
+delete from movie_collection;
+delete from collection;
+delete from movie;
+ALTER SEQUENCE movie_id_seq RESTART WITH 1;
 ALTER SEQUENCE collection_id_seq RESTART WITH 1;
 
 -- Movies

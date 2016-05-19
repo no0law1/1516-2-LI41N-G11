@@ -1,35 +1,40 @@
 package pt.isel.ls.movies.view.rating;
 
 import pt.isel.ls.movies.model.Rating;
-import pt.isel.ls.movies.view.common.IView;
+import pt.isel.ls.utils.common.Writable;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 
 /**
  * Plain text view of a set of {@link Rating}
  */
-public class RatingsView implements IView {
+public class RatingsView implements Writable {
 
-    private List<Rating> ratings;
+    private StringBuilder builder;
 
     public RatingsView(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    @Override
-    public String getView() {
+        builder = new StringBuilder();
         if (ratings.isEmpty()) {
-            return "There are no Ratings\n";
+            builder.append("There are no Ratings\n");
         }
-        StringBuilder view = new StringBuilder();
         float average = 0;
         int count = 0;
         for (Rating rating : ratings) {
             average += rating.getVal() * rating.getCount();
             count += rating.getCount();
-            view.append(new SingleRatingView(rating).getView());
+            builder.append(new SingleRatingView(rating).getView());
         }
-        view.append(String.format("Average: %s\n", average / count));
-        return view.toString();
+        builder.append(String.format("Average: %s\n", average / count));
+    }
+
+    public String getView() {
+        return builder.toString();
+    }
+
+    @Override
+    public void writeTo(Writer w) throws IOException {
+        w.write(getView());
     }
 }
