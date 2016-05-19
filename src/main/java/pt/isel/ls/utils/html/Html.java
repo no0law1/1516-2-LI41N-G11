@@ -53,7 +53,7 @@ public class Html implements HttpContent {
         return new HtmlElem("p", c);
     }
 
-    public static Writable form(String method, String url, Writable... c) {
+    public static HtmlElem form(String method, String url, Writable... c) {
         return new HtmlElem("form", c)
                 .withAttr("method", method)
                 .withAttr("action", url);
@@ -70,9 +70,12 @@ public class Html implements HttpContent {
                 .withAttr("name", name);
     }
 
-    public static Writable table(Writable... c) {
-        return new HtmlElem("table", c)
-                .withAttr("style", "width:50%").withAttr("border", "5");
+    public static HtmlElem table(Writable... c) {
+        return new HtmlElem("table", c);
+    }
+
+    public static HtmlElem btn(Writable... c) {
+        return new HtmlElem("button", c);
     }
 
     public static Writable tr(Writable... c) {

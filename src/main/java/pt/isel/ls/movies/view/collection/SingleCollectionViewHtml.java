@@ -29,7 +29,7 @@ public class SingleCollectionViewHtml extends Html {
                 table(tr(
                         th(text("ID")), th(text("Title")), th(text("Release Year")), th(text("Genre"))
                         ), div
-                )
+                ).withAttr("style", "width:50%").withAttr("border", "5")
         );
     }
 }

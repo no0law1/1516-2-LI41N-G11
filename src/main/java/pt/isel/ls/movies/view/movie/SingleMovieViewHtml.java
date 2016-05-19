@@ -11,7 +11,7 @@ public class SingleMovieViewHtml extends Html {
 
     public SingleMovieViewHtml(Movie movie) {
         super(new HtmlPage("Movie " + movie.getId(),
-                h3(text(String.valueOf(movie.getId()))),
+                h3(text("Movie " + movie.getId())),
                 h1(text(movie.getTitle() + " (" + movie.getReleaseYear() + ")")),
                 h2(text(movie.getGenre())))
         );

@@ -28,7 +28,7 @@ public class CollectionsViewHtml extends Html {
                 table(tr(
                         th(text("ID")), th(text("Name")), th(text("Description"))
                         ), div
-                )
+                ).withAttr("style", "width:50%").withAttr("border", "5")
         );
         _content = new CompositeWritable(page);
     }

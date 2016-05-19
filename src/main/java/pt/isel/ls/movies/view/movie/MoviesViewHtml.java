@@ -1,7 +1,6 @@
 package pt.isel.ls.movies.view.movie;
 
 import pt.isel.ls.movies.model.Movie;
-import pt.isel.ls.utils.common.CompositeWritable;
 import pt.isel.ls.utils.html.Html;
 import pt.isel.ls.utils.html.HtmlElem;
 import pt.isel.ls.utils.html.HtmlPage;
@@ -18,19 +17,24 @@ public class MoviesViewHtml extends Html {
         movies.forEach(
                 movie -> div.withContent(
                         tr(
-                                td(a("/movies/" + movie.getId(), "Movie: " + movie.getId())),
+                                td(
+                                        form("GET", "/movies/" + movie.getId(),
+                                                new HtmlElem("input")
+                                                        .withAttr("type", "submit")
+                                                        .withAttr("value", "Movie: " + movie.getId()))
+                                ),
                                 td(text(movie.getTitle())),
                                 td(text(String.valueOf(movie.getReleaseYear()))),
                                 td(text(movie.getGenre()))
                         ))
         );
-        HtmlPage page = new HtmlPage("Movies",
+
+        _content = new HtmlPage("Movies",
                 table(tr(
                         th(text("ID")), th(text("Title")), th(text("Release Year")), th(text("Genre"))
                         ), div
-                )
+                ).withAttr("style", "width:50%").withAttr("border", "5")
         );
-        _content = new CompositeWritable(page);
     }
 
 }

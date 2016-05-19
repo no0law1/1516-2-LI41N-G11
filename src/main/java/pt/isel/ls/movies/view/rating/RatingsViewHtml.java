@@ -35,7 +35,7 @@ public class RatingsViewHtml extends Html {
                         th(text("Movie ID")), th(text("Value")), th(text("Count"))
                         ),
                         div
-                ),
+                ).withAttr("style", "width:50%").withAttr("border", "5"),
                 h2(text("Average = " + average / count))
         );
         _content = new CompositeWritable(page);

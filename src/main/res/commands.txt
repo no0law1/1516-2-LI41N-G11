@@ -20,4 +20,5 @@ GET /collections/{cid};collections.GetCollection;;Get a specific collection
 DELETE /collections/{cid}/movies/{mid};collections.RemoveMovieFromCollection;;Removes a movie from a collection
 EXIT /;common.Exit;;Exits the application
 OPTION /;common.Option;;Lists all the available options
-LISTEN /;common.Listen;;Launches a webserv listening on port 8080 unless parameter port is specified
+LISTEN /;common.Listen;;Launches a webserver listening on port 8080 unless parameter port is specified
+GET /;common.Home;;Home page of webserver

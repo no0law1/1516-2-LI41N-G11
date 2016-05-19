@@ -28,7 +28,7 @@ public class ReviewsViewHtml extends Html {
                 table(tr(
                         th(text("ID")), th(text("Reviewer")), th(text("Review")), th(text("Rating"))
                         ), div
-                )
+                ).withAttr("style", "width:50%").withAttr("border", "5")
         );
         _content = new CompositeWritable(page);
     }
