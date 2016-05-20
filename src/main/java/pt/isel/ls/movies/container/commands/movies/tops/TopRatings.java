@@ -2,7 +2,6 @@ package pt.isel.ls.movies.container.commands.movies.tops;
 
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.view.movie.TopRatingsViewHtml;
 
 import javax.sql.DataSource;
@@ -17,7 +16,8 @@ public class TopRatings extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
-        new TopRatingsViewHtml().writeTo(response.getWriter());
+    public void doWork(Request request) throws Exception {
+        views.put("text/html", new TopRatingsViewHtml());
+        //TODO: accept plain text?
     }
 }
