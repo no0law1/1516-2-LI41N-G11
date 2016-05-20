@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.container.commands.movies;
+package pt.isel.ls.movies.container.commands.movies.tops;
 
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;

@@ -2,12 +2,12 @@
 POST /movies;movies.PostMovie;title=?&releaseYear=?;Posts a movie to the database
 GET /movies;movies.GetMovieList;;Gets all the movies
 GET /movies/{mid};movies.GetMovie;;Gets a specific movie
-GET /tops/ratings/higher/average;movies.GetHighestRatedMovie;;Gets the movie with the higher average rating
-GET /tops/{n}/ratings/higher/average;movies.GetHighestRatedMovies;;Gets the n movies with the highest average rating
-GET /tops/ratings/lower/average;movies.GetLowestRatedMovie;;Gets the movie with the lowest average rating
-GET /tops/{n}/ratings/lower/average;movies.GetLowestRatedMovies;;Gets the n movies with the lowest average rating
-GET /tops/reviews/higher/count;movies.GetMostReviewedMovie;;Gets the movies with the most reviews
-GET /tops/{n}/reviews/higher/count;movies.GetMostReviewedMovies;;Gets the n movies with the most reviews
+GET /tops/ratings/higher/average;movies.tops.GetHighestRatedMovie;;Gets the movie with the higher average rating
+GET /tops/{n}/ratings/higher/average;movies.tops.GetHighestRatedMovies;;Gets the n movies with the highest average rating
+GET /tops/ratings/lower/average;movies.tops.GetLowestRatedMovie;;Gets the movie with the lowest average rating
+GET /tops/{n}/ratings/lower/average;movies.tops.GetLowestRatedMovies;;Gets the n movies with the lowest average rating
+GET /tops/reviews/higher/count;movies.tops.GetMostReviewedMovie;;Gets the movies with the most reviews
+GET /tops/{n}/reviews/higher/count;movies.tops.GetMostReviewedMovies;;Gets the n movies with the most reviews
 POST /movies/{mid}/ratings;rating.PostRating;rating=?;Posts a movie rating
 GET /movies/{mid}/ratings;rating.GetMovieRating;;Gets the rating information for a movie, such as the rating average and the number of votes for each rating value
 POST /movies/{mid}/reviews;review.PostReview;reviewerName=?&reviewSummary=?&review=?&rating=?;Creates a review for a movie
@@ -22,3 +22,4 @@ EXIT /;common.Exit;;Exits the application
 OPTION /;common.Option;;Lists all the available options
 LISTEN /;common.Listen;;Launches a webserver listening on port 8080 unless parameter port is specified
 GET /;common.Home;;Home page of webserver
+GET /tops/ratings;movies.tops.TopRatings;;Base page of all the tops

@@ -1,5 +1,6 @@
 package pt.isel.ls.movies.view.home;
 
+import pt.isel.ls.utils.html.HtmlElem;
 import pt.isel.ls.utils.html.HtmlPage;
 
 /**
@@ -12,9 +13,21 @@ public class HomeView extends HtmlPage {
                 h1(text("Welcome to the Movie Database")),
                 table(
                         tr(
-                                td(a("/collections", "Collections")),
-                                td(a("/movies", "Movies")),
-                                td(a("/tops/ratings", "Listing Tops"))
+                                td(
+                                        form("GET", "/collections",
+                                                new HtmlElem("input")
+                                                        .withAttr("type", "submit")
+                                                        .withAttr("value", "Collections"))),
+                                td(
+                                        form("GET", "/movies",
+                                                new HtmlElem("input")
+                                                        .withAttr("type", "submit")
+                                                        .withAttr("value", "Movies"))),
+                                td(
+                                        form("GET", "/tops/ratings",
+                                                new HtmlElem("input")
+                                                        .withAttr("type", "submit")
+                                                        .withAttr("value", "Listing Tops")))
                         )
                 ),
                 p(text("Make yourself at home"))

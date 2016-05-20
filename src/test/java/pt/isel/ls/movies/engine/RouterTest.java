@@ -3,7 +3,11 @@ package pt.isel.ls.movies.engine;
 import org.junit.Test;
 import pt.isel.ls.movies.container.commands.common.Exit;
 import pt.isel.ls.movies.container.commands.common.Option;
-import pt.isel.ls.movies.container.commands.movies.*;
+import pt.isel.ls.movies.container.commands.movies.GetMovie;
+import pt.isel.ls.movies.container.commands.movies.GetMovieList;
+import pt.isel.ls.movies.container.commands.movies.PostMovie;
+import pt.isel.ls.movies.container.commands.movies.tops.GetHighestRatedMovie;
+import pt.isel.ls.movies.container.commands.movies.tops.GetHighestRatedMovies;
 import pt.isel.ls.movies.data.DataSourceFactory;
 
 import javax.sql.DataSource;

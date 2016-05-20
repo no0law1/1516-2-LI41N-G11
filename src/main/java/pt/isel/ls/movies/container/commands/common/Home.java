@@ -8,7 +8,7 @@ import pt.isel.ls.movies.view.home.HomeView;
 import javax.sql.DataSource;
 
 /**
- * TODO: Commentary.
+ * Command of the Home page
  */
 public class Home extends Command {
 

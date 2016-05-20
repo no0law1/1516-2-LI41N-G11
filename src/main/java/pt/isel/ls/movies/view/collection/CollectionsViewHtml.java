@@ -18,8 +18,12 @@ public class CollectionsViewHtml extends Html {
         collections.forEach(
                 collection -> div.withContent(
                         tr(
-                                td(a("/collections/" + collection.getId(), "Collection: " + collection.getId())),
-                                td(text(String.valueOf(collection.getId()))),
+                                td(
+                                        form("GET", "/collections/" + collection.getId(),
+                                                new HtmlElem("input")
+                                                        .withAttr("type", "submit")
+                                                        .withAttr("value", "Collection: " + collection.getId()))
+                                ),
                                 td(text(collection.getName())),
                                 td(text(collection.getDescription()))
                         ))

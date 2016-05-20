@@ -1,37 +1,40 @@
-package pt.isel.ls.movies.container.commands.movies;
+package pt.isel.ls.movies.container.commands.movies.tops;
 
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Movie;
-import pt.isel.ls.movies.view.movie.SingleMovieView;
-import pt.isel.ls.movies.view.movie.SingleMovieViewHtml;
+import pt.isel.ls.movies.view.movie.MoviesView;
+import pt.isel.ls.movies.view.movie.MoviesViewHtml;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.util.List;
 
 /**
- * Command that gets the movie with the highest average rating.
+ * Command that gets the n movies with the most reviews.
  */
-public class GetHighestRatedMovie extends Command {
+public class GetMostReviewedMovies extends Command {
 
-    public GetHighestRatedMovie(DataSource dataSource) {
+    public GetMostReviewedMovies(DataSource dataSource) {
         super(dataSource);
     }
 
     @Override
     public void execute(Request request, Response response) throws Exception {
-        Movie movie;
+        List<Movie> movies;
+        int n = Integer.parseInt(request.getParameter("n"));
 
         try (Connection connection = dataSource.getConnection()) {
-            movie = MovieDAO.getHighestRatingMovie(connection);
+            movies = MovieDAO.getMostReviewedMovies(connection, n);
         }
 
-        views.put("text/html", new SingleMovieViewHtml(movie));
-        views.put("text/plain", new SingleMovieView(movie));
+        views.put("text/html", new MoviesViewHtml(movies));
+        views.put("text/plain", new MoviesView(movies));
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
         views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
+
 }

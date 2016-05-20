@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.container.commands.movies;
+package pt.isel.ls.movies.container.commands.movies.tops;
 
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
@@ -12,11 +12,11 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**
- * Command that gets the movie with the lowest average rating.
+ * Command that gets the movie with the highest average rating.
  */
-public class GetLowestRatedMovie extends Command {
+public class GetHighestRatedMovie extends Command {
 
-    public GetLowestRatedMovie(DataSource dataSource) {
+    public GetHighestRatedMovie(DataSource dataSource) {
         super(dataSource);
     }
 
@@ -25,7 +25,7 @@ public class GetLowestRatedMovie extends Command {
         Movie movie;
 
         try (Connection connection = dataSource.getConnection()) {
-            movie = MovieDAO.getLowestRatingMovie(connection);
+            movie = MovieDAO.getHighestRatingMovie(connection);
         }
 
         views.put("text/html", new SingleMovieViewHtml(movie));
@@ -34,5 +34,4 @@ public class GetLowestRatedMovie extends Command {
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
         views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
-
 }
