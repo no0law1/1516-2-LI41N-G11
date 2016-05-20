@@ -37,7 +37,7 @@ public class GetMovieList extends Command{
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         List<Movie> movies;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -51,8 +51,5 @@ public class GetMovieList extends Command{
 
         views.put("text/html", new MoviesViewHtml(movies));
         views.put("text/plain", new MoviesView(movies));
-
-        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 }

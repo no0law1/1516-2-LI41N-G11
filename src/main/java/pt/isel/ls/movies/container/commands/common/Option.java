@@ -18,12 +18,18 @@ public class Option extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.OPTIONS);
 
         for (String s : map.keySet()) {
             System.out.printf("%s\n\t%s\n", s, map.get(s));
         }
+    }
+
+
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        doWork(request);
     }
 
 }

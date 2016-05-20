@@ -21,7 +21,7 @@ public class GetHighestRatedMovie extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         Movie movie;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -30,8 +30,5 @@ public class GetHighestRatedMovie extends Command {
 
         views.put("text/html", new SingleMovieViewHtml(movie));
         views.put("text/plain", new SingleMovieView(movie));
-
-        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 }

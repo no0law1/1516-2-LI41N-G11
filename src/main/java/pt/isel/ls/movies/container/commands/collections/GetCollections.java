@@ -21,7 +21,7 @@ public class GetCollections extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         List<Collection> collections;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -34,8 +34,5 @@ public class GetCollections extends Command {
 
         views.put("text/html", new CollectionsViewHtml(collections));
         views.put("text/plain", new CollectionsView(collections));
-
-        /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        views.get(request.getHeaderOrDefault("accept", "text/html")).writeTo(response.getWriter());
     }
 }

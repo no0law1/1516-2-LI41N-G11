@@ -18,7 +18,7 @@ public class PostMovieToCollection extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         Collection.MovieCollectionUID movieCollectionUID;
         int cid = Integer.parseInt(request.getParameter("cid"));
         int mid = Integer.parseInt(request.getParameter("mid"));
@@ -28,5 +28,11 @@ public class PostMovieToCollection extends Command {
         }
 
         System.out.printf("cid: %d, mid: %d\n", movieCollectionUID.cid, movieCollectionUID.mid);
+    }
+
+    //TODO remove execute method and create views
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        doWork(request);
     }
 }

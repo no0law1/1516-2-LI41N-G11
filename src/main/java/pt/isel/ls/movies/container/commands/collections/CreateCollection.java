@@ -3,8 +3,9 @@ package pt.isel.ls.movies.container.commands.collections;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Collection;
+import pt.isel.ls.movies.view.collection.CreatedCollectionViewHtml;
+import pt.isel.ls.movies.view.collection.CreatedCollectionView;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class CreateCollection extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         int id;
 
         String name = request.getParameter("name");
@@ -30,6 +31,9 @@ public class CreateCollection extends Command {
             id = CollectionDAO.createCollection(connection, collection);
         }
 
-        System.out.printf("Collection id: %d\n", id);
+        collection.setId(id);
+
+        views.put("text/html", new CreatedCollectionViewHtml(collection));
+        views.put("text/plain", new CreatedCollectionView(collection));
     }
 }

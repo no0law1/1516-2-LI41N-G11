@@ -159,8 +159,8 @@ public class Router {
             Response response = Response.create(resp.getWriter());
             try {
                 router.get(request).execute(request, response);
-                //TODO set response content type
                 //TODO set response charset
+                resp.setContentType(response.getContentType());
                 resp.setStatus(200);
             } catch (Exception e) {
                 e.printStackTrace();

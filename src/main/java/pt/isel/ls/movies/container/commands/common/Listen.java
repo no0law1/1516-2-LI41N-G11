@@ -16,7 +16,7 @@ public class Listen extends Command {
     }
 
     @Override
-    public void execute(Request request, Response response) throws Exception {
+    public void doWork(Request request) throws Exception {
         int port = 8080;
         if(request.getParameter("port") != null){
             port = Integer.valueOf(request.getParameter("port"));
@@ -33,5 +33,11 @@ public class Listen extends Command {
         server.join();
         System.out.println("Server is stopped, bye");
         System.exit(0);
+    }
+
+
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        doWork(request);
     }
 }
