@@ -3,6 +3,7 @@ package pt.isel.ls.movies.view.collection;
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.utils.common.Writable;
 import pt.isel.ls.utils.html.HtmlBootstrap;
+import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 import pt.isel.ls.utils.html.HtmlElem;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Html view of a set of {@link Collection}
  */
-public class CollectionsViewHtml extends HtmlBootstrap {
+public class CollectionsViewHtml extends HtmlBootstrapWithHomeButton {
 
     public CollectionsViewHtml(List<Collection> collections) {
         super("Collections",
@@ -28,12 +29,6 @@ public class CollectionsViewHtml extends HtmlBootstrap {
                         ),
                         getList(collections)
                 ).withAttr("class", "table table-striped")
-                        .withAttr("style", "width:80%;margin:20px auto;"),
-                btnGroupJustified(
-                        btnGroup(a("/", "Home")
-                                .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                ).withAttr("style", "width:80%;margin:20px auto;")
-                        .withAttr("class", "text-left")
         );
     }
 

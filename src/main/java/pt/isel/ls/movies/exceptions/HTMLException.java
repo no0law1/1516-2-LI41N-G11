@@ -5,18 +5,25 @@ package pt.isel.ls.movies.exceptions;
  */
 public class HTMLException extends Exception{
     private int htmlErrorCode;
+    private String errorTitle;
 
-    public HTMLException(int htmlErrorCode, String message){
+    public HTMLException(int htmlErrorCode, String errorTitle, String message){
         super(message);
         this.htmlErrorCode = htmlErrorCode;
+        this.errorTitle = errorTitle;
     }
 
-    public HTMLException(int htmlErrorCode, String message, Throwable throwable){
+    public HTMLException(int htmlErrorCode, String errorTitle, String message, Throwable throwable){
         super(message, throwable);
         this.htmlErrorCode = htmlErrorCode;
+        this.errorTitle = errorTitle;
     }
 
     public int getHtmlErrorCode() {
         return htmlErrorCode;
+    }
+
+    public String getErrorTitle() {
+        return errorTitle;
     }
 }

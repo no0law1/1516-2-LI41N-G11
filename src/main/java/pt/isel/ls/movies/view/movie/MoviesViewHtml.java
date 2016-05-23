@@ -3,6 +3,7 @@ package pt.isel.ls.movies.view.movie;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.utils.common.Writable;
 import pt.isel.ls.utils.html.HtmlBootstrap;
+import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 import pt.isel.ls.utils.html.HtmlElem;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Html view of a set of {@link Movie}
  */
-public class MoviesViewHtml extends HtmlBootstrap {
+public class MoviesViewHtml extends HtmlBootstrapWithHomeButton {
 
     public MoviesViewHtml(List<Movie> movies) {
         super("Movies",
@@ -28,19 +29,13 @@ public class MoviesViewHtml extends HtmlBootstrap {
                                 )
                         ),
                         getList(movies)
-                ).withAttr("class", "table table-striped")
-                        .withAttr("style", "width:80%;margin:20px auto;"),
+                ).withAttr("class", "table table-striped"),
                 btnGroupJustified(
-                        btnGroup(
-                                a("/", "Home")
-                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-left"),
-                        btnGroup(text("")),
                         btnGroup(
                                 a("/tops/ratings", "Listing Tops")
                                         .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-right")
-                ).withAttr("style", "width:80%;margin:20px auto;")
+                                .withAttr("class", "text-left")
+                )
         );
     }
 

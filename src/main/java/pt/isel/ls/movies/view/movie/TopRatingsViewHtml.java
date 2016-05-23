@@ -1,11 +1,11 @@
 package pt.isel.ls.movies.view.movie;
 
-import pt.isel.ls.utils.html.HtmlBootstrap;
+import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 
 /**
  * View of base page of all top rating movies
  */
-public class TopRatingsViewHtml extends HtmlBootstrap {
+public class TopRatingsViewHtml extends HtmlBootstrapWithHomeButton {
 
     public TopRatingsViewHtml() {
         super("Listing Tops",
@@ -17,19 +17,14 @@ public class TopRatingsViewHtml extends HtmlBootstrap {
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default")),
                         btnGroup(a("/tops/5/reviews/higher/count", "Most Reviewed Movies")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                ).withAttr("style", "width:80%;margin:20px auto;"),
+                ),
                 btnGroupJustified(
-                        btnGroup(
-                                a("/", "Home")
-                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-left"),
-                        btnGroup(text("")),
                         btnGroup(
                                 a("/movies", "Movies")
                                         .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-right")
+                                .withAttr("class", "text-left")
                                 .withAttr("style", "padding")
-                ).withAttr("style", "width:80%;margin:30px auto;")
+                )
         );
     }
 

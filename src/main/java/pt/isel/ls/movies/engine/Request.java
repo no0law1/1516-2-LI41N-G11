@@ -1,5 +1,8 @@
 package pt.isel.ls.movies.engine;
 
+import pt.isel.ls.movies.exceptions.BadParameterFormatException;
+import pt.isel.ls.movies.exceptions.NoDataException;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -48,6 +51,15 @@ public class Request implements IRequest {
 
     public String getParameter(String key) throws UnsupportedEncodingException {
         return getParameterOrDefault(key, null);
+    }
+
+    public int getIntParameter(String key) throws BadParameterFormatException, UnsupportedEncodingException {
+        try {
+            return Integer.parseInt(getParameter(key));
+        }
+        catch(NumberFormatException e){
+            throw new BadParameterFormatException("Bad format for parameter: " + key);
+        }
     }
 
     public String getParameterOrDefault(String key, String defaultValue) throws UnsupportedEncodingException {

@@ -5,10 +5,10 @@ package pt.isel.ls.movies.exceptions;
  */
 public class MethodNotAllowedException extends HTMLException {
     public MethodNotAllowedException(String message){
-        super(405, message);
+        super(405, "Method Not Allowed", message);
     }
 
     public MethodNotAllowedException(String message, Throwable throwable){
-        super(405, message, throwable);
+        super(405, "Method Not Allowed", message, throwable);
     }
 }

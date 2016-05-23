@@ -9,6 +9,7 @@ import pt.isel.ls.utils.html.HtmlPage;
  */
 public class SingleRatingViewHtml extends Html {
 
+    //TODO: Change to Bootstrap
     public SingleRatingViewHtml(Rating rating) {
         super(new HtmlPage("Movie " + rating.getMid(),
                 h1(text("Rating: " + rating.getVal())),

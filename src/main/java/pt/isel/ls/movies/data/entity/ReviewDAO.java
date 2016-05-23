@@ -1,7 +1,7 @@
 package pt.isel.ls.movies.data.entity;
 
 import pt.isel.ls.movies.data.exceptions.InsertException;
-import pt.isel.ls.movies.data.exceptions.NoDataException;
+import pt.isel.ls.movies.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.model.Review;
 

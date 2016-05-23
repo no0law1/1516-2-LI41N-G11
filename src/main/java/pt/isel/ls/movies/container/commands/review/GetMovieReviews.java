@@ -30,7 +30,7 @@ public class GetMovieReviews extends Command {
             reviews = ReviewDAO.getReviews(connection, mid);
         }
 
-        views.put("text/html", new ReviewsViewHtml(reviews));
+        views.put("text/html", new ReviewsViewHtml(mid, reviews));
         views.put("text/plain", new ReviewsView(reviews));
     }
 }

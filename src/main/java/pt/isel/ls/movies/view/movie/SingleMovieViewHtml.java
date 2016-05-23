@@ -4,6 +4,7 @@ import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.utils.common.Writable;
 import pt.isel.ls.utils.html.HtmlBootstrap;
+import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 import pt.isel.ls.utils.html.HtmlElem;
 
 import java.util.List;
@@ -11,16 +12,14 @@ import java.util.List;
 /**
  * Html view of a {@link Movie}
  */
-public class SingleMovieViewHtml extends HtmlBootstrap {
+public class SingleMovieViewHtml extends HtmlBootstrapWithHomeButton {
 
     public SingleMovieViewHtml(Movie movie) {
         super(movie.getTitle(),
                 h1(text(movie.getTitle()))
                         .withAttr("class", "text-center"),
-                h3(text("<b>Release Year:</b> " + movie.getReleaseYear()))
-                        .withAttr("style", "width:80%;margin:20px auto;"),
-                h3(text("<b>Genre:</b> " + movie.getGenre()))
-                        .withAttr("style", "width:80%;margin:20px auto;"),
+                h3(text("<b>Release Year:</b> " + movie.getReleaseYear())),
+                h3(text("<b>Genre:</b> " + movie.getGenre())),
                 table(
                         new HtmlElem("thead",
                                 tr(
@@ -32,8 +31,7 @@ public class SingleMovieViewHtml extends HtmlBootstrap {
                         ),
                         getList(movie.getReviews())
                 )
-                        .withAttr("class", "table table-striped")
-                        .withAttr("style", "width:80%;margin:20px auto;"),
+                        .withAttr("class", "table table-striped"),
                 btnGroupJustified(
                         btnGroup(
                                 a("/movies", "Movies")
@@ -44,7 +42,7 @@ public class SingleMovieViewHtml extends HtmlBootstrap {
                                 a("/movies/" + movie.getId() + "/ratings", "Ratings")
                                         .withAttr("role", "btn").withAttr("class", "btn btn-default"))
                                 .withAttr("class", "text-right")
-                ).withAttr("style", "width:80%;margin:20px auto;")
+                )
         );
     }
 

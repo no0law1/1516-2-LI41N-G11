@@ -2,12 +2,13 @@ package pt.isel.ls.movies.view.collection;
 
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.utils.html.HtmlBootstrap;
+import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 import pt.isel.ls.utils.html.HtmlElem;
 
 /**
  * Html view of a {@link Collection}
  */
-public class SingleCollectionViewHtml extends HtmlBootstrap {
+public class SingleCollectionViewHtml extends HtmlBootstrapWithHomeButton {
 
     public SingleCollectionViewHtml(Collection collection) {
         super("Collections",
@@ -24,13 +25,11 @@ public class SingleCollectionViewHtml extends HtmlBootstrap {
                                 )
                         ),
                         getList(collection)
-                ).withAttr("class", "table table-striped")
-                        .withAttr("style", "width:80%;margin:20px auto;"),
+                ).withAttr("class", "table table-striped"),
                 btnGroupJustified(
                         btnGroup(a("/collections", "Collections")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                ).withAttr("style", "width:80%;margin:20px auto;")
-                        .withAttr("class", "text-left")
+                ).withAttr("class", "text-left")
         );
     }
 

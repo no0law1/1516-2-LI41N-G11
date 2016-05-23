@@ -45,7 +45,7 @@ public class Html implements HttpContent {
         return new HtmlElem("h4", c);
     }
 
-    public static Writable h5(Writable... c) {
+    public static HtmlElem h5(Writable... c) {
         return new HtmlElem("h5", c);
     }
 

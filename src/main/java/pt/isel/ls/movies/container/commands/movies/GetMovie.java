@@ -23,7 +23,7 @@ public class GetMovie extends Command {
     @Override
     public void doWork(Request request) throws Exception {
         Movie movie;
-        int mid = Integer.parseInt(request.getParameter("mid"));
+        int mid = request.getIntParameter("mid");
 
         try(Connection connection = dataSource.getConnection()){
             movie = MovieDAO.getMovie(connection, mid);

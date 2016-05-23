@@ -5,10 +5,10 @@ package pt.isel.ls.movies.exceptions;
  */
 public class PathNotFoundException extends HTMLException {
     public PathNotFoundException(String message){
-        super(404, message);
+        super(404, "Path not Found", message);
     }
 
     public PathNotFoundException(String message, Throwable throwable){
-        super(404, message, throwable);
+        super(404, "Path not Found", message, throwable);
     }
 }

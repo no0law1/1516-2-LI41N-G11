@@ -2,35 +2,54 @@ package pt.isel.ls.movies.view.review;
 
 import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.utils.common.CompositeWritable;
-import pt.isel.ls.utils.html.Html;
-import pt.isel.ls.utils.html.HtmlElem;
-import pt.isel.ls.utils.html.HtmlPage;
+import pt.isel.ls.utils.html.*;
 
 import java.util.List;
 
 /**
  * Html view of a set of {@link Review}
  */
-public class ReviewsViewHtml extends Html {
+public class ReviewsViewHtml extends HtmlBootstrapWithHomeButton {
 
-    public ReviewsViewHtml(List<Review> reviews) {
-        HtmlElem div = new HtmlElem("div");
+    public ReviewsViewHtml(int mid, List<Review> reviews) {
+        super("reviews",
+                h1(text("Movie Reviews"))
+                        .withAttr("class", "text-center"),
+                table(
+                        new HtmlElem("thead",
+                                tr(
+                                        th(text("ID")),
+                                        th(text("Reviewer")),
+                                        th(text("Review Summary")),
+                                        th(text("Rating")),
+                                        th(text(""))
+                                )),
+                        getList(reviews)
+                )
+                        .withAttr("class", "table table-striped"),
+                btnGroupJustified(
+                        btnGroup(a("/movies/" + mid, "Movie")
+                                .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                ).withAttr("class", "text-left")
+        );
+    }
+
+    private static HtmlElem getList(List<Review> reviews) {
+        HtmlElem div = new HtmlElem("tbody");
         reviews.forEach(
                 review -> div.withContent(
                         tr(
-                                td(a("/movies/" + review.getMid() + "/reviews/" + review.getId(), "Review: " + review.getId())),
-                                td(text(review.getReviewerName())),
-                                td(text(String.valueOf(review.getReview()))),
-                                td(text(String.valueOf(review.getRating())))
+                                td(text(String.valueOf(review.getId()))),
+                                td(text(String.valueOf(review.getReviewerName()))),
+                                td(text(String.valueOf(review.getReviewSummary()))),
+                                td(text(String.valueOf(review.getRating()))),
+                                td(
+                                        btn(a("/movies/" + review.getMid() + "/reviews/" + review.getId(), "See more"))
+                                                .withAttr("class", "btn-link")
+                                )
                         ))
         );
-        HtmlPage page = new HtmlPage("Reviews",
-                table(tr(
-                        th(text("ID")), th(text("Reviewer")), th(text("Review")), th(text("Rating"))
-                        ), div
-                ).withAttr("style", "width:50%").withAttr("border", "5")
-        );
-        _content = new CompositeWritable(page);
+        return div;
     }
 
 }

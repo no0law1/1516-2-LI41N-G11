@@ -4,6 +4,7 @@ import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.exceptions.MethodNotAllowedException;
 import pt.isel.ls.movies.exceptions.PathNotFoundException;
 import pt.isel.ls.movies.exceptions.HTMLException;
+import pt.isel.ls.movies.view.errors.ErrorView;
 import pt.isel.ls.utils.FileUtils;
 
 import javax.servlet.ServletException;
@@ -168,9 +169,11 @@ public class Router {
                 resp.setStatus(200);
             }
             catch (HTMLException e){
+                new ErrorView(e.getHtmlErrorCode(), e.getErrorTitle(), e.getMessage()).writeTo(resp.getWriter());
                 resp.setStatus(e.getHtmlErrorCode());
             }
             catch (Exception e) {
+                new ErrorView(500, "Internal Server Error", e.getMessage()).writeTo(resp.getWriter());
                 resp.setStatus(500);
                 e.printStackTrace();
             }

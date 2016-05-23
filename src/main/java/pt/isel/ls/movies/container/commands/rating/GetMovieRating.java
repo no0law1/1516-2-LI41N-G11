@@ -30,7 +30,7 @@ public class GetMovieRating extends Command {
             ratings = RatingDAO.getMovieRatings(connection, mid);
         }
 
-        views.put("text/html", new RatingsViewHtml(ratings));
+        views.put("text/html", new RatingsViewHtml(mid, ratings));
         views.put("text/plain", new RatingsView(ratings));
     }
 }
