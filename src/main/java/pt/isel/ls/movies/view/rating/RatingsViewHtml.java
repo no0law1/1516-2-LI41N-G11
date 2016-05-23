@@ -28,13 +28,6 @@ public class RatingsViewHtml extends HtmlBootstrap {
                         .withAttr("style", "width:60%;margin:20px auto;"),
                 h2(text("<b>Average:</b> " + getAverage(ratings)))
                         .withAttr("style", "width:60%;margin:20px auto;")
-                /*,
-                btnGroupJustified(
-                        btnGroup(
-                                a("/#", "Movie")
-                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-left")
-                ).withAttr("style", "width:60%;margin:20px auto;")*/
         );
     }
 

@@ -200,18 +200,13 @@ public class MovieDAO {
         return getMostReviewedMovies(connection, 1).get(0);
     }
 
-    /**
-     * Gets from the database the {@code n} movies with the most reviews.
-     *
-     * @param n number of movies
-     * @return the detail for the {@code n} movies with the lowest average rating.
-     */
-    public static List<Movie> getMostReviewedMovies(Connection connection, int n) throws Exception {
+    private static List<Movie> getReviewedMovies(Connection connection, int n, boolean descNotAsc) throws Exception {
+        String sorting = descNotAsc ? "desc" : "asc";
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select movie.id, title, release_year, genre\n" +
-                        "\tfrom movie join review on movie.id=mid\n" +
+                        "\tfrom movie left join review on movie.id=mid\n" +
                         "\tgroup by movie.id\n" +
-                        "\torder by count(mid) desc, release_year desc, title asc\n" +
+                        "\torder by count(mid) " + sorting + ", release_year " + sorting + ", title " + sorting + "\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -225,6 +220,26 @@ public class MovieDAO {
             movies.add(new Movie(id, title, releaseYear, genre));
         }
         return movies;
+    }
+
+    /**
+     * Gets from the database the {@code n} movies with the most reviews.
+     *
+     * @param n number of movies
+     * @return the detail for the {@code n} movies with the lowest average rating.
+     */
+    public static List<Movie> getMostReviewedMovies(Connection connection, int n) throws Exception {
+        return getReviewedMovies(connection, n, false);
+    }
+
+    /**
+     * Gets from the database the {@code n} movies with the most reviews.
+     *
+     * @param n number of movies
+     * @return the detail for the {@code n} movies with the lowest average rating.
+     */
+    public static List<Movie> getLeastReviewedMovies(Connection connection, int n) throws Exception {
+        return getReviewedMovies(connection, n, true);
     }
 
     public static List<Movie> getMoviesOfCollection(Connection connection, int cid) throws SQLException {

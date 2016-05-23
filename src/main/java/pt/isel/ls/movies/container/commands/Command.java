@@ -35,5 +35,6 @@ public abstract class Command implements ICommand {
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
         response.setContentType(request.getHeaderOrDefault("accept", "text/html"));
         views.get(response.getContentType()).writeTo(response.getWriter());
+        response.getWriter().flush();
     }
 }

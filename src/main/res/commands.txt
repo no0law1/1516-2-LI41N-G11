@@ -8,6 +8,7 @@ GET /tops/ratings/lower/average;movies.tops.GetLowestRatedMovie;;Gets the movie 
 GET /tops/{n}/ratings/lower/average;movies.tops.GetLowestRatedMovies;;Gets the n movies with the lowest average rating
 GET /tops/reviews/higher/count;movies.tops.GetMostReviewedMovie;;Gets the movies with the most reviews
 GET /tops/{n}/reviews/higher/count;movies.tops.GetMostReviewedMovies;;Gets the n movies with the most reviews
+GET /tops/{n}/reviews/lower/count;movies.tops.GetLeastReviewedMovies;;Gets the n movies with the least reviews
 POST /movies/{mid}/ratings;rating.PostRating;rating=?;Posts a movie rating
 GET /movies/{mid}/ratings;rating.GetMovieRating;;Gets the rating information for a movie, such as the rating average and the number of votes for each rating value
 POST /movies/{mid}/reviews;review.PostReview;reviewerName=?&reviewSummary=?&review=?&rating=?;Creates a review for a movie
