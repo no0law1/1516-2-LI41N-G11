@@ -1,38 +1,35 @@
 package pt.isel.ls.movies.view.movie;
 
-import pt.isel.ls.utils.html.HtmlElem;
-import pt.isel.ls.utils.html.HtmlPage;
+import pt.isel.ls.utils.html.HtmlBootstrap;
 
 /**
  * View of base page of all top rating movies
  */
-public class TopRatingsViewHtml extends HtmlPage {
+public class TopRatingsViewHtml extends HtmlBootstrap {
 
     public TopRatingsViewHtml() {
         super("Listing Tops",
-                table(
-                        tr(
-                                td(
-                                        form("GET", "/tops/5/ratings/higher/average",
-                                                new HtmlElem("input")
-                                                        .withAttr("type", "submit")
-                                                        .withAttr("value", "Movies with highest average rating")))
-                        ),
-                        tr(
-                                td(
-                                        form("GET", "/tops/5/ratings/lower/average",
-                                                new HtmlElem("input")
-                                                        .withAttr("type", "submit")
-                                                        .withAttr("value", "Movies with lowest average rating")))
-                        ),
-                        tr(
-                                td(
-                                        form("GET", "/tops/5/reviews/higher/count",
-                                                new HtmlElem("input")
-                                                        .withAttr("type", "submit")
-                                                        .withAttr("value", "Most Reviewed Movies")))
-                        )
-                )
+                h1(text("Tops")).withAttr("class", "text-center"),
+                btnGroupJustified(
+                        btnGroup(a("/tops/5/ratings/higher/average", "Movies with highest average rating")
+                                .withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                        btnGroup(a("/tops/5/ratings/lower/average", "Movies with lowest average rating")
+                                .withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                        btnGroup(a("/tops/5/reviews/higher/count", "Most Reviewed Movies")
+                                .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                ).withAttr("style", "width:80%;margin:20px auto;"),
+                btnGroupJustified(
+                        btnGroup(
+                                a("/", "Home")
+                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                                .withAttr("class", "text-left"),
+                        btnGroup(text("")),
+                        btnGroup(
+                                a("/movies", "Movies")
+                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                                .withAttr("class", "text-right")
+                                .withAttr("style", "padding")
+                ).withAttr("style", "width:80%;margin:30px auto;")
         );
     }
 

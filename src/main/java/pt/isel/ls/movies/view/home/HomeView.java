@@ -11,7 +11,7 @@ public class HomeView extends HtmlBootstrap {
         super("Welcome",
                 h1(text("Welcome to the Movie Database"))
                         .withAttr("class", "text-center")
-                        .withAttr("style", "margin-top:10px"),
+                        .withAttr("style", "margin-top:20px"),
                 btnGroupJustified(
                         btnGroup(a("/collections", "Collections")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default")),
@@ -19,10 +19,10 @@ public class HomeView extends HtmlBootstrap {
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default")),
                         btnGroup(a("/tops/ratings", "Listing Tops")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                ).withAttr("style", "margin-top:10px"),
+                ).withAttr("style", "width:80%;margin:20px auto;"),
                 p(text("Make yourself at home"))
                         .withAttr("class", "text-center")
-                        .withAttr("style", "margin-top:10px")
+                        .withAttr("style", "margin-top:20px")
         );
     }
 

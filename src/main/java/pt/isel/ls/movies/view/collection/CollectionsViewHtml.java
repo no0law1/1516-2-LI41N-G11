@@ -13,7 +13,7 @@ import java.util.List;
 public class CollectionsViewHtml extends HtmlBootstrap {
 
     public CollectionsViewHtml(List<Collection> collections) {
-        super("Movies",
+        super("Collections",
                 h1(text("Collections"))
                         .withAttr("class", "text-center")
                         .withAttr("style", "margin-top:20px"),
@@ -28,7 +28,12 @@ public class CollectionsViewHtml extends HtmlBootstrap {
                         ),
                         getList(collections)
                 ).withAttr("class", "table table-striped")
-                        .withAttr("style", "width:80%;margin:20px auto;")
+                        .withAttr("style", "width:80%;margin:20px auto;"),
+                btnGroupJustified(
+                        btnGroup(a("/", "Home")
+                                .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                ).withAttr("style", "width:80%;margin:20px auto;")
+                        .withAttr("class", "text-left")
         );
     }
 

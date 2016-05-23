@@ -1,40 +1,64 @@
 package pt.isel.ls.movies.view.movie;
 
 import pt.isel.ls.movies.model.Movie;
-import pt.isel.ls.utils.html.Html;
+import pt.isel.ls.utils.common.Writable;
+import pt.isel.ls.utils.html.HtmlBootstrap;
 import pt.isel.ls.utils.html.HtmlElem;
-import pt.isel.ls.utils.html.HtmlPage;
 
 import java.util.List;
 
 /**
  * Html view of a set of {@link Movie}
  */
-public class MoviesViewHtml extends Html {
+public class MoviesViewHtml extends HtmlBootstrap {
 
     public MoviesViewHtml(List<Movie> movies) {
-        HtmlElem div = new HtmlElem("div");
-        movies.forEach(
-                movie -> div.withContent(
-                        tr(
-                                td(
-                                        form("GET", "/movies/" + movie.getId(),
-                                                new HtmlElem("input")
-                                                        .withAttr("type", "submit")
-                                                        .withAttr("value", "Movie: " + movie.getId()))
-                                ),
-                                td(text(movie.getTitle())),
-                                td(text(String.valueOf(movie.getReleaseYear()))),
-                                td(text(movie.getGenre()))
-                        ))
-        );
-
-        _content = new HtmlPage("Movies",
-                table(tr(
-                        th(text("ID")), th(text("Title")), th(text("Release Year")), th(text("Genre"))
-                        ), div
-                ).withAttr("style", "width:50%").withAttr("border", "5")
+        super("Movies",
+                h1(text("Movies"))
+                        .withAttr("class", "text-center")
+                        .withAttr("style", "margin-top:20px"),
+                table(
+                        new HtmlElem("thead",
+                                tr(
+                                        th(text("ID")),
+                                        th(text("Title")),
+                                        th(text("Release Year")),
+                                        th(text("Genre")),
+                                        th(text(""))
+                                )
+                        ),
+                        getList(movies)
+                ).withAttr("class", "table table-striped")
+                        .withAttr("style", "width:80%;margin:20px auto;"),
+                btnGroupJustified(
+                        btnGroup(
+                                a("/", "Home")
+                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                                .withAttr("class", "text-left"),
+                        btnGroup(text("")),
+                        btnGroup(
+                                a("/tops/ratings", "Listing Tops")
+                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                                .withAttr("class", "text-right")
+                ).withAttr("style", "width:80%;margin:20px auto;")
         );
     }
 
+    private static Writable getList(List<Movie> movies) {
+        HtmlElem div = new HtmlElem("tbody");
+        movies.forEach(
+                movie -> div.withContent(
+                        tr(
+                                td(text("Movie " + movie.getId())),
+                                td(text(movie.getTitle())),
+                                td(text(String.valueOf(movie.getReleaseYear()))),
+                                td(text(movie.getGenre())),
+                                td(
+                                        btn(a("/movies/" + movie.getId(), "See more"))
+                                                .withAttr("class", "btn-link")
+                                )
+                        ))
+        );
+        return div;
+    }
 }
