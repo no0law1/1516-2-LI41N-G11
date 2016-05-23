@@ -3,6 +3,7 @@ package pt.isel.ls.movies.engine;
 import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.exceptions.MethodNotAllowedException;
 import pt.isel.ls.movies.exceptions.PathNotFoundException;
+import pt.isel.ls.movies.exceptions.HTMLException;
 import pt.isel.ls.utils.FileUtils;
 
 import javax.servlet.ServletException;
@@ -166,11 +167,8 @@ public class Router {
                 resp.setContentType(response.getContentType());
                 resp.setStatus(200);
             }
-            catch (MethodNotAllowedException e){
-                resp.setStatus(405);
-            }
-            catch (PathNotFoundException | UnsupportedEncodingException e){
-                resp.setStatus(404);
+            catch (HTMLException e){
+                resp.setStatus(e.getHtmlErrorCode());
             }
             catch (Exception e) {
                 resp.setStatus(500);
