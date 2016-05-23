@@ -1,6 +1,7 @@
 package pt.isel.ls.movies.engine;
 
 import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.view.errors.NotFoundHtml;
 import pt.isel.ls.utils.FileUtils;
 
 import javax.servlet.ServletException;
@@ -163,6 +164,7 @@ public class Router {
                 resp.setContentType(response.getContentType());
                 resp.setStatus(200);
             } catch (Exception e) {
+                new NotFoundHtml().writeTo(resp.getWriter());
                 resp.setStatus(404);
                 e.printStackTrace();
             }

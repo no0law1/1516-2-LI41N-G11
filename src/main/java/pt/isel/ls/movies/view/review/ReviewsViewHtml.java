@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class ReviewsViewHtml extends Html {
 
+    //TODO: Change to bootstrap
     public ReviewsViewHtml(List<Review> reviews) {
         HtmlElem div = new HtmlElem("div");
         reviews.forEach(
