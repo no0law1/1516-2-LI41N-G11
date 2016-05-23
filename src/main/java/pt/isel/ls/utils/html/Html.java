@@ -33,11 +33,11 @@ public class Html implements HttpContent {
         return new HtmlElem("h1", c);
     }
 
-    public static Writable h2(Writable... c) {
+    public static HtmlElem h2(Writable... c) {
         return new HtmlElem("h2", c);
     }
 
-    public static Writable h3(Writable... c) {
+    public static HtmlElem h3(Writable... c) {
         return new HtmlElem("h3", c);
     }
 

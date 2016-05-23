@@ -3,6 +3,7 @@ package pt.isel.ls.movies.data.entity;
 import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.data.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Movie;
+import pt.isel.ls.movies.model.Review;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -112,7 +113,8 @@ public class MovieDAO {
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
-            return new Movie(id, title, releaseYear, genre);
+            List<Review> reviews = ReviewDAO.getReviews(connection, id);
+            return new Movie(id, title, releaseYear, genre, reviews);
         }
         throw new NoDataException("There is no such movie with the id: " + id);
     }

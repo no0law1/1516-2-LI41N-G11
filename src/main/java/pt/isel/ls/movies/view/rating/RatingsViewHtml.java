@@ -1,43 +1,62 @@
 package pt.isel.ls.movies.view.rating;
 
 import pt.isel.ls.movies.model.Rating;
-import pt.isel.ls.utils.common.CompositeWritable;
-import pt.isel.ls.utils.html.Html;
+import pt.isel.ls.utils.html.HtmlBootstrap;
 import pt.isel.ls.utils.html.HtmlElem;
-import pt.isel.ls.utils.html.HtmlPage;
 
 import java.util.List;
 
 /**
  * Html view of a set of {@link Rating}
  */
-public class RatingsViewHtml extends Html {
-
-    private float average = 0;
-    private int count = 0;
+public class RatingsViewHtml extends HtmlBootstrap {
 
     public RatingsViewHtml(List<Rating> ratings) {
-        HtmlElem div = new HtmlElem("div");
+        super("Ratings",
+                h1(text("Movie Ratings"))
+                        .withAttr("class", "text-center"),
+                table(
+                        new HtmlElem("thead",
+                                tr(
+                                        th(text("Movie ID")),
+                                        th(text("Value")),
+                                        th(text("Count"))
+                                )),
+                        getList(ratings)
+                )
+                        .withAttr("class", "table table-striped")
+                        .withAttr("style", "width:60%;margin:20px auto;"),
+                h2(text("<b>Average:</b> " + getAverage(ratings)))
+                        .withAttr("style", "width:60%;margin:20px auto;")
+                /*,
+                btnGroupJustified(
+                        btnGroup(
+                                a("/#", "Movie")
+                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                                .withAttr("class", "text-left")
+                ).withAttr("style", "width:60%;margin:20px auto;")*/
+        );
+    }
+
+    private static float getAverage(List<Rating> ratings) {
+        float average = 0, count = 0;
+        for (Rating rating : ratings) {
+            average += rating.getVal() * rating.getCount();
+            count += rating.getCount();
+        }
+        return average / count;
+    }
+
+    private static HtmlElem getList(List<Rating> ratings) {
+        HtmlElem div = new HtmlElem("tbody");
         ratings.forEach(
-                rating -> {
-                    average += rating.getVal() * rating.getCount();
-                    count += rating.getCount();
-                    div.withContent(
-                            tr(
-                                    td(text(String.valueOf(rating.getMid()))),
-                                    td(text(String.valueOf(rating.getVal()))),
-                                    td(text(String.valueOf(rating.getCount())))
-                            ));
-                }
+                rating -> div.withContent(
+                        tr(
+                                td(text(String.valueOf(rating.getMid()))),
+                                td(text(String.valueOf(rating.getVal()))),
+                                td(text(String.valueOf(rating.getCount())))
+                        ))
         );
-        HtmlPage page = new HtmlPage("Ratings",
-                table(tr(
-                        th(text("Movie ID")), th(text("Value")), th(text("Count"))
-                        ),
-                        div
-                ).withAttr("style", "width:50%").withAttr("border", "5"),
-                h2(text("Average = " + average / count))
-        );
-        _content = new CompositeWritable(page);
+        return div;
     }
 }
