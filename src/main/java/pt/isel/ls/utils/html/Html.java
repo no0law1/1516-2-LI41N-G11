@@ -29,7 +29,7 @@ public class Html implements HttpContent {
         return new HtmlText(s);
     }
 
-    public static Writable h1(Writable... c) {
+    public static HtmlElem h1(Writable... c) {
         return new HtmlElem("h1", c);
     }
 
@@ -49,7 +49,7 @@ public class Html implements HttpContent {
         return new HtmlElem("h5", c);
     }
 
-    public static Writable p(Writable... c) {
+    public static HtmlElem p(Writable... c) {
         return new HtmlElem("p", c);
     }
 
@@ -82,11 +82,11 @@ public class Html implements HttpContent {
         return new HtmlElem("tr", c);
     }
 
-    public static Writable th(Writable... c) {
+    public static HtmlElem th(Writable... c) {
         return new HtmlElem("th", c);
     }
 
-    public static Writable td(Writable... c) {
+    public static HtmlElem td(Writable... c) {
         return new HtmlElem("td", c);
     }
 
@@ -98,8 +98,12 @@ public class Html implements HttpContent {
         return new HtmlElem("li", c);
     }
 
-    public static Writable a(String href, String t) {
+    public static HtmlElem a(String href, String t) {
         return new HtmlElem("a", text(t))
                 .withAttr("href", href);
+    }
+
+    public static Writable css(String link) {
+        return new HtmlElem("link").withAttr("rel", "stylesheet").withAttr("href", link);
     }
 }

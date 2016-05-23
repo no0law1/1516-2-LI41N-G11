@@ -163,6 +163,7 @@ public class Router {
                 resp.setContentType(response.getContentType());
                 resp.setStatus(200);
             } catch (Exception e) {
+                resp.setStatus(404);
                 e.printStackTrace();
             }
         }

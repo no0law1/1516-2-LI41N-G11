@@ -1,39 +1,51 @@
 package pt.isel.ls.movies.view.collection;
 
 import pt.isel.ls.movies.model.Collection;
-import pt.isel.ls.utils.common.CompositeWritable;
-import pt.isel.ls.utils.html.Html;
+import pt.isel.ls.utils.common.Writable;
+import pt.isel.ls.utils.html.HtmlBootstrap;
 import pt.isel.ls.utils.html.HtmlElem;
-import pt.isel.ls.utils.html.HtmlPage;
 
 import java.util.List;
 
 /**
  * Html view of a set of {@link Collection}
  */
-public class CollectionsViewHtml extends Html {
+public class CollectionsViewHtml extends HtmlBootstrap {
 
     public CollectionsViewHtml(List<Collection> collections) {
-        HtmlElem div = new HtmlElem("div");
+        super("Movies",
+                h1(text("Collections"))
+                        .withAttr("class", "text-center")
+                        .withAttr("style", "margin-top:20px"),
+                table(
+                        new HtmlElem("thead",
+                                tr(
+                                        th(text("ID")),
+                                        th(text("Name")),
+                                        th(text("Description")),
+                                        th(text(""))
+                                )
+                        ),
+                        getList(collections)
+                ).withAttr("class", "table table-striped")
+                        .withAttr("style", "width:80%;margin:20px auto;")
+        );
+    }
+
+    private static Writable getList(List<Collection> collections) {
+        HtmlElem div = new HtmlElem("tbody");
         collections.forEach(
                 collection -> div.withContent(
                         tr(
-                                td(
-                                        form("GET", "/collections/" + collection.getId(),
-                                                new HtmlElem("input")
-                                                        .withAttr("type", "submit")
-                                                        .withAttr("value", "Collection: " + collection.getId()))
-                                ),
+                                td(text("Collection " + collection.getId())),
                                 td(text(collection.getName())),
-                                td(text(collection.getDescription()))
+                                td(text(collection.getDescription())),
+                                td(
+                                        btn(a("/collections/" + collection.getId(), "See more"))
+                                                .withAttr("class", "btn-link")
+                                )
                         ))
         );
-        HtmlPage page = new HtmlPage("Movies",
-                table(tr(
-                        th(text("ID")), th(text("Name")), th(text("Description"))
-                        ), div
-                ).withAttr("style", "width:50%").withAttr("border", "5")
-        );
-        _content = new CompositeWritable(page);
+        return div;
     }
 }
