@@ -1,6 +1,8 @@
 package pt.isel.ls.movies.engine;
 
 import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.exceptions.MethodNotAllowedException;
+import pt.isel.ls.movies.exceptions.PathNotFoundException;
 import pt.isel.ls.movies.view.errors.NotFoundHtml;
 import pt.isel.ls.utils.FileUtils;
 
@@ -109,17 +111,18 @@ public class Router {
         return auxNode;
     }
 
-    public ICommand get(Request request) throws UnsupportedEncodingException {
+    public ICommand get(Request request) throws MethodNotAllowedException, PathNotFoundException,
+        UnsupportedEncodingException{
         Node node = methods.get(request.getMethod());
         if(node == null){
-            throw new UnsupportedOperationException("Method not found");
+            throw new MethodNotAllowedException("Method not found");
         }
         for (String name: request.getPath().split("/")) {
             if(name.isEmpty()) continue;
             Node auxNode = node.get(name);
             if(auxNode == null){
                 if(node.parameter == null) {
-                    throw new UnsupportedOperationException("Path not found");
+                    throw new PathNotFoundException("Path not found");
                 }
                 request.getParametersMap().put(node.parameter.getParameterName(), name);
                 node = node.parameter.node;
@@ -163,9 +166,16 @@ public class Router {
                 //TODO set response charset
                 resp.setContentType(response.getContentType());
                 resp.setStatus(200);
-            } catch (Exception e) {
+            }
+            catch (MethodNotAllowedException e){
+                resp.setStatus(405);
+            }
+            catch (PathNotFoundException | UnsupportedEncodingException e){
                 new NotFoundHtml().writeTo(resp.getWriter());
                 resp.setStatus(404);
+            }
+            catch (Exception e) {
+                resp.setStatus(500);
                 e.printStackTrace();
             }
         }
