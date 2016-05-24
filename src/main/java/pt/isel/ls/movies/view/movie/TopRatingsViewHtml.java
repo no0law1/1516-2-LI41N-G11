@@ -16,6 +16,8 @@ public class TopRatingsViewHtml extends HtmlBootstrapWithHomeButton {
                         btnGroup(a("/tops/5/ratings/lower/average", "Movies with lowest average rating")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default")),
                         btnGroup(a("/tops/5/reviews/higher/count", "Most Reviewed Movies")
+                                .withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                        btnGroup(a("/tops/5/reviews/lower/count", "Least Reviewed Movies")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default"))
                 ),
                 btnGroupJustified(
