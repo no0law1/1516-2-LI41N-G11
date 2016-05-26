@@ -29,7 +29,7 @@ public class GetLeastReviewedMovies extends Command {
             movies = MovieDAO.getLeastReviewedMovies(connection, n);
         }
 
-        views.put("text/html", new MoviesViewHtml(movies));
+        views.put("text/html", new MoviesViewHtml(movies, n, -1, 0));
         views.put("text/plain", new MoviesView(movies));
     }
 }

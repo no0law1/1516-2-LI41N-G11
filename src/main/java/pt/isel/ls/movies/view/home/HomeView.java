@@ -13,12 +13,9 @@ public class HomeView extends HtmlBootstrap {
                         .withAttr("class", "text-center")
                         .withAttr("style", "margin-top:20px"),
                 btnGroupJustified(
-                        btnGroup(a("/collections", "Collections")
-                                .withAttr("role", "btn").withAttr("class", "btn btn-default")),
-                        btnGroup(a("/movies", "Movies")
-                                .withAttr("role", "btn").withAttr("class", "btn btn-default")),
-                        btnGroup(a("/tops/ratings", "Listing Tops")
-                                .withAttr("role", "btn").withAttr("class", "btn btn-default"))
+                        btnGroup(a("/collections?top=5", "Collections").withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                        btnGroup(a("/movies?top=5", "Movies").withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                        btnGroup(a("/tops/ratings", "Tops").withAttr("role", "btn").withAttr("class", "btn btn-default"))
                 ),
                 p(text("Make yourself at home"))
                         .withAttr("class", "text-center")

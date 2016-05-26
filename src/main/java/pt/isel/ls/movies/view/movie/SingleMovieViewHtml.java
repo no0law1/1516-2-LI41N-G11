@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SingleMovieViewHtml extends HtmlBootstrapWithHomeButton {
 
-    public SingleMovieViewHtml(Movie movie) {
+    public SingleMovieViewHtml(Movie movie, List<Review> reviews, int count, int top, int skip) {
         super(movie.getTitle(),
                 h1(text(movie.getTitle()))
                         .withAttr("class", "text-center"),
@@ -29,20 +29,18 @@ public class SingleMovieViewHtml extends HtmlBootstrapWithHomeButton {
                                         th(text("Rating"))
                                 )
                         ),
-                        getList(movie.getReviews())
-                )
-                        .withAttr("class", "table table-striped"),
+                        getList(reviews)
+                ).withAttr("class", "table table-striped"),
+                pagingButtons("/movies/" + movie.getId(), null, count, top, skip),
                 btnGroupJustified(
                         btnGroup(
-                                a("/movies", "Movies")
-                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-left"),
+                                a("/movies?top=5", "Movies")
+                                        .withAttr("role", "btn").withAttr("class", "btn btn-default")),
                         btnGroup(text("")),
                         btnGroup(
                                 a("/movies/" + movie.getId() + "/ratings", "Ratings")
                                         .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-right")
-                )
+                ).withAttr("class", "text-left")
         );
     }
 
@@ -56,7 +54,7 @@ public class SingleMovieViewHtml extends HtmlBootstrapWithHomeButton {
                                 td(text(String.valueOf(review.getReviewSummary()))),
                                 td(text(String.valueOf(review.getRating()))),
                                 td(
-                                        btn(a("/movies/" + review.getMid() + "/reviews/" + review.getId(), "See more"))
+                                        btn(a("/movies/" + review.getMid() + "/reviews/" + review.getId() + "?top=5", "See more"))
                                                 .withAttr("class", "btn-link")
                                 )
                         ))

@@ -14,6 +14,14 @@ import java.util.List;
  */
 public class MovieDAO {
 
+    public static int getCount(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select count(*) from movie");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
+
     /**
      * Inserts a movie into the database
      *
@@ -113,8 +121,7 @@ public class MovieDAO {
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
-            List<Review> reviews = ReviewDAO.getReviews(connection, id);
-            return new Movie(id, title, releaseYear, genre, reviews);
+            return new Movie(id, title, releaseYear, genre);
         }
         throw new NoDataException("There is no such movie with the id: " + id);
     }
@@ -242,13 +249,18 @@ public class MovieDAO {
         return getReviewedMovies(connection, n, true);
     }
 
-    public static List<Movie> getMoviesOfCollection(Connection connection, int cid) throws SQLException {
+    public static List<Movie> getCollectionMovies(Connection connection, int cid) throws SQLException {
+        return getCollectionMovies(connection, cid, -1, 0);
+    }
+
+    public static List<Movie> getCollectionMovies(Connection connection, int cid, int top, int skip) throws SQLException {
         List<Movie> movies = new LinkedList<>();
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select movie.* from movie_collection join movie on mid=movie.id where cid=?");
         preparedStatement.setInt(1, cid);
         ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
+        for (int i=0; i<skip; i++) if(!resultSet.next()) return movies;
+        for (int i=0; resultSet.next() && (top < 0 || i < top); i++) {
             int id = resultSet.getInt(1);
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
@@ -257,6 +269,5 @@ public class MovieDAO {
         }
         return movies;
     }
-
 
 }

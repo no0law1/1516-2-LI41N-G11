@@ -2,9 +2,11 @@ package pt.isel.ls.movies.container.commands.collections;
 
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
+import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Collection;
+import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.collection.CollectionsView;
 import pt.isel.ls.movies.view.collection.CollectionsViewHtml;
 
@@ -24,15 +26,20 @@ public class GetCollections extends Command {
     public void doWork(Request request) throws Exception {
         List<Collection> collections;
 
+        int top = Integer.valueOf(request.getParameterOrDefault("top", "-1"));
+        int skip = Integer.valueOf(request.getParameterOrDefault("skip", "0"));
+
+        int count;
         try (Connection connection = dataSource.getConnection()) {
             collections = CollectionDAO.getCollections(
                     connection,
-                    Integer.valueOf(request.getParameterOrDefault("top", "-1")),
-                    Integer.valueOf(request.getParameterOrDefault("skip", "0"))
+                    top,
+                    skip
             );
+            count = CollectionDAO.getCount(connection);
         }
 
-        views.put("text/html", new CollectionsViewHtml(collections));
+        views.put("text/html", new CollectionsViewHtml(collections, count, top, skip));
         views.put("text/plain", new CollectionsView(collections));
     }
 }

@@ -11,22 +11,16 @@ public class Movie {
     private int releaseYear;
     private String genre;
 
-    private List<Review> reviews;
-
-    public Movie(int id, String title, int releaseYear, String genre){
-        this(id, title, releaseYear, genre, null);
-    }
 
     public Movie(String title, int releaseYear, String genre){
-        this(0, title, releaseYear, genre, null);
+        this(0, title, releaseYear, genre);
     }
 
-    public Movie(int id, String title, int releaseYear, String genre, List<Review> reviews) {
+    public Movie(int id, String title, int releaseYear, String genre) {
         this.id = id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.genre = genre;
-        this.reviews = reviews;
     }
 
     public int getId() {
@@ -43,10 +37,6 @@ public class Movie {
 
     public String getTitle() {
         return title;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
     }
 
     @Override

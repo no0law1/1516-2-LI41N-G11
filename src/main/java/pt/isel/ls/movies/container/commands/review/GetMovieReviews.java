@@ -26,11 +26,18 @@ public class GetMovieReviews extends Command {
         List<Review> reviews;
         int mid = Integer.parseInt(request.getParameter("mid"));
 
+        int top = Integer.valueOf(request.getParameterOrDefault("top", "-1"));
+        int skip = Integer.valueOf(request.getParameterOrDefault("skip", "0"));
+
+        int count;
         try (Connection connection = dataSource.getConnection()) {
-            reviews = ReviewDAO.getReviews(connection, mid);
+            reviews = ReviewDAO.getReviews(connection, mid,
+                    top,
+                    skip);
+            count = ReviewDAO.getCount(connection, mid);
         }
 
-        views.put("text/html", new ReviewsViewHtml(mid, reviews));
+        views.put("text/html", new ReviewsViewHtml(mid, reviews, count, top, skip));
         views.put("text/plain", new ReviewsView(reviews));
     }
 }

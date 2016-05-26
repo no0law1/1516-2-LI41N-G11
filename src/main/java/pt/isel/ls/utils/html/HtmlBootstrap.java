@@ -2,6 +2,8 @@ package pt.isel.ls.utils.html;
 
 import pt.isel.ls.utils.common.Writable;
 
+import javax.swing.text.html.HTML;
+
 
 public class HtmlBootstrap extends Html {
 
@@ -22,6 +24,37 @@ public class HtmlBootstrap extends Html {
         Writable bootstrapTheme = css("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css");
 
         return new HtmlElem("head", t, bootstrap, bootstrapTheme);
+    }
+
+    public static HtmlElem pagingButtons(String path, String parameters, int count, int top, int skip){
+        if(top == -1 || (skip <= 0 && count <= skip+top) ) return btnGroup(text(""));
+        String mpath = path + "?top="+top;
+        if(parameters != null){
+            mpath += "&" + parameters;
+        }
+        if(skip <= 0 && count > skip+top) {
+            return btnGroupJustified(
+                    btnGroup( a(mpath + "&skip=" + (skip+top), ">").withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                    btnGroup(text("")),
+                    btnGroup( a(mpath + "&skip=" + (count-(count%top == 0 ? 5 : count%top)), ">>").withAttr("role", "btn").withAttr("class", "btn btn-default"))
+            ).withAttr("class", "text-rigth");
+        }
+        if(skip > 0 && count <= skip+top) {
+            return btnGroupJustified(
+                    btnGroup( a(mpath + "&skip=0", "<<").withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                    btnGroup(text("")),
+                    btnGroup( a(mpath + "&skip=" + (skip-top < 0 ? 0 : skip-top), "<").withAttr("role", "btn").withAttr("class", "btn btn-default"))
+            ).withAttr("class", "text-rigth");
+        }
+        return btnGroupJustified(
+                btnGroup( a(mpath + "&skip=0", "<<").withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                btnGroup(text("")),
+                btnGroup( a(mpath + "&skip=" + (skip-top < 0 ? 0 : skip-top), "<").withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                btnGroup(text("")),
+                btnGroup( a(mpath + "&skip=" + (skip+top), ">").withAttr("role", "btn").withAttr("class", "btn btn-default")),
+                btnGroup(text("")),
+                btnGroup( a(mpath + "&skip=" + (count-(count%top == 0 ? 5 : count%top)), ">>").withAttr("role", "btn").withAttr("class", "btn btn-default"))
+        ).withAttr("class", "text-rigth");
     }
 
     public static HtmlElem btnGroupJustified(Writable... content) {

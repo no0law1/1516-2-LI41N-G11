@@ -1,5 +1,6 @@
 package pt.isel.ls.movies.view.collection;
 
+import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.utils.common.Writable;
 import pt.isel.ls.utils.html.HtmlBootstrap;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class CollectionsViewHtml extends HtmlBootstrapWithHomeButton {
 
-    public CollectionsViewHtml(List<Collection> collections) {
+    public CollectionsViewHtml(List<Collection> collections, int count, int top, int skip) {
         super("Collections",
                 h1(text("Collections"))
                         .withAttr("class", "text-center")
@@ -28,7 +29,8 @@ public class CollectionsViewHtml extends HtmlBootstrapWithHomeButton {
                                 )
                         ),
                         getList(collections)
-                ).withAttr("class", "table table-striped")
+                ).withAttr("class", "table table-striped"),
+                pagingButtons("/collections", null, count, top, skip)
         );
     }
 
@@ -41,7 +43,7 @@ public class CollectionsViewHtml extends HtmlBootstrapWithHomeButton {
                                 td(text(collection.getName())),
                                 td(text(collection.getDescription())),
                                 td(
-                                        btn(a("/collections/" + collection.getId(), "See more"))
+                                        btn(a("/collections/" + collection.getId() + "?top=5", "See more"))
                                                 .withAttr("class", "btn-link")
                                 )
                         ))

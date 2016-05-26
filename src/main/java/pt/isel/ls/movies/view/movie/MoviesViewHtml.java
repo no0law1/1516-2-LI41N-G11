@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class MoviesViewHtml extends HtmlBootstrapWithHomeButton {
 
-    public MoviesViewHtml(List<Movie> movies) {
+    public MoviesViewHtml(List<Movie> movies, int count, int top, int skip) {
         super("Movies",
                 h1(text("Movies"))
                         .withAttr("class", "text-center")
@@ -30,12 +30,11 @@ public class MoviesViewHtml extends HtmlBootstrapWithHomeButton {
                         ),
                         getList(movies)
                 ).withAttr("class", "table table-striped"),
+                pagingButtons("/movies", null, count, top, skip),
                 btnGroupJustified(
-                        btnGroup(
-                                a("/tops/ratings", "Listing Tops")
-                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-left")
-                )
+                        btnGroup( a("/tops/ratings", "Tops").withAttr("role", "btn").withAttr("class", "btn btn-default"))
+
+                ).withAttr("class", "text-left")
         );
     }
 
@@ -49,7 +48,7 @@ public class MoviesViewHtml extends HtmlBootstrapWithHomeButton {
                                 td(text(String.valueOf(movie.getReleaseYear()))),
                                 td(text(movie.getGenre())),
                                 td(
-                                        btn(a("/movies/" + movie.getId(), "See more"))
+                                        btn(a("/movies/" + movie.getId() + "?top=5", "See more"))
                                                 .withAttr("class", "btn-link")
                                 )
                         ))

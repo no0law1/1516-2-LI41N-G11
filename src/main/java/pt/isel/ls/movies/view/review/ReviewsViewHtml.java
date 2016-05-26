@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ReviewsViewHtml extends HtmlBootstrapWithHomeButton {
 
-    public ReviewsViewHtml(int mid, List<Review> reviews) {
+    public ReviewsViewHtml(int mid, List<Review> reviews, int count, int top, int skip) {
         super("reviews",
                 h1(text("Movie Reviews"))
                         .withAttr("class", "text-center"),
@@ -27,8 +27,9 @@ public class ReviewsViewHtml extends HtmlBootstrapWithHomeButton {
                         getList(reviews)
                 )
                         .withAttr("class", "table table-striped"),
+                pagingButtons("/movies", null, count, top, skip),
                 btnGroupJustified(
-                        btnGroup(a("/movies/" + mid, "Movie")
+                        btnGroup(a("/movies/" + mid + "?top=5", "Movie")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default"))
                 ).withAttr("class", "text-left")
         );

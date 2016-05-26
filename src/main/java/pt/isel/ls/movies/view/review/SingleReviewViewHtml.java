@@ -18,15 +18,13 @@ public class SingleReviewViewHtml extends HtmlBootstrapWithHomeButton {
                 h5(text("<b>Rating:</b> " + review.getRating())),
                 btnGroupJustified(
                         btnGroup(
-                                a("/movies/" + review.getMid(), "Movie")
-                                        .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-left"),
+                                a("/movies/" + review.getMid() + "?top=5", "Movie")
+                                        .withAttr("role", "btn").withAttr("class", "btn btn-default")),
                         btnGroup(text("")),
                         btnGroup(
-                                a("/movies/" + review.getMid() + "/reviews", "All Reviews")
+                                a("/movies/" + review.getMid() + "/reviews?top=5", "All Reviews")
                                         .withAttr("role", "btn").withAttr("class", "btn btn-default"))
-                                .withAttr("class", "text-right")
-                )
+                ).withAttr("class", "text-left")
         );
     }
 

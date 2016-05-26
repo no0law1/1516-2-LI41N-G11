@@ -40,16 +40,21 @@ public class GetMovieList extends Command{
     public void doWork(Request request) throws Exception {
         List<Movie> movies;
 
+        int top = Integer.valueOf(request.getParameterOrDefault("top", "-1"));
+        int skip = Integer.valueOf(request.getParameterOrDefault("skip", "0"));
+
+        int count;
         try (Connection connection = dataSource.getConnection()) {
             movies = MovieDAO.getMovies(
                     connection,
-                    Integer.valueOf(request.getParameterOrDefault("top", "-1")),
-                    Integer.valueOf(request.getParameterOrDefault("skip", "0")),
+                    top,
+                    skip,
                     wrapSortParameter(request.getParameterOrDefault("sortBy", null))
             );
+            count = MovieDAO.getCount(connection);
         }
 
-        views.put("text/html", new MoviesViewHtml(movies));
+        views.put("text/html", new MoviesViewHtml(movies, count, top, skip));
         views.put("text/plain", new MoviesView(movies));
     }
 }

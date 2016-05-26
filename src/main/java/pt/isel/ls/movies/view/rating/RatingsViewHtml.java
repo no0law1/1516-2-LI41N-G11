@@ -29,7 +29,7 @@ public class RatingsViewHtml extends HtmlBootstrapWithHomeButton {
                 h2(text("<b>Average:</b> " + getAverage(ratings))),
                 btnGroupJustified(
                         btnGroup(
-                                a("/movies/" + mid, "Movie")
+                                a("/movies/" + mid + "?top=5", "Movie")
                                         .withAttr("role", "btn").withAttr("class", "btn btn-default"))
                 ).withAttr("class", "text-left")
         );

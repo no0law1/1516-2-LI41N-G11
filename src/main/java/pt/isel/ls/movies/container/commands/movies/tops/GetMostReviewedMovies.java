@@ -30,7 +30,7 @@ public class GetMostReviewedMovies extends Command {
             movies = MovieDAO.getMostReviewedMovies(connection, n);
         }
 
-        views.put("text/html", new MoviesViewHtml(movies));
+        views.put("text/html", new MoviesViewHtml(movies, n, -1, 0));
         views.put("text/plain", new MoviesView(movies));
     }
 

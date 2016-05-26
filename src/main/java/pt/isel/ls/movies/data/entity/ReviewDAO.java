@@ -5,10 +5,7 @@ import pt.isel.ls.movies.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.model.Review;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +13,23 @@ import java.util.List;
  * review's Data Access Object
  */
 public class ReviewDAO {
+
+    public static int getCount(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select count(*) from review");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
+
+    public static int getCount(Connection connection, int mid) throws SQLException {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select count(*) from review WHERE mid = ?");
+        preparedStatement.setInt(1, mid);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
 
     /**
      * Submit a review of a specific movie to the database
@@ -54,13 +68,26 @@ public class ReviewDAO {
      * @return All reviews of a Movie
      */
     public static List<Review> getReviews(Connection connection, int mid) throws Exception {
+        return getReviews(connection, mid, -1, 0);
+    }
+
+    /**
+     * Gets all review from a movie from the database
+     *
+     * @param mid Unique identifier of a Movie
+     * @param top number of rows, -1 if all
+     * @param skip number of rows to skip
+     * @return All reviews of a Movie
+     */
+    public static List<Review> getReviews(Connection connection, int mid, int top, int skip) throws Exception {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select * from review where mid=?");
         preparedStatement.setInt(1, mid);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<Review> reviews = new LinkedList<>();
-        while(resultSet.next()){
+        for (int i=0; i<skip; i++) if(!resultSet.next()) return reviews;
+        for (int i=0; resultSet.next() && (top < 0 || i < top); i++){
             int id = resultSet.getInt(2);
             String reviewerName = resultSet.getString(3);
             String reviewSummary = resultSet.getString(4);

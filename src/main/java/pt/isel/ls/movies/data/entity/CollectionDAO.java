@@ -4,10 +4,7 @@ import pt.isel.ls.movies.data.exceptions.InsertException;
 import pt.isel.ls.movies.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Collection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +12,23 @@ import java.util.List;
  * Collection's Data Access Object
  */
 public class CollectionDAO {
+
+    public static int getCount(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select count(*) from collection");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
+
+    public static int getCount(Connection connection, int cid) throws SQLException {
+        PreparedStatement preparedStatement =
+                connection.prepareStatement("select count(*) from movie_collection WHERE cid = ?");
+        preparedStatement.setInt(1, cid);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
 
     /**
      * Inserts a new {@link Collection} to the database
@@ -58,7 +72,7 @@ public class CollectionDAO {
             String name = resultSet.getString(2);
             String description = resultSet.getString(3);
             Collection collection = new Collection(id, name, description);
-            collection.setMovies(MovieDAO.getMoviesOfCollection(connection, collection.getId()));
+            collection.setMovies(MovieDAO.getCollectionMovies(connection, collection.getId()));
             return collection;
         }
         throw new NoDataException("There is no such collection with the id: " + id);
