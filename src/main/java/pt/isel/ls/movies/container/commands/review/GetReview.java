@@ -24,8 +24,8 @@ public class GetReview extends Command {
     public void doWork(Request request) throws Exception {
 
         Review review;
-        int mid = Integer.parseInt(request.getParameter("mid"));
-        int id = Integer.parseInt(request.getParameter("rid"));
+        int mid = request.getIntParameter("mid");
+        int id = request.getIntParameter("rid");
 
         try (Connection connection = dataSource.getConnection()) {
             review = ReviewDAO.getReview(connection, new Review.ReviewUID(mid, id));

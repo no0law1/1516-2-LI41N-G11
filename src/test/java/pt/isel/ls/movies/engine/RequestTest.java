@@ -19,7 +19,7 @@ public class RequestTest {
         expected.put("rating", "5");
 
         String[] args = new String[]{"POST", "/movies/123", "name=Avengers&rating=5"};
-        Request request = Request.create(args);
+        Request request = Request.create(new ContextData(), args);
 
         assertEquals(expected.get("name"), request.getParameter("name"));
         assertEquals(expected.get("rating"), request.getParameter("rating"));
@@ -32,7 +32,7 @@ public class RequestTest {
         expected.put("accept-language", "en-gb");
 
         String[] args = new String[]{"GET", "/movies/123", "accept:text/plain|accept-language:en-gb"};
-        Request request = Request.create(args);
+        Request request = Request.create(new ContextData(), args);
 
         assertEquals(expected.get("accept"), request.getHeader("accept"));
         assertEquals(expected.get("accept-language"), request.getHeader("accept-language"));
@@ -45,7 +45,7 @@ public class RequestTest {
                 "/movies/123",
                 "accept:text/plain|accept-language:en-gb",
                 "name=Avengers&rating=5"};
-        Request request = Request.create(args);
+        Request request = Request.create(new ContextData(), args);
 
         assertEquals("text/plain", request.getHeader("accept"));
         assertEquals("en-gb", request.getHeader("accept-language"));
@@ -57,12 +57,12 @@ public class RequestTest {
     @Test
     public void create() throws Exception {
         String[] args = new String[]{"GET", "/movies"};
-        Request.create(args);
+        Request.create(new ContextData(), args);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void badCreate() throws Exception {
         String[] args = new String[]{"GET"};
-        Request.create(args);
+        Request.create(new ContextData(), args);
     }
 }

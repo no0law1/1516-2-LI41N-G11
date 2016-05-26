@@ -153,14 +153,16 @@ public class Router {
 
     public class RouterHttpServlet extends HttpServlet{
         protected Router router;
+        private ContextData contextData;
 
-        public RouterHttpServlet(Router router){
+        public RouterHttpServlet(ContextData contextData, Router router){
             this.router = router;
+            this.contextData = contextData;
         }
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            Request request = Request.create(req);
+            Request request = Request.create(contextData, req);
             Response response = Response.create(resp.getWriter());
             try {
                 router.get(request).execute(request, response);
@@ -180,7 +182,7 @@ public class Router {
         }
     }
 
-    public HttpServlet createHttpServlet(){
-        return new RouterHttpServlet(this);
+    public HttpServlet createHttpServlet(ContextData contextData){
+        return new RouterHttpServlet(contextData, this);
     }
 }

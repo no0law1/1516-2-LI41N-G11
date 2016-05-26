@@ -24,7 +24,7 @@ public class GetMovieReviews extends Command {
     @Override
     public void doWork(Request request) throws Exception {
         List<Review> reviews;
-        int mid = Integer.parseInt(request.getParameter("mid"));
+        int mid = request.getIntParameter("mid");
 
         int top = Integer.valueOf(request.getParameterOrDefault("top", "-1"));
         int skip = Integer.valueOf(request.getParameterOrDefault("skip", "0"));

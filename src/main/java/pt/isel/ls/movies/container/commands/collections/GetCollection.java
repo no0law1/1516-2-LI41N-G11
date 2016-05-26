@@ -25,7 +25,7 @@ public class GetCollection extends Command {
     @Override
     public void doWork(Request request) throws Exception {
         Collection collection;
-        int cid = Integer.parseInt(request.getParameter("cid"));
+        int cid = request.getIntParameter("cid");
 
         int top = Integer.valueOf(request.getParameterOrDefault("top", "-1"));
         int skip = Integer.valueOf(request.getParameterOrDefault("skip", "0"));

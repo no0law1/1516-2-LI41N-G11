@@ -24,7 +24,7 @@ public class GetMovieRating extends Command {
     @Override
     public void doWork(Request request) throws Exception {
         List<Rating> ratings;
-        int mid = Integer.parseInt(request.getParameter("mid"));
+        int mid = request.getIntParameter("mid");
 
         try (Connection connection = dataSource.getConnection()) {
             ratings = RatingDAO.getMovieRatings(connection, mid);

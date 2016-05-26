@@ -19,8 +19,8 @@ public class RemoveMovieFromCollection extends Command {
 
     @Override
     public void doWork(Request request) throws Exception {
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        int mid = Integer.parseInt(request.getParameter("mid"));
+        int cid = request.getIntParameter("cid");
+        int mid = request.getIntParameter("mid");
 
         try (Connection connection = dataSource.getConnection()) {
             CollectionDAO.removeMovieFromCollection(connection, cid, mid);

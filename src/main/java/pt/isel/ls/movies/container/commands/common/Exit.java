@@ -17,6 +17,13 @@ public class Exit extends Command {
 
     @Override
     public void doWork(Request request) throws Exception {
+        if(request.getContextData().runningServer != null){
+            System.out.println("stopping web server...");
+
+            request.getContextData().runningServer.stop();
+            request.getContextData().runningServer.join();
+        }
+
         System.out.println("Closing your application...");
         System.exit(0);
     }

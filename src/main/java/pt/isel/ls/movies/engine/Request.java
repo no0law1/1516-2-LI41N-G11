@@ -21,17 +21,22 @@ public class Request implements IRequest {
     private String parameters;
     private Map<String, String> parametersMap;
     private Map<String, String> headersMap;
+    private ContextData contextData;
 
-    private Request(String method, String path) {
-        this.method = method;
-        this.path = path;
+    private Request(ContextData contextData, String method, String path) {
+        this(contextData, method, path, null, null);
     }
 
-    private Request(String method, String path, String headers, String parameters) {
+    private Request(ContextData contextData, String method, String path, String headers, String parameters) {
         this.method = method;
         this.path = path;
         this.headers = headers;
         this.parameters = parameters;
+        this.contextData = contextData;
+    }
+
+    public ContextData getContextData() {
+        return contextData;
     }
 
     public String getMethod() {
@@ -93,20 +98,20 @@ public class Request implements IRequest {
         return map;
     }
 
-    public static Request create(String[] request) {
+    public static Request create(ContextData contextData, String[] request) {
         if (request.length < 2) {
             throw new IllegalArgumentException("Bad request");
         }
         if (request.length == 2) {
-            return new Request(request[0], request[1]);
+            return new Request(contextData, request[0], request[1]);
         }
         if (request.length == 3) {
             if (request[2].contains("=")) {
-                return new Request(request[0], request[1], null, request[2]);
+                return new Request(contextData, request[0], request[1], null, request[2]);
             }
-            return new Request(request[0], request[1], request[2], null);
+            return new Request(contextData, request[0], request[1], request[2], null);
         }
-        return new Request(request[0], request[1], request[2], request[3]);
+        return new Request(contextData, request[0], request[1], request[2], request[3]);
     }
 
     private static String getHeaderOrDefault(HttpServletRequest request, String name, String def){
@@ -114,8 +119,8 @@ public class Request implements IRequest {
         return val != null ? val : def;
     }
 
-    public static Request create(HttpServletRequest request){
-        Request cRequest = new Request(request.getMethod(), request.getPathInfo());
+    public static Request create(ContextData contextData, HttpServletRequest request){
+        Request cRequest = new Request(contextData, request.getMethod(), request.getPathInfo());
         cRequest.headersMap = new HashMap<>();
         Enumeration<String> headerNames = request.getHeaderNames();
         while(headerNames.hasMoreElements()){

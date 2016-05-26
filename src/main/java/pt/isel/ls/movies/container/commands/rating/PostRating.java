@@ -20,8 +20,8 @@ public class PostRating extends Command {
 
     @Override
     public void doWork(Request request) throws Exception {
-        int mid = Integer.parseInt(request.getParameter("mid"));
-        int val = Integer.parseInt(request.getParameter("rating"));
+        int mid = request.getIntParameter("mid");
+        int val = request.getIntParameter("rating");
 
         Rating rating = new Rating(mid, val);
 

@@ -24,7 +24,7 @@ public class GetMostReviewedMovies extends Command {
     @Override
     public void doWork(Request request) throws Exception {
         List<Movie> movies;
-        int n = Integer.parseInt(request.getParameter("n"));
+        int n = request.getIntParameter("n");
 
         try (Connection connection = dataSource.getConnection()) {
             movies = MovieDAO.getMostReviewedMovies(connection, n);

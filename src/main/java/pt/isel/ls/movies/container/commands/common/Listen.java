@@ -17,6 +17,12 @@ public class Listen extends Command {
 
     @Override
     public void doWork(Request request) throws Exception {
+
+        if(request.getContextData().runningServer != null){
+            System.out.println("A Server is already running");
+            return;
+        }
+
         int port = 8080;
         if(request.getParameter("port") != null){
             port = Integer.valueOf(request.getParameter("port"));
@@ -26,13 +32,15 @@ public class Listen extends Command {
         Server server = new Server(port);
         ServletHandler handler = new ServletHandler();
         server.setHandler(handler);
-        handler.addServletWithMapping(new ServletHolder(Router.createRouter(dataSource).createHttpServlet()), "/*");
+        handler.addServletWithMapping(new ServletHolder(Router.createRouter(dataSource).createHttpServlet(request.getContextData())), "/*");
         server.start();
         System.out.println("Server is started");
 
-        server.join();
-        System.out.println("Server is stopped, bye");
-        System.exit(0);
+        request.getContextData().runningServer = server;
+
+        if(!request.getContextData().dynamic) {
+            request.getContextData().runningServer.join();
+        }
     }
 
 

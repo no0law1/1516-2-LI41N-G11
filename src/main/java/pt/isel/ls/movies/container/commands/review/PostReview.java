@@ -21,7 +21,8 @@ public class PostReview extends Command {
     @Override
     public void doWork(Request request) throws Exception {
         Review.ReviewUID reviewUID;
-        int mid = Integer.parseInt(request.getParameter("mid"));
+        int mid = request.getIntParameter("mid");
+
         String reviewerName = request.getParameter("reviewerName");
         String reviewSummary = request.getParameter("reviewSummary");
         String reviewExtended = request.getParameter("review");

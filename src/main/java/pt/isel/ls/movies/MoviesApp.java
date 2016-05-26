@@ -1,6 +1,7 @@
 package pt.isel.ls.movies;
 
 import pt.isel.ls.movies.data.DataSourceFactory;
+import pt.isel.ls.movies.engine.ContextData;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.engine.Router;
@@ -13,14 +14,17 @@ import java.util.Scanner;
 public class MoviesApp {
 
     private final Router router;
+    private ContextData contextData;
 
     public MoviesApp() throws Exception {
         router = Router.createRouter(DataSourceFactory.createInstance());
+        contextData = new ContextData();
     }
 
     private void run(String[] args) throws Exception {
+        contextData.dynamic = false;
         try {
-            Request request = Request.create(args);
+            Request request = Request.create(contextData, args);
             Response response = Response.create(request.getHeader("file-name"));
             router.get(request).execute(request, response);
         } catch (Exception e) {
@@ -29,11 +33,12 @@ public class MoviesApp {
     }
 
     private void run() {
+        contextData.dynamic = true;
         while (true) {
             try {
                 System.out.print("Enter Request: ");
                 String route = new Scanner(System.in).nextLine();
-                Request request = Request.create(route.split(" "));
+                Request request = Request.create(contextData, route.split(" "));
                 Response response = Response.create(request.getHeader("file-name"));
                 router.get(request).execute(request, response);
             } catch (Exception e) {

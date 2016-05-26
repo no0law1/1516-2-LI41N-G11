@@ -40,49 +40,49 @@ public class RouterTest {
 
     @Test
     public void testGet() throws Exception {
-        Request request = Request.create(new String[]{"GET", "/movies/12"});
+        Request request = Request.create(new ContextData(), new String[]{"GET", "/movies/12"});
         assertTrue(router.get(request) instanceof GetMovie);
     }
 
     @Test
     public void testGet2() throws Exception {
-        Request request = Request.create(new String[]{"GET", "/tops/ratings/higher/average"});
+        Request request = Request.create(new ContextData(), new String[]{"GET", "/tops/ratings/higher/average"});
         assertTrue(router.get(request) instanceof GetHighestRatedMovie);
     }
 
     @Test
     public void testGet3() throws Exception {
-        Request request = Request.create(new String[]{"POST", "/movies"});
+        Request request = Request.create(new ContextData(), new String[]{"POST", "/movies"});
         assertTrue(router.get(request) instanceof PostMovie);
     }
 
     @Test
     public void testGetWithParameterOnPath() throws Exception {
-        Request request = Request.create(new String[]{"GET", "/movies/12"});
+        Request request = Request.create(new ContextData(), new String[]{"GET", "/movies/12"});
         assertTrue(router.get(request) instanceof GetMovie);
     }
 
     @Test
     public void testGetWithParameterInTheMiddleOfPath() throws Exception {
-        Request request = Request.create(new String[]{"GET", "/tops/{n}/ratings/higher/average"});
+        Request request = Request.create(new ContextData(), new String[]{"GET", "/tops/{n}/ratings/higher/average"});
         assertTrue(router.get(request) instanceof GetHighestRatedMovies);
     }
 
     @Test(expected = MethodNotAllowedException.class)
     public void testGetNotExistingMethod() throws Exception {
-        Request request = Request.create(new String[]{"SDA", "/movies"});
+        Request request = Request.create(new ContextData(), new String[]{"SDA", "/movies"});
         router.get(request);
     }
 
     @Test(expected = PathNotFoundException.class)
     public void testGetNotExistingPath() throws Exception {
-        Request request = Request.create(new String[]{"GET", "/movies/test/unholy"});
+        Request request = Request.create(new ContextData(), new String[]{"GET", "/movies/test/unholy"});
         router.get(request);
     }
 
     @Test
     public void testGetPathParameter() throws Exception {
-        Request request = Request.create(new String[]{"GET", "/movies/12"});
+        Request request = Request.create(new ContextData(), new String[]{"GET", "/movies/12"});
         router.get(request);
 
         assertEquals("12", request.getParameter("mid"));
@@ -90,22 +90,22 @@ public class RouterTest {
 
     @Test
     public void testGetCommonCommand() throws Exception {
-        Request request = Request.create(new String[]{"EXIT", "/"});
+        Request request = Request.create(new ContextData(), new String[]{"EXIT", "/"});
         assertTrue(router.get(request) instanceof Exit);
     }
 
     @Test
     public void testGetCommonCommandOption() throws Exception {
-        Request request = Request.create(new String[]{"OPTION", "/"});
+        Request request = Request.create(new ContextData(), new String[]{"OPTION", "/"});
         assertTrue(router.get(request) instanceof Option);
     }
 
     @Test
     public void testCreateRouter() throws Exception {
         Router router = Router.createRouter(DataSourceFactory.createTestInstance());
-        Request request1 = Request.create(new String[]{"OPTION", "/"});
-        Request request2 = Request.create(new String[]{"GET", "/movies/12"});
-        Request request3 = Request.create(new String[]{"GET", "/tops/{n}/ratings/higher/average"});
+        Request request1 = Request.create(new ContextData(), new String[]{"OPTION", "/"});
+        Request request2 = Request.create(new ContextData(), new String[]{"GET", "/movies/12"});
+        Request request3 = Request.create(new ContextData(), new String[]{"GET", "/tops/{n}/ratings/higher/average"});
 
         assertNotNull(router);
         assertTrue(router.get(request1) instanceof Option);
