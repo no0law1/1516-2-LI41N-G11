@@ -9,6 +9,8 @@ import pt.isel.ls.movies.container.commands.movies.PostMovie;
 import pt.isel.ls.movies.container.commands.movies.tops.GetHighestRatedMovie;
 import pt.isel.ls.movies.container.commands.movies.tops.GetHighestRatedMovies;
 import pt.isel.ls.movies.data.DataSourceFactory;
+import pt.isel.ls.movies.exceptions.MethodNotAllowedException;
+import pt.isel.ls.movies.exceptions.PathNotFoundException;
 
 import javax.sql.DataSource;
 
@@ -66,13 +68,13 @@ public class RouterTest {
         assertTrue(router.get(request) instanceof GetHighestRatedMovies);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = MethodNotAllowedException.class)
     public void testGetNotExistingMethod() throws Exception {
         Request request = Request.create(new String[]{"SDA", "/movies"});
         router.get(request);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = PathNotFoundException.class)
     public void testGetNotExistingPath() throws Exception {
         Request request = Request.create(new String[]{"GET", "/movies/test/unholy"});
         router.get(request);

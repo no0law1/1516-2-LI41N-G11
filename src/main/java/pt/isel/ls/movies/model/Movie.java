@@ -10,17 +10,23 @@ public class Movie {
     private String title;
     private int releaseYear;
     private String genre;
+    private float averageRating;
 
 
     public Movie(String title, int releaseYear, String genre){
-        this(0, title, releaseYear, genre);
+        this(0, title, releaseYear, genre, 0);
     }
 
     public Movie(int id, String title, int releaseYear, String genre) {
+        this(id, title, releaseYear, genre, 0);
+    }
+
+    public Movie(int id, String title, int releaseYear, String genre, float averageRating) {
         this.id = id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.genre = genre;
+        this.averageRating = averageRating;
     }
 
     public int getId() {
@@ -37,6 +43,10 @@ public class Movie {
 
     public String getTitle() {
         return title;
+    }
+
+    public float getAverageRating() {
+        return averageRating;
     }
 
     @Override

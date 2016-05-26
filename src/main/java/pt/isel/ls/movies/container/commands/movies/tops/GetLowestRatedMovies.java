@@ -30,7 +30,7 @@ public class GetLowestRatedMovies extends Command {
             movies = MovieDAO.getLowestRatingMovies(connection, n);
         }
 
-        views.put("text/html", new MoviesViewHtml(movies, n, -1, 0));
+        views.put("text/html", new MoviesViewHtml(" - " + n + " Lowest Rated Movies", movies, n, -1, 0, null));
         views.put("text/plain", new MoviesView(movies));
     }
 

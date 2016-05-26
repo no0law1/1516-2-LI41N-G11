@@ -430,12 +430,12 @@ public class MovieDAOTest {
 
     @Test
     public void testGetMostReviewedMovieWithMoreThanOne() throws Exception {
-        Movie expected = new Movie("test1", 2016, "genre_test");
+        Movie expected = new Movie(3, "test2", 2016, "genre_test");
         List<Movie> movies = new LinkedList<>();
-        movies.add(new Movie("test2", 2016, "genre_test"));
+        movies.add(new Movie(1, "test3", 2015, "genre_test"));
+        movies.add(new Movie(2, "test1", 2016, "genre_test"));
         movies.add(expected);
-        movies.add(new Movie("test3", 2015, "genre_test"));
-        movies.add(new Movie("test4", 2015, "genre_test"));
+        movies.add(new Movie(4, "test4", 2015, "genre_test"));
 
         try(Connection connection = dataSource.getConnection()){
             connection.setAutoCommit(false);
@@ -452,8 +452,7 @@ public class MovieDAOTest {
 
             Movie actual = MovieDAO.getMostReviewedMovie(connection);
 
-            assertEquals(expected.getTitle(), actual.getTitle());
-            assertEquals(expected.getReleaseYear(), actual.getReleaseYear());
+            assertEquals(expected, actual);
         }
     }
 

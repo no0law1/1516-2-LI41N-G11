@@ -81,14 +81,15 @@ public class MovieDAO {
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
-            Movie movie = new Movie(id, title, releaseYear, genre);
+            float averageRating = resultSet.getFloat(5);
+            Movie movie = new Movie(id, title, releaseYear, genre, averageRating);
             movies.add(movie);
         }
         return movies;
     }
 
     private static String getQuery(Movie.Sort sort){
-        StringBuilder query = new StringBuilder("select movie.* from movie");
+        StringBuilder query = new StringBuilder("select movie.*, COALESCE(SUM(val*count)::float/SUM(count), 0) AS averageRating from movie LEFT JOIN rating ON id=mid GROUP BY id ");
         if(sort == null){
             sort = Movie.Sort.ADDED_DATE;
         }
@@ -99,11 +100,11 @@ public class MovieDAO {
             case YEAR_DESC: return query.append(" ORDER BY release_year DESC").toString();
             case TITLE: return query.append(" ORDER BY title ASC").toString();
             case TITLE_DESC: return query.append(" ORDER BY title DESC").toString();
+            case RATING: return query.append(" ORDER BY averageRating ASC").toString();
+            case RATING_DESC: return query.append(" ORDER BY averageRating DESC").toString();
         }
 
-        query.append(" LEFT JOIN rating ON id=mid GROUP BY id ORDER BY COALESCE(SUM(val*count)::float/SUM(count), 0) ");
-        query.append(sort == Movie.Sort.RATING ? "ASC" : "DESC");
-        return query.toString();
+        throw new IllegalArgumentException("invalid sort parameter");
     }
 
     /**
@@ -114,14 +115,15 @@ public class MovieDAO {
      */
     public static Movie getMovie(Connection connection, int id) throws Exception {
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select * from movie where id=?");
+                connection.prepareStatement("select movie.*, COALESCE(SUM(val*count)::float/SUM(count), 0) AS averageRating from movie LEFT JOIN rating ON id=mid WHERE id=? GROUP BY movie.id");
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if(resultSet.next()){
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
-            return new Movie(id, title, releaseYear, genre);
+            float averageRating = resultSet.getFloat(5);
+            return new Movie(id, title, releaseYear, genre, averageRating);
         }
         throw new NoDataException("There is no such movie with the id: " + id);
     }
@@ -152,10 +154,10 @@ public class MovieDAO {
      */
     public static List<Movie> getHighestRatingMovies(Connection connection, int n) throws Exception {
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select id, title, release_year, genre\n" +
+                connection.prepareStatement("select id, title, release_year, genre, COALESCE(SUM(val*count)::float/SUM(count), 0) AS averageRating \n" +
                         "\tfrom movie left join rating on id=mid\n" +
                         "\tgroup by id\n" +
-                        "\torder by COALESCE(SUM(val*count)::float/SUM(count), 0) desc, release_year desc, title asc\n" +
+                        "\torder by averageRating desc, release_year desc, title asc\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -166,7 +168,8 @@ public class MovieDAO {
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
-            movies.add(new Movie(id, title, releaseYear, genre));
+            float averageRating = resultSet.getFloat(5);
+            movies.add(new Movie(id, title, releaseYear, genre, averageRating));
         }
         return movies;
     }
@@ -179,10 +182,10 @@ public class MovieDAO {
      */
     public static List<Movie> getLowestRatingMovies(Connection connection, int n) throws Exception {
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select id, title, release_year, genre\n" +
+                connection.prepareStatement("select id, title, release_year, genre, COALESCE(SUM(val*count)::float/SUM(count), 0) AS averageRating \n" +
                         "\tfrom movie left join rating on id=mid\n" +
                         "\tgroup by id\n" +
-                        "\torder by COALESCE(SUM(val*count)::float/SUM(count), 0) asc, release_year desc, title asc\n" +
+                        "\torder by averageRating asc, release_year desc, title asc\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -193,7 +196,8 @@ public class MovieDAO {
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
-            movies.add(new Movie(id, title, releaseYear, genre));
+            float averageRating = resultSet.getFloat(5);
+            movies.add(new Movie(id, title, releaseYear, genre, averageRating));
         }
         return movies;
     }
@@ -210,10 +214,10 @@ public class MovieDAO {
     private static List<Movie> getReviewedMovies(Connection connection, int n, boolean descNotAsc) throws Exception {
         String sorting = descNotAsc ? "desc" : "asc";
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select movie.id, title, release_year, genre\n" +
-                        "\tfrom movie left join review on movie.id=mid\n" +
+                connection.prepareStatement("select movie.id, title, release_year, genre, COALESCE(SUM(val*count)::float/SUM(count), 0) AS averageRating, COALESCE(count(review.mid), 0) AS reviews\n" +
+                        "\tfrom movie left join review on movie.id=review.mid left join rating on movie.id=rating.mid\n" +
                         "\tgroup by movie.id\n" +
-                        "\torder by count(mid) " + sorting + ", release_year " + sorting + ", title " + sorting + "\n" +
+                        "\torder by reviews " + sorting + ", release_year " + sorting + ", title " + sorting + "\n" +
                         "\tlimit ?");
         preparedStatement.setInt(1, n);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -224,7 +228,8 @@ public class MovieDAO {
             String title = resultSet.getString(2);
             int releaseYear = resultSet.getInt(3);
             String genre = resultSet.getString(4);
-            movies.add(new Movie(id, title, releaseYear, genre));
+            float averageRating = resultSet.getFloat(5);
+            movies.add(new Movie(id, title, releaseYear, genre, averageRating));
         }
         return movies;
     }
@@ -236,7 +241,7 @@ public class MovieDAO {
      * @return the detail for the {@code n} movies with the lowest average rating.
      */
     public static List<Movie> getMostReviewedMovies(Connection connection, int n) throws Exception {
-        return getReviewedMovies(connection, n, false);
+        return getReviewedMovies(connection, n, true);
     }
 
     /**
@@ -246,7 +251,7 @@ public class MovieDAO {
      * @return the detail for the {@code n} movies with the lowest average rating.
      */
     public static List<Movie> getLeastReviewedMovies(Connection connection, int n) throws Exception {
-        return getReviewedMovies(connection, n, true);
+        return getReviewedMovies(connection, n, false);
     }
 
     public static List<Movie> getCollectionMovies(Connection connection, int cid) throws SQLException {

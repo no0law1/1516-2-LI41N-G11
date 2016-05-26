@@ -106,4 +106,8 @@ public class Html implements HttpContent {
     public static Writable css(String link) {
         return new HtmlElem("link").withAttr("rel", "stylesheet").withAttr("href", link);
     }
+
+    public static HtmlElem style(){
+        return new HtmlElem("style", text("th a { display: block; }"));
+    }
 }

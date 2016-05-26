@@ -43,7 +43,7 @@ public class GetMovieList extends Command{
         int top = Integer.valueOf(request.getParameterOrDefault("top", "-1"));
         int skip = Integer.valueOf(request.getParameterOrDefault("skip", "0"));
 
-        Movie.Sort sort = wrapSortParameter(request.getParameterOrDefault("sortBy", null));
+        String sortBy = request.getParameterOrDefault("sortBy", null);
 
         int count;
         try (Connection connection = dataSource.getConnection()) {
@@ -51,12 +51,12 @@ public class GetMovieList extends Command{
                     connection,
                     top,
                     skip,
-                    sort
+                    wrapSortParameter(sortBy)
             );
             count = MovieDAO.getCount(connection);
         }
 
-        views.put("text/html", new MoviesViewHtml(movies, count, top, skip, sort));
+        views.put("text/html", new MoviesViewHtml(movies, count, top, skip, sortBy));
         views.put("text/plain", new MoviesView(movies));
     }
 }

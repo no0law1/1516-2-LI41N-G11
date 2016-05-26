@@ -1,5 +1,6 @@
 package pt.isel.ls.utils.html;
 
+import org.w3c.dom.html.HTMLElement;
 import pt.isel.ls.utils.common.Writable;
 
 import javax.swing.text.html.HTML;
@@ -23,7 +24,7 @@ public class HtmlBootstrap extends Html {
         Writable bootstrap = css("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css");
         Writable bootstrapTheme = css("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css");
 
-        return new HtmlElem("head", t, bootstrap, bootstrapTheme);
+        return new HtmlElem("head", t, bootstrap, bootstrapTheme, style());
     }
 
     public static HtmlElem pagingButtons(String path, String parameters, int count, int top, int skip){
