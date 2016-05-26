@@ -2,6 +2,7 @@ package pt.isel.ls.movies.container.commands;
 
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
+import pt.isel.ls.movies.exceptions.InvalidAcceptException;
 import pt.isel.ls.utils.common.Writable;
 
 import javax.sql.DataSource;
@@ -33,8 +34,16 @@ public abstract class Command implements ICommand {
         doWork(request);
 
         /**  views.put(OptionView.ERROR, new NotFoundView());  **/
-        response.setContentType(request.getHeaderOrDefault("accept", "text/html"));
-        views.get(response.getContentType()).writeTo(response.getWriter());
-        response.getWriter().flush();
+        String acceptHeader = request.getHeaderOrDefault("accept", "text/html");
+        for(String acceptType: acceptHeader.split(",")){
+            Writable view = views.get(acceptType.split(" ")[0]);
+            if(view != null){
+                response.setContentType(acceptType);
+                view.writeTo(response.getWriter());
+                response.getWriter().flush();
+                return;
+            }
+        }
+        throw new InvalidAcceptException("");
     }
 }

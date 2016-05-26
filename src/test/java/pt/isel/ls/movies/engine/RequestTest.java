@@ -55,6 +55,22 @@ public class RequestTest {
     }
 
     @Test
+    public void getQueryHeadersAndParametersAvoidingCase() throws Exception {
+        String[] args = new String[]{
+                "POST",
+                "/movies/123",
+                "aCcept:text/plain|accept-languaGe:en-gb",
+                "naMe=Avengers&ratiNg=5"};
+        Request request = Request.create(new ContextData(), args);
+
+        assertEquals("text/plain", request.getHeader("Accept"));
+        assertEquals("en-gb", request.getHeader("Accept-language"));
+
+        assertEquals("Avengers", request.getParameter("namE"));
+        assertEquals("5", request.getParameter("raTing"));
+    }
+
+    @Test
     public void create() throws Exception {
         String[] args = new String[]{"GET", "/movies"};
         Request.create(new ContextData(), args);

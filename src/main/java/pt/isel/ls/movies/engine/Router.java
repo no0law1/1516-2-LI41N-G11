@@ -71,6 +71,8 @@ public class Router {
     }
 
     public void add(String method, String path, ICommand ICommand){
+        method = method.toLowerCase();
+        path = path.toLowerCase();
         Node node = methods.get(method);
         if(node == null){
             node = new Node();
@@ -92,6 +94,7 @@ public class Router {
     }
 
     public Node addNode(Node node, String name){
+        name = name.toLowerCase();
         Node auxNode = node.get(name);
         if(auxNode == null){
             auxNode = new Node();
@@ -101,6 +104,7 @@ public class Router {
     }
 
     public Node addParameter(Node node, String name){
+        name = name.toLowerCase();
         Node auxNode;
         if(node.parameter == null){
             auxNode = new Node();

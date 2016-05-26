@@ -40,11 +40,11 @@ public class Request implements IRequest {
     }
 
     public String getMethod() {
-        return method;
+        return method.toLowerCase();
     }
 
     public String getPath() {
-        return path;
+        return path.toLowerCase();
     }
 
     public Map<String, String> getParametersMap() throws UnsupportedEncodingException {
@@ -71,7 +71,7 @@ public class Request implements IRequest {
         if (parametersMap == null) {
             parametersMap = resolve(parameters, "&", "=");
         }
-        return parametersMap.getOrDefault(key, defaultValue);
+        return parametersMap.getOrDefault(key.toLowerCase(), defaultValue);
     }
 
     public String getHeader(String key) throws UnsupportedEncodingException {
@@ -82,7 +82,7 @@ public class Request implements IRequest {
         if (headersMap == null) {
             headersMap = resolve(headers, "\\|", ":");
         }
-        return headersMap.getOrDefault(key, defaultValue);
+        return headersMap.getOrDefault(key.toLowerCase(), defaultValue);
     }
 
     private static Map<String, String> resolve(String toBeResolved, String sequenceSeparator, String keyValueSeparator)
@@ -92,7 +92,7 @@ public class Request implements IRequest {
             String[] splitted = toBeResolved.split(sequenceSeparator);
             for (String splittedKeyValue : splitted) {
                 String[] keyValue = splittedKeyValue.split(keyValueSeparator);
-                map.put(keyValue[0], URLDecoder.decode(keyValue[1], "UTF-8"));
+                map.put(keyValue[0].toLowerCase(), URLDecoder.decode(keyValue[1], "UTF-8"));
             }
         }
         return map;
@@ -102,21 +102,20 @@ public class Request implements IRequest {
         if (request.length < 2) {
             throw new IllegalArgumentException("Bad request");
         }
-        if (request.length == 2) {
-            return new Request(contextData, request[0], request[1]);
-        }
+        String method = request[0], path = request[1], headers = null, parameters = null;
         if (request.length == 3) {
             if (request[2].contains("=")) {
-                return new Request(contextData, request[0], request[1], null, request[2]);
+                parameters = request[2];
             }
-            return new Request(contextData, request[0], request[1], request[2], null);
+            else{
+                headers = request[2];
+            }
         }
-        return new Request(contextData, request[0], request[1], request[2], request[3]);
-    }
-
-    private static String getHeaderOrDefault(HttpServletRequest request, String name, String def){
-        String val = request.getHeader(name);
-        return val != null ? val : def;
+        else if(request.length == 4){
+            headers = request[2];
+            parameters = request[3];
+        }
+        return new Request(contextData, method, path, headers, parameters);
     }
 
     public static Request create(ContextData contextData, HttpServletRequest request){
@@ -125,12 +124,12 @@ public class Request implements IRequest {
         Enumeration<String> headerNames = request.getHeaderNames();
         while(headerNames.hasMoreElements()){
             String headerName = headerNames.nextElement();
-            cRequest.headersMap.put(headerName, request.getHeader(headerName));
+            cRequest.headersMap.put(headerName.toLowerCase(), request.getHeader(headerName));
         }
 
         cRequest.parametersMap = new HashMap<>();
         request.getParameterMap().forEach((s, strings) -> {
-            cRequest.parametersMap.put(s, strings[0]);
+            cRequest.parametersMap.put(s.toLowerCase(), strings[0]);
         });
 
         return cRequest;
