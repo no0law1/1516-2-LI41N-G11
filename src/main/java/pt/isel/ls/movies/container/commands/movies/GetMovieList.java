@@ -24,7 +24,7 @@ public class GetMovieList extends Command{
     private Movie.Sort wrapSortParameter(String sortBy){
         if(sortBy == null) return null;
         switch(sortBy){
-            case "addedData": return Movie.Sort.ADDED_DATE;
+            case "addedDate": return Movie.Sort.ADDED_DATE;
             case "addedDateDesc": return Movie.Sort.ADDED_DATE_DESC;
             case "year": return Movie.Sort.YEAR;
             case "yearDesc": return Movie.Sort.YEAR_DESC;
@@ -43,18 +43,20 @@ public class GetMovieList extends Command{
         int top = Integer.valueOf(request.getParameterOrDefault("top", "-1"));
         int skip = Integer.valueOf(request.getParameterOrDefault("skip", "0"));
 
+        Movie.Sort sort = wrapSortParameter(request.getParameterOrDefault("sortBy", null));
+
         int count;
         try (Connection connection = dataSource.getConnection()) {
             movies = MovieDAO.getMovies(
                     connection,
                     top,
                     skip,
-                    wrapSortParameter(request.getParameterOrDefault("sortBy", null))
+                    sort
             );
             count = MovieDAO.getCount(connection);
         }
 
-        views.put("text/html", new MoviesViewHtml(movies, count, top, skip));
+        views.put("text/html", new MoviesViewHtml(movies, count, top, skip, sort));
         views.put("text/plain", new MoviesView(movies));
     }
 }
