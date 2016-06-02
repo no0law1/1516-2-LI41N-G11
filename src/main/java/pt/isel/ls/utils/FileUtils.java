@@ -1,5 +1,7 @@
 package pt.isel.ls.utils;
 
+import com.sun.istack.internal.Nullable;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,11 +14,6 @@ import java.util.Scanner;
  */
 public class FileUtils {
 
-    public enum Option {
-        OPTIONS,
-        COMMANDS
-    }
-
     /**
      * Retrieves from a file, a set key value pairs to a map
      *
@@ -24,7 +21,7 @@ public class FileUtils {
      * @return mapped key value from file
      * @throws FileNotFoundException if file does not exist
      */
-    public static Map<String, String> getFromFile(String filePath, Option option) throws FileNotFoundException {
+    public static Map<String, String> getFromFile(String filePath, @Nullable String splitter) throws FileNotFoundException {
         Map<String, String> map = new HashMap<>();
 
         Scanner scanner = new Scanner(new FileReader(new File(filePath)));
@@ -32,12 +29,8 @@ public class FileUtils {
         while (scanner.hasNext()) {
             String line = scanner.nextLine();
             if (!line.startsWith("#")) {
-                String[] args = line.split(";");
-                if (option.equals(Option.COMMANDS)) {
-                    map.put(args[0], args[1]);
-                } else {
-                    map.put(args[0].concat(" " + args[2]), args[3]);
-                }
+                String[] args = line.split(splitter);
+                map.put(args[0].concat(" " + args[1]), args[2]);
             }
         }
 

@@ -13,8 +13,15 @@ import java.sql.Connection;
  * Posts a relation of movie and collection to the database
  */
 public class PostMovieToCollection extends Command {
+
+    private static final String DETAILS = "Adds a movie to a collection";
+
+    private static final String METHOD = "POST";
+
+    private static final String PATH = "/collections/{cid}/movies";
+
     public PostMovieToCollection(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

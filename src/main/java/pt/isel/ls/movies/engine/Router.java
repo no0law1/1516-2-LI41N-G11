@@ -1,11 +1,12 @@
 package pt.isel.ls.movies.engine;
 
+import org.reflections.Reflections;
+import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.container.commands.ICommand;
+import pt.isel.ls.movies.exceptions.HTMLException;
 import pt.isel.ls.movies.exceptions.MethodNotAllowedException;
 import pt.isel.ls.movies.exceptions.PathNotFoundException;
-import pt.isel.ls.movies.exceptions.HTMLException;
 import pt.isel.ls.movies.view.errors.ErrorView;
-import pt.isel.ls.utils.FileUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Class whose instance contains the routing for a set of Commands
@@ -146,13 +149,22 @@ public class Router {
     }
 
     private static void populate(Router router, DataSource ds) throws Exception {
-        String prefix = "pt.isel.ls.movies.container.commands.";
-        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.COMMANDS);
-        for (String key : map.keySet()) {
-            String[] pathAndMethod = key.split(" ");
-            ICommand command = (ICommand) Class.forName(prefix + map.get(key)).getDeclaredConstructor(DataSource.class).newInstance(ds);
-            router.add(pathAndMethod[0], pathAndMethod[1], command);
-        }
+        Reflections reflections = new Reflections("pt.isel.ls.movies.container.commands");
+        Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
+
+        classes.forEach(
+                aClass -> {
+                    try {
+                        ICommand command = aClass.getDeclaredConstructor(DataSource.class).newInstance(ds);
+                        router.add(command.getMethod(), command.getPath(), command);
+                    } catch (NoSuchMethodException
+                            | IllegalAccessException
+                            | InvocationTargetException
+                            | InstantiationException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
     }
 
     public class RouterHttpServlet extends HttpServlet{

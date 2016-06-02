@@ -14,8 +14,14 @@ import java.sql.Connection;
  */
 public class PostReview extends Command {
 
+    private static final String DETAILS = "Creates a review for a movie";
+
+    private static final String METHOD = "POST";
+
+    private static final String PATH = "/movies/{mid}/reviews";
+
     public PostReview(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

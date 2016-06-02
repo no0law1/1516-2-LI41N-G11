@@ -11,8 +11,14 @@ import javax.sql.DataSource;
  */
 public class Exit extends Command {
 
+    private static final String DETAILS = "Exits the application";
+
+    private static final String METHOD = "EXIT";
+
+    private static final String PATH = "/";
+
     public Exit(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

@@ -3,7 +3,6 @@ package pt.isel.ls.movies.container.commands.movies.tops;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.movie.MoviesView;
 import pt.isel.ls.movies.view.movie.MoviesViewHtml;
@@ -17,8 +16,14 @@ import java.util.List;
  */
 public class GetHighestRatedMovies extends Command {
 
+    private static final String DETAILS = "Gets the n movies with the highest average rating";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/tops/{n}/ratings/higher/average";
+
     public GetHighestRatedMovies(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

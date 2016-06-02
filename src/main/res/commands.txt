@@ -1,26 +1,26 @@
-#{Method} {Path};{Class};{Parameters};{Description}
-POST /movies;movies.PostMovie;title=?&releaseYear=?;Posts a movie to the database
-GET /movies;movies.GetMovieList;;Gets all the movies
-GET /movies/{mid};movies.GetMovie;;Gets a specific movie
-GET /tops/ratings/higher/average;movies.tops.GetHighestRatedMovie;;Gets the movie with the higher average rating
-GET /tops/{n}/ratings/higher/average;movies.tops.GetHighestRatedMovies;;Gets the n movies with the highest average rating
-GET /tops/ratings/lower/average;movies.tops.GetLowestRatedMovie;;Gets the movie with the lowest average rating
-GET /tops/{n}/ratings/lower/average;movies.tops.GetLowestRatedMovies;;Gets the n movies with the lowest average rating
-GET /tops/reviews/higher/count;movies.tops.GetMostReviewedMovie;;Gets the movies with the most reviews
-GET /tops/{n}/reviews/higher/count;movies.tops.GetMostReviewedMovies;;Gets the n movies with the most reviews
-GET /tops/{n}/reviews/lower/count;movies.tops.GetLeastReviewedMovies;;Gets the n movies with the least reviews
-POST /movies/{mid}/ratings;rating.PostRating;rating=?;Posts a movie rating
-GET /movies/{mid}/ratings;rating.GetMovieRating;;Gets the rating information for a movie, such as the rating average and the number of votes for each rating value
-POST /movies/{mid}/reviews;review.PostReview;reviewerName=?&reviewSummary=?&review=?&rating=?;Creates a review for a movie
-GET /movies/{mid}/reviews;review.GetMovieReviews;;Gets all reviews of a movie
-GET /movies/{mid}/reviews/{rid};review.GetReview;;Gets a specific review from a movie
-POST /collections;collections.CreateCollection;name=?&description=?;Creates a collection
-POST /collections/{cid}/movies;collections.PostMovieToCollection;mid=?;Adds a movie to a collection
-GET /collections;collections.GetCollections;;Get al of the collections
-GET /collections/{cid};collections.GetCollection;;Get a specific collection
-DELETE /collections/{cid}/movies/{mid};collections.RemoveMovieFromCollection;;Removes a movie from a collection
-EXIT /;common.Exit;;Exits the application
-OPTION /;common.Option;;Lists all the available options
-LISTEN /;common.Listen;;Launches a webserver listening on port 8080 unless parameter port is specified
-GET /;common.Home;;Home page of webserver
-GET /tops/ratings;movies.tops.TopRatings;;Base page of all the tops
+#{Method} {Path};{Parameters};{Description}
+POST /movies;title=?&releaseYear=?;Posts a movie to the database
+GET /movies;;Gets all the movies
+GET /movies/{mid};;Gets a specific movie
+GET /tops/ratings/higher/average;;Gets the movie with the higher average rating
+GET /tops/{n}/ratings/higher/average;;Gets the n movies with the highest average rating
+GET /tops/ratings/lower/average;;Gets the movie with the lowest average rating
+GET /tops/{n}/ratings/lower/average;;Gets the n movies with the lowest average rating
+GET /tops/reviews/higher/count;;Gets the movies with the most reviews
+GET /tops/{n}/reviews/higher/count;;Gets the n movies with the most reviews
+GET /tops/{n}/reviews/lower/count;;Gets the n movies with the least reviews
+POST /movies/{mid}/ratings;rating=?;Posts a movie rating
+GET /movies/{mid}/ratings;;Gets the rating information for a movie, such as the rating average and the number of votes for each rating value
+POST /movies/{mid}/reviews;reviewerName=?&reviewSummary=?&review=?&rating=?;Creates a review for a movie
+GET /movies/{mid}/reviews;;Gets all reviews of a movie
+GET /movies/{mid}/reviews/{rid};;Gets a specific review from a movie
+POST /collections;name=?&description=?;Creates a collection
+POST /collections/{cid}/movies;mid=?;Adds a movie to a collection
+GET /collections;;Get all collections
+GET /collections/{cid};;Get a specific collection
+DELETE /collections/{cid}/movies/{mid};;Removes a movie from a collection
+EXIT /;;Exits the application
+OPTION /;;Lists all the available options
+LISTEN /;;Launches a webserver listening on port 8080 unless parameter port is specified
+GET /;;Home page of webserver
+GET /tops/ratings;;Base page of all the tops

@@ -14,8 +14,14 @@ import java.sql.Connection;
  */
 public class PostMovie extends Command {
 
+    private static final String DETAILS = "Posts a movie to the database";
+
+    private static final String METHOD = "POST";
+
+    private static final String PATH = "/movies";
+
     public PostMovie(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

@@ -13,14 +13,14 @@ public class FileUtilsTest {
 
     @Test
     public void testGetFromFile() throws Exception {
-        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.COMMANDS);
+        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", ";");
 
         assertNotNull(map);
     }
 
     @Test
     public void testGetFromFileOptions() throws Exception {
-        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.OPTIONS);
+        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", ";");
 
         assertNotNull(map);
     }

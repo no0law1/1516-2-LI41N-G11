@@ -4,8 +4,8 @@ import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Collection;
-import pt.isel.ls.movies.view.collection.CreatedCollectionViewHtml;
 import pt.isel.ls.movies.view.collection.CreatedCollectionView;
+import pt.isel.ls.movies.view.collection.CreatedCollectionViewHtml;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -15,8 +15,12 @@ import java.sql.Connection;
  */
 public class CreateCollection extends Command {
 
+    private static final String METHOD = "POST";
+
+    private static final String PATH = "/collections";
+
     public CreateCollection(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override
@@ -35,5 +39,15 @@ public class CreateCollection extends Command {
 
         views.put("text/html", new CreatedCollectionViewHtml(collection));
         views.put("text/plain", new CreatedCollectionView(collection));
+    }
+
+    @Override
+    public String getMethod() {
+        return METHOD;
+    }
+
+    @Override
+    public String getPath() {
+        return PATH;
     }
 }

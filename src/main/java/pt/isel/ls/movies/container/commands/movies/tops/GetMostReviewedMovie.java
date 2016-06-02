@@ -4,7 +4,6 @@ import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.data.entity.ReviewDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.movies.view.movie.SingleMovieView;
@@ -19,8 +18,14 @@ import java.util.List;
  */
 public class GetMostReviewedMovie extends Command {
 
+    private static final String DETAILS = "Gets the movies with the most reviews";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/tops/reviews/higher/count";
+
     public GetMostReviewedMovie(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

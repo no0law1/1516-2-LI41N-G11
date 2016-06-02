@@ -3,7 +3,6 @@ package pt.isel.ls.movies.container.commands.movies;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.movie.MoviesView;
 import pt.isel.ls.movies.view.movie.MoviesViewHtml;
@@ -17,8 +16,14 @@ import java.util.List;
  */
 public class GetMovieList extends Command{
 
+    private static final String DETAILS = "Gets all the movies";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/movies";
+
     public GetMovieList(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     private Movie.Sort wrapSortParameter(String sortBy){

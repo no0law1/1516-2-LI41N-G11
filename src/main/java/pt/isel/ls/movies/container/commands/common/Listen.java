@@ -11,8 +11,15 @@ import pt.isel.ls.movies.engine.Router;
 import javax.sql.DataSource;
 
 public class Listen extends Command {
+
+    private static final String DETAILS = "Launches a webserver listening on port 8080 unless parameter port is specified";
+
+    private static final String METHOD = "LISTEN";
+
+    private static final String PATH = "/";
+
     public Listen(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

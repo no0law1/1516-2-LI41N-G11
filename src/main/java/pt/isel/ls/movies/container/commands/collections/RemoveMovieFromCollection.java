@@ -13,8 +13,14 @@ import java.sql.Connection;
  */
 public class RemoveMovieFromCollection extends Command {
 
+    private static final String DETAILS = "Removes a movie from a collection";
+
+    private static final String METHOD = "DELETE";
+
+    private static final String PATH = "/collections/{cid}/movies/{mid}";
+
     public RemoveMovieFromCollection(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

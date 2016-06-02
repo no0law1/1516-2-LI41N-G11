@@ -3,7 +3,6 @@ package pt.isel.ls.movies.container.commands.review;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.ReviewDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.movies.view.review.SingleReviewView;
 import pt.isel.ls.movies.view.review.SingleReviewViewHtml;
@@ -16,8 +15,14 @@ import java.sql.Connection;
  */
 public class GetReview extends Command {
 
+    private static final String DETAILS = "Gets a specific review from a movie";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/movies/{mid}/reviews/{rid}";
+
     public GetReview(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

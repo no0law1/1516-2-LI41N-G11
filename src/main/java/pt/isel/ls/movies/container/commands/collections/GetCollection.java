@@ -4,7 +4,6 @@ import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.collection.SingleCollectionView;
@@ -18,8 +17,15 @@ import java.util.List;
  * Get a single collection instance from the database
  */
 public class GetCollection extends Command {
+
+    private static final String DETAILS = "Gets a specific collection";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/collections";
+
     public GetCollection(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

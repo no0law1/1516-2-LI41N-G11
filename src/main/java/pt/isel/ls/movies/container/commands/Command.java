@@ -14,12 +14,18 @@ import java.util.Map;
  */
 public abstract class Command implements ICommand {
 
+    private final String METHOD;
+    private final String PATH;
+
     protected Map<String, Writable> views;
     protected DataSource dataSource;
 
-    public Command(DataSource dataSource) {
+    public Command(DataSource dataSource, String method, String path) {
         this.dataSource = dataSource;
         views = new HashMap<>();
+
+        this.METHOD = method;
+        this.PATH = path;
     }
 
     /**
@@ -45,5 +51,15 @@ public abstract class Command implements ICommand {
             }
         }
         throw new InvalidAcceptException("");
+    }
+
+    @Override
+    public String getMethod() {
+        return METHOD;
+    }
+
+    @Override
+    public String getPath() {
+        return PATH;
     }
 }

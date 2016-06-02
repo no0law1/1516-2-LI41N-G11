@@ -11,8 +11,14 @@ import javax.sql.DataSource;
  */
 public class TopRatings extends Command {
 
+    private static final String DETAILS = "Base page of all the tops";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/tops/ratings";
+
     public TopRatings(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

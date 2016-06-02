@@ -16,8 +16,14 @@ import java.util.List;
  */
 public class GetLeastReviewedMovies extends Command {
 
+    private static final String DETAILS = "Gets the n movies with the least reviews";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/tops/{n}/reviews/lower/count";
+
     public GetLeastReviewedMovies(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

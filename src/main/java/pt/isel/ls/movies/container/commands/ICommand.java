@@ -8,5 +8,9 @@ import pt.isel.ls.movies.engine.Response;
  */
 public interface ICommand {
 
+    String getMethod();
+
+    String getPath();
+
     void execute(Request request, Response response) throws Exception;
 }

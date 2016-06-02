@@ -11,8 +11,14 @@ import javax.sql.DataSource;
  */
 public class Home extends Command {
 
+    private static final String DETAILS = "Home page of webserver";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/";
+
     public Home(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

@@ -2,11 +2,8 @@ package pt.isel.ls.movies.container.commands.collections;
 
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
-import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Collection;
-import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.view.collection.CollectionsView;
 import pt.isel.ls.movies.view.collection.CollectionsViewHtml;
 
@@ -18,8 +15,15 @@ import java.util.List;
  * Get all collection instances from the database
  */
 public class GetCollections extends Command {
+
+    private static final String DETAILS = "Gets all collections";
+
+    private static final String METHOD = "GET";
+
+    private static final String PATH = "/collections";
+
     public GetCollections(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override

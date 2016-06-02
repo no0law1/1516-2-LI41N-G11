@@ -13,13 +13,19 @@ import java.util.Map;
  */
 public class Option extends Command {
 
+    private static final String DETAILS = "Lists all the available options";
+
+    private static final String METHOD = "OPTION";
+
+    private static final String PATH = "/";
+
     public Option(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, METHOD, PATH);
     }
 
     @Override
     public void doWork(Request request) throws Exception {
-        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", FileUtils.Option.OPTIONS);
+        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", ";");
 
         for (String s : map.keySet()) {
             System.out.printf("%s\n\t%s\n", s, map.get(s));
