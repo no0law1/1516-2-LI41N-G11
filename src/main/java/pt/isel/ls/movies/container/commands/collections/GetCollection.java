@@ -22,7 +22,7 @@ public class GetCollection extends Command {
 
     private static final String METHOD = "GET";
 
-    private static final String PATH = "/collections";
+    private static final String PATH = "/collections/{cid}";
 
     public GetCollection(DataSource dataSource) {
         super(dataSource, METHOD, PATH);

@@ -1,7 +1,5 @@
 package pt.isel.ls.utils;
 
-import com.sun.istack.internal.Nullable;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,7 +19,7 @@ public class FileUtils {
      * @return mapped key value from file
      * @throws FileNotFoundException if file does not exist
      */
-    public static Map<String, String> getFromFile(String filePath, @Nullable String splitter) throws FileNotFoundException {
+    public static Map<String, String> getFromFile(String filePath, String splitter) throws FileNotFoundException {
         Map<String, String> map = new HashMap<>();
 
         Scanner scanner = new Scanner(new FileReader(new File(filePath)));
