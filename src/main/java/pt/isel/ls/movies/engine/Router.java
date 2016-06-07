@@ -178,6 +178,22 @@ public class Router {
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            doAll(req, resp);
+        }
+
+        @Override
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            doAll(req, resp);
+        }
+
+        /**
+         * Handles all the requests
+         *
+         * @param req  Request given from http post and http get
+         * @param resp Response given from http post and http get
+         * @throws IOException todo
+         */
+        private void doAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
             Request request = Request.create(contextData, req);
             Response response = Response.create(resp.getWriter());
             try {
@@ -185,12 +201,10 @@ public class Router {
                 //TODO set response charset
                 resp.setContentType(response.getContentType());
                 resp.setStatus(200);
-            }
-            catch (HTMLException e){
+            } catch (HTMLException e) {
                 new ErrorView(e.getHtmlErrorCode(), e.getErrorTitle(), e.getMessage()).writeTo(resp.getWriter());
                 resp.setStatus(e.getHtmlErrorCode());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 new ErrorView(500, "Internal Server Error", e.getMessage()).writeTo(resp.getWriter());
                 resp.setStatus(500);
                 e.printStackTrace();
