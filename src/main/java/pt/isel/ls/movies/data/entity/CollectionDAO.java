@@ -1,6 +1,7 @@
 package pt.isel.ls.movies.data.entity;
 
 import pt.isel.ls.movies.data.exceptions.InsertException;
+import pt.isel.ls.movies.exceptions.BadRequestException;
 import pt.isel.ls.movies.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Collection;
 
@@ -39,6 +40,10 @@ public class CollectionDAO {
      * @throws Exception if it was not possible to insert, or an error to the connection
      */
     public static int createCollection(Connection connection, Collection collection) throws Exception {
+        if (collection.getName() == null || collection.getDescription() == null) {
+            throw new BadRequestException("You missed some parameters");
+        }
+
         PreparedStatement preparedStatement =
                 connection.prepareStatement(
                         "insert into collection(name, description) values (?, ?)",
@@ -106,6 +111,10 @@ public class CollectionDAO {
     }
 
     public static Collection.MovieCollectionUID postMovieToCollection(Connection connection, int cid, int mid) throws Exception {
+        if (mid <= 0) {
+            throw new BadRequestException("You missed some parameters");
+        }
+
         PreparedStatement preparedStatement =
                 connection.prepareStatement(
                         "insert into movie_collection(cid, mid) values (?, ?)",

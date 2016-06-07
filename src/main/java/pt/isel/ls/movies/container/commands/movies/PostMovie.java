@@ -29,7 +29,7 @@ public class PostMovie extends Command {
         int mid;
 
         String title = request.getParameter("title");
-        int releaseYear = Integer.parseInt(request.getParameter("releaseYear"));
+        int releaseYear = request.getIntParameter("releaseYear");
         String genre = request.getParameter("genre");
         Movie movie = new Movie(title, releaseYear, genre);
 

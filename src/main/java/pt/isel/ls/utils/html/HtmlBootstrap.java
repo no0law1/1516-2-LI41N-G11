@@ -1,9 +1,6 @@
 package pt.isel.ls.utils.html;
 
-import org.w3c.dom.html.HTMLElement;
 import pt.isel.ls.utils.common.Writable;
-
-import javax.swing.text.html.HTML;
 
 
 public class HtmlBootstrap extends Html {
@@ -38,14 +35,14 @@ public class HtmlBootstrap extends Html {
                     btnGroup( a(mpath + "&skip=" + (skip+top), ">").withAttr("role", "btn").withAttr("class", "btn btn-default")),
                     btnGroup(text("")),
                     btnGroup( a(mpath + "&skip=" + (count-(count%top == 0 ? 5 : count%top)), ">>").withAttr("role", "btn").withAttr("class", "btn btn-default"))
-            ).withAttr("class", "text-rigth");
+            ).withAttr("class", "text-right");
         }
         if(skip > 0 && count <= skip+top) {
             return btnGroupJustified(
                     btnGroup( a(mpath + "&skip=0", "<<").withAttr("role", "btn").withAttr("class", "btn btn-default")),
                     btnGroup(text("")),
                     btnGroup( a(mpath + "&skip=" + (skip-top < 0 ? 0 : skip-top), "<").withAttr("role", "btn").withAttr("class", "btn btn-default"))
-            ).withAttr("class", "text-rigth");
+            ).withAttr("class", "text-right");
         }
         return btnGroupJustified(
                 btnGroup( a(mpath + "&skip=0", "<<").withAttr("role", "btn").withAttr("class", "btn btn-default")),
@@ -55,7 +52,7 @@ public class HtmlBootstrap extends Html {
                 btnGroup( a(mpath + "&skip=" + (skip+top), ">").withAttr("role", "btn").withAttr("class", "btn btn-default")),
                 btnGroup(text("")),
                 btnGroup( a(mpath + "&skip=" + (count-(count%top == 0 ? 5 : count%top)), ">>").withAttr("role", "btn").withAttr("class", "btn btn-default"))
-        ).withAttr("class", "text-rigth");
+        ).withAttr("class", "text-right");
     }
 
     public static HtmlElem btnGroupJustified(Writable... content) {

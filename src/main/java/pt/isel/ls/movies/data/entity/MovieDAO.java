@@ -1,9 +1,9 @@
 package pt.isel.ls.movies.data.entity;
 
 import pt.isel.ls.movies.data.exceptions.InsertException;
+import pt.isel.ls.movies.exceptions.BadRequestException;
 import pt.isel.ls.movies.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Movie;
-import pt.isel.ls.movies.model.Review;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -29,6 +29,10 @@ public class MovieDAO {
      * @return unique id
      */
     public static int submitMovie(Connection connection, Movie movie) throws Exception {
+        if (movie.getTitle() == null || movie.getReleaseYear() == -1) {
+            throw new BadRequestException("You missed some parameters");
+        }
+
         PreparedStatement preparedStatement =
                 connection.prepareStatement(
                         "insert into movie(title, release_year, genre) values (?, ?, ?)",

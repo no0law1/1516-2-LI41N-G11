@@ -1,4 +1,4 @@
-package pt.isel.ls.movies.exceptions;
+package pt.isel.ls.movies.exceptions.common;
 
 /**
  * Created by rcacheira on 23/05/16.

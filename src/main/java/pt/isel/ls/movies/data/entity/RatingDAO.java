@@ -1,6 +1,7 @@
 package pt.isel.ls.movies.data.entity;
 
 import pt.isel.ls.movies.data.exceptions.InsertException;
+import pt.isel.ls.movies.exceptions.BadRequestException;
 import pt.isel.ls.movies.model.Rating;
 
 import java.sql.Connection;
@@ -21,6 +22,10 @@ public class RatingDAO {
      * @return Unique identifier of the rating
      */
     public static Rating submitRating(Connection connection, Rating rating) throws Exception {
+        if (rating.getVal() == -1) {
+            throw new BadRequestException("You missed some parameters");
+        }
+
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select * from rating where mid=? and val=?");
         preparedStatement.setInt(1, rating.getMid());

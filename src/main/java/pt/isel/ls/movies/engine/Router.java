@@ -3,9 +3,9 @@ package pt.isel.ls.movies.engine;
 import org.reflections.Reflections;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.container.commands.ICommand;
-import pt.isel.ls.movies.exceptions.HTMLException;
 import pt.isel.ls.movies.exceptions.MethodNotAllowedException;
 import pt.isel.ls.movies.exceptions.PathNotFoundException;
+import pt.isel.ls.movies.exceptions.common.HTMLException;
 import pt.isel.ls.movies.view.errors.ErrorView;
 
 import javax.servlet.ServletException;

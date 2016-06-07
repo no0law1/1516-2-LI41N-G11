@@ -1,5 +1,7 @@
 package pt.isel.ls.movies.exceptions;
 
+import pt.isel.ls.movies.exceptions.common.HTMLException;
+
 /**
  * Created by rcacheira on 23/05/16.
  */

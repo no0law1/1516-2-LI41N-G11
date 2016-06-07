@@ -1,6 +1,7 @@
 package pt.isel.ls.movies.data.entity;
 
 import pt.isel.ls.movies.data.exceptions.InsertException;
+import pt.isel.ls.movies.exceptions.BadRequestException;
 import pt.isel.ls.movies.exceptions.NoDataException;
 import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.model.Review;
@@ -38,6 +39,13 @@ public class ReviewDAO {
      * @return Unique identifier for the review added
      */
     public static Review.ReviewUID submitReview(Connection connection, Review review) throws Exception {
+        if (review.getReviewerName() == null
+                || review.getReviewSummary() == null
+                || review.getReview() == null
+                || review.getRating() == -1) {
+            throw new BadRequestException("You missed some parameters");
+        }
+
         PreparedStatement preparedStatement =
                 connection.prepareStatement(
                         "insert into review(mid, id, reviewer_name, review_summary, review, rating) values (?, ?, ?, ?, ?, ?)",
