@@ -59,15 +59,19 @@ public class Html implements HttpContent {
                 .withAttr("action", url);
     }
 
-    public static Writable label(String to, String text) {
+    public static HtmlElem label(String to, String text) {
         return new HtmlElem("label", new HtmlText(text))
                 .withAttr("for", to);
     }
 
-    public static Writable textInput(String name) {
+    public static HtmlElem textInput(String name) {
         return new HtmlElem("input")
                 .withAttr("type", "text")
                 .withAttr("name", name);
+    }
+
+    public static HtmlElem div(Writable... c) {
+        return new HtmlElem("div", c);
     }
 
     public static HtmlElem table(Writable... c) {

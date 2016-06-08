@@ -3,7 +3,6 @@ package pt.isel.ls.movies.view.movie;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.model.Review;
 import pt.isel.ls.utils.common.Writable;
-import pt.isel.ls.utils.html.HtmlBootstrap;
 import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 import pt.isel.ls.utils.html.HtmlElem;
 
@@ -20,18 +19,23 @@ public class SingleMovieViewHtml extends HtmlBootstrapWithHomeButton {
                         .withAttr("class", "text-center"),
                 h3(text("<b>Release Year:</b> " + movie.getReleaseYear())),
                 h3(text("<b>Genre:</b> " + movie.getGenre())),
-                table(
-                        new HtmlElem("thead",
-                                tr(
-                                        th(text("ID")),
-                                        th(text("Reviewer")),
-                                        th(text("Review Summary")),
-                                        th(text("Rating"))
-                                )
-                        ),
-                        getList(reviews)
-                ).withAttr("class", "table table-striped"),
+                getList(reviews),
                 pagingButtons("/movies/" + movie.getId(), null, count, top, skip),
+                h2(text("Add a review"))
+                        .withAttr("class", "text-center"),
+                form("POST", "/movies/" + movie.getId() + "/reviews",
+                        formGroup("name", "Name", "name"),
+                        formGroup("review", "Review", "review"),
+                        formGroup("summary", "Summary", "reviewSummary"),
+                        formGroup("rating", "Rating", "rating"),
+                        div(
+                                new HtmlElem("input")
+                                        .withAttr("class", "btn btn-default")
+                                        .withAttr("type", "submit")
+                                        .withAttr("name", "Submit")
+                                        .withAttr("style", "margin-left:10px")
+                        ).withAttr("class", "col-sm-10 text-right")
+                ).withAttr("class", "form-horizontal clearfix"),
                 btnGroupJustified(
                         btnGroup(
                                 a("/movies?top=5", "Movies")
@@ -59,7 +63,17 @@ public class SingleMovieViewHtml extends HtmlBootstrapWithHomeButton {
                                 )
                         ))
         );
-        return div;
+        return table(
+                new HtmlElem("thead",
+                        tr(
+                                th(text("ID")),
+                                th(text("Reviewer")),
+                                th(text("Review Summary")),
+                                th(text("Rating"))
+                        )
+                ),
+                div
+        ).withAttr("class", "table table-striped");
     }
 
 }

@@ -40,7 +40,8 @@ public class CollectionDAO {
      * @throws Exception if it was not possible to insert, or an error to the connection
      */
     public static int createCollection(Connection connection, Collection collection) throws Exception {
-        if (collection.getName() == null || collection.getDescription() == null) {
+        if (collection.getName() == null || collection.getDescription() == null
+                || collection.getName().isEmpty() || collection.getDescription().isEmpty()) {
             throw new BadRequestException("You missed some parameters");
         }
 

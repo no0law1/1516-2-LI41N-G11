@@ -2,7 +2,6 @@ package pt.isel.ls.movies.view.movie;
 
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.utils.common.Writable;
-import pt.isel.ls.utils.html.HtmlBootstrap;
 import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 import pt.isel.ls.utils.html.HtmlElem;
 
@@ -19,20 +18,20 @@ public class MoviesViewHtml extends HtmlBootstrapWithHomeButton {
                 h1(text("Movies " + titleSuffix))
                         .withAttr("class", "text-center")
                         .withAttr("style", "margin-top:20px"),
-                table(
-                        new HtmlElem("thead",
-                                tr(
-                                        th(a("/movies?top=5&sortBy=" + (Objects.equals(sortBy, "addedDate") ? "addedDateDesc" : "addedDate"),"ID")),
-                                        th(a("/movies?top=5&sortBy=" + (Objects.equals(sortBy, "title") ? "titleDesc" : "title"),"Title")),
-                                        th(a("/movies?top=5&sortBy=" + (Objects.equals(sortBy, "year") ? "yearDesc" : "year"),"Release Year")),
-                                        th(a("/movies?top=5&sortBy=" + (Objects.equals(sortBy, "rating") ? "ratingDesc" : "rating"),"Average Rating")),
-                                        th(text("Genre")),
-                                        th(text(""))
-                                )
-                        ),
-                        getList(movies)
-                ).withAttr("class", "table table-striped"),
+                getList(movies, sortBy),
                 pagingButtons("/movies", sortBy != null ? "sortBy="+sortBy : null, count, top, skip),
+                h2(text("Movie Creation")).withAttr("class", "text-center"),
+                form("POST", "/movies",
+                        formGroup("title", "Title", "title"),
+                        formGroup("releaseYear", "Release Year", "releaseYear"),
+                        div(
+                                new HtmlElem("input")
+                                        .withAttr("class", "btn btn-default")
+                                        .withAttr("type", "submit")
+                                        .withAttr("name", "Submit")
+                                        .withAttr("style", "margin-left:10px")
+                        ).withAttr("class", "col-sm-10 text-right")
+                ).withAttr("class", "form-horizontal clearfix"),
                 btnGroupJustified(
                         btnGroup( a("/tops/ratings", "Tops").withAttr("role", "btn").withAttr("class", "btn btn-default"))
 
@@ -44,7 +43,7 @@ public class MoviesViewHtml extends HtmlBootstrapWithHomeButton {
         this("", movies, count, top, skip, sortBy);
     }
 
-    private static Writable getList(List<Movie> movies) {
+    private static Writable getList(List<Movie> movies, String sortBy) {
         HtmlElem div = new HtmlElem("tbody");
         movies.forEach(
                 movie -> div.withContent(
@@ -60,6 +59,18 @@ public class MoviesViewHtml extends HtmlBootstrapWithHomeButton {
                                 )
                         ))
         );
-        return div;
+        return table(
+                new HtmlElem("thead",
+                        tr(
+                                th(a("/movies?top=5&sortBy=" + (Objects.equals(sortBy, "addedDate") ? "addedDateDesc" : "addedDate"), "ID")),
+                                th(a("/movies?top=5&sortBy=" + (Objects.equals(sortBy, "title") ? "titleDesc" : "title"), "Title")),
+                                th(a("/movies?top=5&sortBy=" + (Objects.equals(sortBy, "year") ? "yearDesc" : "year"), "Release Year")),
+                                th(a("/movies?top=5&sortBy=" + (Objects.equals(sortBy, "rating") ? "ratingDesc" : "rating"), "Average Rating")),
+                                th(text("Genre")),
+                                th(text(""))
+                        )
+                ),
+                div
+        ).withAttr("class", "table table-striped");
     }
 }

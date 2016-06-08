@@ -29,7 +29,8 @@ public class MovieDAO {
      * @return unique id
      */
     public static int submitMovie(Connection connection, Movie movie) throws Exception {
-        if (movie.getTitle() == null || movie.getReleaseYear() == -1) {
+        if (movie.getTitle() == null || movie.getReleaseYear() == -1
+                || movie.getTitle().isEmpty()) {
             throw new BadRequestException("You missed some parameters");
         }
 

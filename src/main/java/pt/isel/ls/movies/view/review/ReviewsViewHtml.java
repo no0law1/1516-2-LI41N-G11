@@ -1,8 +1,8 @@
 package pt.isel.ls.movies.view.review;
 
 import pt.isel.ls.movies.model.Review;
-import pt.isel.ls.utils.common.CompositeWritable;
-import pt.isel.ls.utils.html.*;
+import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
+import pt.isel.ls.utils.html.HtmlElem;
 
 import java.util.List;
 
@@ -15,19 +15,9 @@ public class ReviewsViewHtml extends HtmlBootstrapWithHomeButton {
         super("reviews",
                 h1(text("Movie Reviews"))
                         .withAttr("class", "text-center"),
-                table(
-                        new HtmlElem("thead",
-                                tr(
-                                        th(text("ID")),
-                                        th(text("Reviewer")),
-                                        th(text("Review Summary")),
-                                        th(text("Rating")),
-                                        th(text(""))
-                                )),
-                        getList(reviews)
-                )
-                        .withAttr("class", "table table-striped"),
+                getList(reviews),
                 pagingButtons("/movies", null, count, top, skip),
+                //TODO: post input form
                 btnGroupJustified(
                         btnGroup(a("/movies/" + mid + "?top=5", "Movie")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default"))
@@ -50,7 +40,17 @@ public class ReviewsViewHtml extends HtmlBootstrapWithHomeButton {
                                 )
                         ))
         );
-        return div;
+        return table(
+                new HtmlElem("thead",
+                        tr(
+                                th(text("ID")),
+                                th(text("Reviewer")),
+                                th(text("Review Summary")),
+                                th(text("Rating")),
+                                th(text(""))
+                        )
+                ), div
+        ).withAttr("class", "table table-striped");
     }
 
 }

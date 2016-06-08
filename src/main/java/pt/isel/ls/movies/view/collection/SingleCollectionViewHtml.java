@@ -2,7 +2,6 @@ package pt.isel.ls.movies.view.collection;
 
 import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.model.Movie;
-import pt.isel.ls.utils.html.HtmlBootstrap;
 import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 import pt.isel.ls.utils.html.HtmlElem;
 
@@ -17,19 +16,19 @@ public class SingleCollectionViewHtml extends HtmlBootstrapWithHomeButton {
         super("Collections",
                 h1(text(collection.getName())).withAttr("class", "text-center"),
                 p(text(collection.getDescription())).withAttr("style", "width:80%;margin:20px auto;"),
-                table(
-                        new HtmlElem("thead",
-                                tr(
-                                        th(text("ID")),
-                                        th(text("Title")),
-                                        th(text("Release Year")),
-                                        th(text("Genre")),
-                                        th(text(""))
-                                )
-                        ),
-                        getList(movies)
-                ).withAttr("class", "table table-striped"),
+                getList(movies),
                 pagingButtons("/collections/" + collection.getId(), null, count, top, skip),
+                h2(text("Add a Movie")).withAttr("class", "text-center"),
+                form("POST", "/collections/" + collection.getId() + "/movies",
+                        formGroup("mid", "Unique identifier", "mid"),
+                        div(
+                                new HtmlElem("input")
+                                        .withAttr("class", "btn btn-default")
+                                        .withAttr("type", "submit")
+                                        .withAttr("name", "Submit")
+                                        .withAttr("style", "margin-left:10px")
+                        ).withAttr("class", "col-sm-10 text-right")
+                ).withAttr("class", "form-horizontal clearfix"),
                 btnGroupJustified(
                         btnGroup(a("/collections?top=5", "Collections")
                                 .withAttr("role", "btn").withAttr("class", "btn btn-default"))
@@ -52,6 +51,17 @@ public class SingleCollectionViewHtml extends HtmlBootstrapWithHomeButton {
                                 )
                         ))
         );
-        return div;
+        return table(
+                new HtmlElem("thead",
+                        tr(
+                                th(text("ID")),
+                                th(text("Title")),
+                                th(text("Release Year")),
+                                th(text("Genre")),
+                                th(text(""))
+                        )
+                ),
+                div
+        ).withAttr("class", "table table-striped");
     }
 }

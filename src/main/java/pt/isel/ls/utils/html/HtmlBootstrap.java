@@ -11,7 +11,7 @@ public class HtmlBootstrap extends Html {
                         head(title),
                         new HtmlElem("body",
                                 container(cs)
-                        )
+                        ).withAttr("style", "padding-bottom:50px")
                 )
         );
     }
@@ -22,6 +22,18 @@ public class HtmlBootstrap extends Html {
         Writable bootstrapTheme = css("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css");
 
         return new HtmlElem("head", t, bootstrap, bootstrapTheme, style());
+    }
+
+    public static HtmlElem formGroup(String identifier, String labelName, String inputName) {
+        return new HtmlElem("div",
+                label(identifier, labelName)
+                        .withAttr("class", "col-sm-2 control-label"),
+                new HtmlElem("div",
+                        textInput(inputName)
+                                .withAttr("class", "form-control col-sm-10")
+                                .withAttr("id", identifier)
+                ).withAttr("class", "col-sm-8")
+        ).withAttr("class", "form-group");
     }
 
     public static HtmlElem pagingButtons(String path, String parameters, int count, int top, int skip){

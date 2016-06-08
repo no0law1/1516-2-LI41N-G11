@@ -1,7 +1,6 @@
 package pt.isel.ls.movies.view.rating;
 
 import pt.isel.ls.movies.model.Rating;
-import pt.isel.ls.utils.html.HtmlBootstrap;
 import pt.isel.ls.utils.html.HtmlBootstrapWithHomeButton;
 import pt.isel.ls.utils.html.HtmlElem;
 
@@ -27,6 +26,19 @@ public class RatingsViewHtml extends HtmlBootstrapWithHomeButton {
                 )
                         .withAttr("class", "table table-striped"),
                 h2(text("<b>Average:</b> " + getAverage(ratings))),
+                h2(text("Rating Submission"))
+                        .withAttr("style", "margin-top:30px"),
+                form("POST", "/movies/" + mid + "/ratings",
+                        label("1", "Rating")
+                                .withAttr("style", "margin-right:10px"),
+                        textInput("rating"),
+                        new HtmlElem("input")
+                                .withAttr("class", "btn btn-default")
+                                .withAttr("type", "submit")
+                                .withAttr("name", "Submit")
+                                .withAttr("style", "margin-left:10px")
+
+                ),
                 btnGroupJustified(
                         btnGroup(
                                 a("/movies/" + mid + "?top=5", "Movie")
