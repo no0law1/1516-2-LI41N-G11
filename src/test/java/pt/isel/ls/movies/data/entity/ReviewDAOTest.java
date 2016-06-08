@@ -54,10 +54,10 @@ public class ReviewDAOTest {
     @Test
     public void testGetReviews() throws Exception {
         List<Review> expected = new LinkedList<>();
-        expected.add(new Review(1, 1, "Nuno", "Kickass Movie", null, 5));
-        expected.add(new Review(1, 2, "Nuno", "Just Another Movie", null, 3));
-        expected.add(new Review(1, 3, "Nuno", "Superb Movie", null, 5));
-        expected.add(new Review(1, 4, "Nuno", "It's Ok", null, 2));
+        expected.add(new Review(1, 1, "Nuno", "Kickass Movie", "summary", 5));
+        expected.add(new Review(1, 2, "Nuno", "Just Another Movie", "summary", 3));
+        expected.add(new Review(1, 3, "Nuno", "Superb Movie", "summary", 5));
+        expected.add(new Review(1, 4, "Nuno", "It's Ok", "summary", 2));
 
         try(Connection connection = dataSource.getConnection()){
             connection.setAutoCommit(false);

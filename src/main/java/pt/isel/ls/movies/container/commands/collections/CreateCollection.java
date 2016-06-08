@@ -13,7 +13,7 @@ import java.sql.Connection;
 /**
  * Creates a Collection in the database
  */
-public class CreateCollection extends Command {
+public class CreateCollection extends Command.RedirectViewCommand {
 
     private static final String METHOD = "POST";
 
@@ -24,7 +24,7 @@ public class CreateCollection extends Command {
     }
 
     @Override
-    public void doWork(Request request) throws Exception {
+    public String doWork(Request request) throws Exception {
         int id;
 
         String name = request.getParameter("name");
@@ -39,6 +39,8 @@ public class CreateCollection extends Command {
 
         views.put("text/html", new CreatedCollectionViewHtml(collection));
         views.put("text/plain", new CreatedCollectionView(collection));
+
+        return new StringBuilder("/collections/").append(id).append("/movies").toString();
     }
 
     @Override

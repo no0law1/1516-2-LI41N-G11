@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Gets all reviews of a Movie from the database
  */
-public class GetMovieReviews extends Command {
+public class GetMovieReviews extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets all reviews of a movie";
 

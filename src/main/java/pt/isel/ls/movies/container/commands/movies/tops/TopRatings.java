@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 /**
  * Command used to show the list all the options of top rating movies
  */
-public class TopRatings extends Command {
+public class TopRatings extends Command.ViewCommand {
 
     private static final String DETAILS = "Base page of all the tops";
 

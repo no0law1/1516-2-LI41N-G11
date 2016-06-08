@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Testing class of model class {@link Review}
@@ -31,7 +32,7 @@ public class ReviewTest {
         Review expected = new Review(1, 1, "Nuno", "Kickass Movie", "review1", 5);
         Review actual = new Review(1, 1, "Nuno", "Kickass Movie", null, 5);
 
-        assertFalse(expected.equals(actual));
+        assertTrue(expected.equals(actual));
     }
 
     @Test

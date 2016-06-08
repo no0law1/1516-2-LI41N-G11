@@ -415,12 +415,12 @@ public class MovieDAOTest {
             for (Movie movie : movies) {
                 MovieDAO.submitMovie(connection, movie);
             }
-            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(1, 3, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(1, 4, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(1, 3, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(1, 4, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", "summary", 5));
 
             Movie actual = MovieDAO.getMostReviewedMovie(connection);
 
@@ -442,13 +442,13 @@ public class MovieDAOTest {
             for (Movie movie : movies) {
                 MovieDAO.submitMovie(connection, movie);
             }
-            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(3, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(3, 2, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(4, 1, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(3, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(3, 2, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(4, 1, "Nuno", "Kickass Movie", "summary", 5));
 
             Movie actual = MovieDAO.getMostReviewedMovie(connection);
 
@@ -475,19 +475,19 @@ public class MovieDAOTest {
             for (Movie movie : movies) {
                 MovieDAO.submitMovie(connection, movie);
             }
-            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(4, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(1, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(4, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(2, 2, "Nuno", "Kickass Movie", "summary", 5));
 
             List<Movie> actual = MovieDAO.getMostReviewedMovies(connection, 2);
 
             assertEquals(2, actual.size());
             assertEquals(expected1, actual.get(0));
 
-            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(3, 1, "Nuno", "Kickass Movie", null, 5));
-            ReviewDAO.submitReview(connection, new Review(3, 2, "Nuno", "Kickass Movie", null, 5));
+            ReviewDAO.submitReview(connection, new Review(1, 2, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(3, 1, "Nuno", "Kickass Movie", "summary", 5));
+            ReviewDAO.submitReview(connection, new Review(3, 2, "Nuno", "Kickass Movie", "summary", 5));
 
             actual = MovieDAO.getMostReviewedMovies(connection, 2);
 

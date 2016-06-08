@@ -21,8 +21,9 @@ public class Exit extends Command {
         super(dataSource, METHOD, PATH);
     }
 
+
     @Override
-    public void doWork(Request request) throws Exception {
+    public void execute(Request request, Response response) throws Exception {
         if(request.getContextData().runningServer != null){
             System.out.println("stopping web server...");
 
@@ -32,11 +33,5 @@ public class Exit extends Command {
 
         System.out.println("Closing your application...");
         System.exit(0);
-    }
-
-
-    @Override
-    public void execute(Request request, Response response) throws Exception {
-        doWork(request);
     }
 }

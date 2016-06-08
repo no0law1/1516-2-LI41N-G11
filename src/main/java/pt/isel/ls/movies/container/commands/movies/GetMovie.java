@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Get a single movie instance from the database
  */
-public class GetMovie extends Command {
+public class GetMovie extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets a specific movie";
 

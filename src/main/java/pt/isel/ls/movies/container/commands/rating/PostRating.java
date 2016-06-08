@@ -12,7 +12,7 @@ import java.sql.Connection;
 /**
  * Submits a rating of a Movie to the database
  */
-public class PostRating extends Command {
+public class PostRating extends Command.RedirectViewCommand {
 
     private static final String DETAILS = "Posts a movie rating";
 
@@ -25,7 +25,7 @@ public class PostRating extends Command {
     }
 
     @Override
-    public void doWork(Request request) throws Exception {
+    public String doWork(Request request) throws Exception {
         int mid = request.getIntParameter("mid");
         int val = request.getIntParameter("rating");
 
@@ -36,11 +36,7 @@ public class PostRating extends Command {
         }
 
         System.out.printf("rating mid: %d, val: %d\n", rating.getMid(), rating.getVal());
-    }
 
-    //TODO remove execute method and create views
-    @Override
-    public void execute(Request request, Response response) throws Exception {
-        doWork(request);
+        return new StringBuilder("/movies/").append(mid).append("/ratings").toString();
     }
 }

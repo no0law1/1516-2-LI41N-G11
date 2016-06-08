@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Command that gets the n movies with the highest average rating.
  */
-public class GetHighestRatedMovies extends Command {
+public class GetHighestRatedMovies extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets the n movies with the highest average rating";
 

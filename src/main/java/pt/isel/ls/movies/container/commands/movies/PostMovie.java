@@ -13,7 +13,7 @@ import java.sql.Connection;
 /**
  * Submits a Movie to the database
  */
-public class PostMovie extends Command {
+public class PostMovie extends Command.RedirectViewCommand {
 
     private static final String DETAILS = "Posts a movie to the database";
 
@@ -26,12 +26,7 @@ public class PostMovie extends Command {
     }
 
     @Override
-    public void doWork(Request request) throws Exception {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void execute(Request request, Response response) throws Exception {
+    public String doWork(Request request) throws Exception {
         int mid;
 
         String title = request.getParameter("title");
@@ -43,7 +38,6 @@ public class PostMovie extends Command {
             mid = MovieDAO.submitMovie(connection, movie);
         }
 
-        response.addHeader("Location", PATH + "/" + mid);
-        response.setStatus(303);
+        return new StringBuilder("/movies/").append(mid).toString();
     }
 }

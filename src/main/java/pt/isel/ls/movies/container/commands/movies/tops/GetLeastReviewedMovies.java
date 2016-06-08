@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Command that gets the n movies with the least reviews.
  */
-public class GetLeastReviewedMovies extends Command {
+public class GetLeastReviewedMovies extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets the n movies with the least reviews";
 

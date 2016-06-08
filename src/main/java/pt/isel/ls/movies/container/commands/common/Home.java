@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 /**
  * Command of the Home page
  */
-public class Home extends Command {
+public class Home extends Command.ViewCommand {
 
     private static final String DETAILS = "Home page of webserver";
 

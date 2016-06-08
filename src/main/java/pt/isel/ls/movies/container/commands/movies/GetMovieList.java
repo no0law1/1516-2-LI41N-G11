@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Gets all movie instances from the database
  */
-public class GetMovieList extends Command{
+public class GetMovieList extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets all the movies";
 

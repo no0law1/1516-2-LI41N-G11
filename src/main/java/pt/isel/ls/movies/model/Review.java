@@ -79,7 +79,7 @@ public class Review {
                 this.id == review.id &&
                 this.reviewerName != null && this.reviewerName.equals(review.reviewerName) &&
                 this.reviewSummary != null && this.reviewSummary.equals(review.reviewSummary) &&
-                (this.review==null && review.review==null || this.review!=null && this.review.equals(review.review)) &&
+                //(this.review==null && review.review==null || this.review!=null && this.review.equals(review.review)) &&
                 this.rating == review.rating;
     }
 }

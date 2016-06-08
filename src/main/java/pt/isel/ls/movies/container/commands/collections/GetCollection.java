@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Get a single collection instance from the database
  */
-public class GetCollection extends Command {
+public class GetCollection extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets a specific collection";
 

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Get all collection instances from the database
  */
-public class GetCollections extends Command {
+public class GetCollections extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets all collections";
 

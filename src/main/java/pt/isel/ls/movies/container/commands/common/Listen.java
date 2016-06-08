@@ -25,7 +25,7 @@ public class Listen extends Command {
     }
 
     @Override
-    public void doWork(Request request) throws Exception {
+    public void execute(Request request, Response response) throws Exception {
 
         if(request.getContextData().runningServer != null){
             System.out.println("A Server is already running");
@@ -56,18 +56,12 @@ public class Listen extends Command {
         }
     }
 
-
-    @Override
-    public void execute(Request request, Response response) throws Exception {
-        doWork(request);
-    }
-
     public static void main(String[] args) throws Exception {
         ContextData data = new ContextData();
         data.dynamic = false;
 
         String[] request = new String[]{"LISTEN", "/", "port="+System.getenv("PORT")};
 
-        new Listen(DataSourceFactory.createInstance()).doWork(Request.create(data, request));
+        new Listen(DataSourceFactory.createInstance()).execute(Request.create(data, request), null);
     }
 }

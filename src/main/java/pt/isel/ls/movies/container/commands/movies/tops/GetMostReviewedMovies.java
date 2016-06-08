@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Command that gets the n movies with the most reviews.
  */
-public class GetMostReviewedMovies extends Command {
+public class GetMostReviewedMovies extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets the n movies with the most reviews";
 

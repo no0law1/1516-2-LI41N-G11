@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Gets the average rating and the count to every rating of a Movie
  */
-public class GetMovieRating extends Command {
+public class GetMovieRating extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets the rating information for a movie, such as the rating average and the number of votes for each rating value";
 

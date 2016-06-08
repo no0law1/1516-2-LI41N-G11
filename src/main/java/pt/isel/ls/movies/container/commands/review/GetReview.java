@@ -13,7 +13,7 @@ import java.sql.Connection;
 /**
  * Gets a single review of a Movie from the database
  */
-public class GetReview extends Command {
+public class GetReview extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets a specific review from a movie";
 

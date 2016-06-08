@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Command that gets the movie with the lowest average rating.
  */
-public class GetLowestRatedMovie extends Command {
+public class GetLowestRatedMovie extends Command.ViewCommand {
 
     private static final String DETAILS = "Gets the movie with the lowest average rating";
 

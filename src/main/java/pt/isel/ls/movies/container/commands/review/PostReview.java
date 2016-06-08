@@ -12,7 +12,7 @@ import java.sql.Connection;
 /**
  * Submits a review of a Movie in the database
  */
-public class PostReview extends Command {
+public class PostReview extends Command.RedirectViewCommand {
 
     private static final String DETAILS = "Creates a review for a movie";
 
@@ -25,7 +25,7 @@ public class PostReview extends Command {
     }
 
     @Override
-    public void doWork(Request request) throws Exception {
+    public String doWork(Request request) throws Exception {
         Review.ReviewUID reviewUID;
         int mid = request.getIntParameter("mid");
 
@@ -40,11 +40,7 @@ public class PostReview extends Command {
         }
 
         System.out.printf("mid: %d, id: %d\n", reviewUID.mid, reviewUID.id);
-    }
 
-    //TODO remove execute method and create views
-    @Override
-    public void execute(Request request, Response response) throws Exception {
-        doWork(request);
+        return new StringBuilder("/movies/").append(mid).append("/reviews").toString();
     }
 }

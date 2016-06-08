@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -155,8 +156,10 @@ public class Router {
         classes.forEach(
                 aClass -> {
                     try {
-                        ICommand command = aClass.getDeclaredConstructor(DataSource.class).newInstance(ds);
-                        router.add(command.getMethod(), command.getPath(), command);
+                        if(!Modifier.isAbstract( aClass.getModifiers())) {
+                            ICommand command = aClass.getDeclaredConstructor(DataSource.class).newInstance(ds);
+                            router.add(command.getMethod(), command.getPath(), command);
+                        }
                     } catch (NoSuchMethodException
                             | IllegalAccessException
                             | InvocationTargetException
