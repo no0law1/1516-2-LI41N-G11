@@ -20,13 +20,14 @@ public class PostMovie extends Command {
 
     private static final String PATH = "/movies";
 
+    int mid;
+
     public PostMovie(DataSource dataSource) {
         super(dataSource, METHOD, PATH);
     }
 
     @Override
     public void doWork(Request request) throws Exception {
-        int mid;
 
         String title = request.getParameter("title");
         int releaseYear = request.getIntParameter("releaseYear");
@@ -44,5 +45,9 @@ public class PostMovie extends Command {
     @Override
     public void execute(Request request, Response response) throws Exception {
         doWork(request);
+
+        response.setContentType("text/html");
+        response.addHeader("Location", PATH + "/" + mid);
+        response.setStatus(303);
     }
 }

@@ -199,8 +199,11 @@ public class Router {
             try {
                 router.get(request).execute(request, response);
                 //TODO set response charset
+                if (response.getHeader("Location") != null) {
+                    resp.setHeader("Location", response.getHeader("Location"));
+                }
                 resp.setContentType(response.getContentType());
-                resp.setStatus(200);
+                resp.setStatus(response.getStatus());
             } catch (HTMLException e) {
                 new ErrorView(e.getHtmlErrorCode(), e.getErrorTitle(), e.getMessage()).writeTo(resp.getWriter());
                 resp.setStatus(e.getHtmlErrorCode());

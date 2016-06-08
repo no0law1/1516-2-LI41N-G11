@@ -46,6 +46,7 @@ public abstract class Command implements ICommand {
             if(view != null){
                 response.setContentType(acceptType);
                 view.writeTo(response.getWriter());
+                response.setStatus(200);
                 response.getWriter().flush();
                 return;
             }
