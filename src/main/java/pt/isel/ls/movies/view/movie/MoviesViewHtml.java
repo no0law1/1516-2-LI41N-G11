@@ -28,7 +28,7 @@ public class MoviesViewHtml extends HtmlBootstrapWithHomeButton {
                                 new HtmlElem("input")
                                         .withAttr("class", "btn btn-default")
                                         .withAttr("type", "submit")
-                                        .withAttr("name", "Submit")
+                                        .withAttr("text", "Submit")
                                         .withAttr("style", "margin-left:10px")
                         ).withAttr("class", "col-sm-10 text-right")
                 ).withAttr("class", "form-horizontal clearfix"),

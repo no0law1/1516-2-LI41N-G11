@@ -25,6 +25,20 @@ public class Option extends Command {
 
     @Override
     public void doWork(Request request) throws Exception {
+        /*
+        Reflections reflections = new Reflections("pt.isel.ls.movies.container.commands");
+        Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
+
+        classes.forEach(
+                aClass -> {
+                    try {
+                        System.out.println(aClass.getField("DETAILS"));
+                    } catch (NoSuchFieldException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+        */
         Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", ";");
 
         for (String s : map.keySet()) {

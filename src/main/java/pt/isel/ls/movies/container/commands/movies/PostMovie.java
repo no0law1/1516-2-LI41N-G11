@@ -5,6 +5,7 @@ import pt.isel.ls.movies.data.entity.MovieDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Movie;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -20,14 +21,18 @@ public class PostMovie extends Command {
 
     private static final String PATH = "/movies";
 
-    int mid;
-
     public PostMovie(DataSource dataSource) {
         super(dataSource, METHOD, PATH);
     }
 
     @Override
     public void doWork(Request request) throws Exception {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void execute(Request request, Response response) throws Exception {
+        int mid;
 
         String title = request.getParameter("title");
         int releaseYear = request.getIntParameter("releaseYear");
@@ -38,15 +43,6 @@ public class PostMovie extends Command {
             mid = MovieDAO.submitMovie(connection, movie);
         }
 
-        System.out.printf("mid: %d\n", mid);
-    }
-
-    //TODO remove execute method and create views
-    @Override
-    public void execute(Request request, Response response) throws Exception {
-        doWork(request);
-
-        response.setContentType("text/html");
         response.addHeader("Location", PATH + "/" + mid);
         response.setStatus(303);
     }

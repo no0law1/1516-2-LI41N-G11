@@ -202,7 +202,9 @@ public class Router {
                 if (response.getHeader("Location") != null) {
                     resp.setHeader("Location", response.getHeader("Location"));
                 }
-                resp.setContentType(response.getContentType());
+                if (response.getContentType() != null) {
+                    resp.setContentType(response.getContentType());
+                }
                 resp.setStatus(response.getStatus());
             } catch (HTMLException e) {
                 new ErrorView(e.getHtmlErrorCode(), e.getErrorTitle(), e.getMessage()).writeTo(resp.getWriter());
