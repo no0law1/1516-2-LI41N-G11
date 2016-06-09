@@ -157,9 +157,9 @@ public class Router {
 
     private static void populate(Router router, DataSource ds) throws Exception {
         Reflections reflections = new Reflections("pt.isel.ls.movies.container.commands");
-        Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
+        Set<Class<? extends ICommand>> classes = reflections.getSubTypesOf(ICommand.class);
 
-        for(Class<? extends Command> aClass : classes ){
+        for(Class<? extends ICommand> aClass : classes ){
             try {
                 Command.Creator creator = (Command.Creator)aClass.getField("CREATOR").get(null);
                 Command command = creator.create(ds);
