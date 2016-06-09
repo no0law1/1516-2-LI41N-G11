@@ -14,14 +14,20 @@ import java.sql.Connection;
  */
 public class PostRating extends Command.RedirectViewCommand {
 
-    private static final String DETAILS = "Posts a movie rating";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new PostRating(dataSource);
+        }
 
-    private static final String METHOD = "POST";
-
-    private static final String PATH = "/movies/{mid}/ratings";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("POST", "/movies/{mid}/ratings", null, "Posts a movie rating");
+        }
+    };
 
     public PostRating(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

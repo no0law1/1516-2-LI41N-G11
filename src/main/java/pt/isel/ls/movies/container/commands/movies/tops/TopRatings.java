@@ -11,14 +11,20 @@ import javax.sql.DataSource;
  */
 public class TopRatings extends Command.ViewCommand {
 
-    private static final String DETAILS = "Base page of all the tops";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new TopRatings(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/tops/ratings";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/tops/ratings", null, "Base page of all the tops");
+        }
+    };
 
     public TopRatings(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

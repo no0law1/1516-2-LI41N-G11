@@ -14,14 +14,20 @@ import java.sql.Connection;
  */
 public class PostMovieToCollection extends Command.RedirectViewCommand {
 
-    private static final String DETAILS = "Adds a movie to a collection";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new PostMovieToCollection(dataSource);
+        }
 
-    private static final String METHOD = "POST";
-
-    private static final String PATH = "/collections/{cid}/movies";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("POST", "/collections/{cid}/movies", "mid=?", "Adds a movie to a collection");
+        }
+    };
 
     public PostMovieToCollection(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

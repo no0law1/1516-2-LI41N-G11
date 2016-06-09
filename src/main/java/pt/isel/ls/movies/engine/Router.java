@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -153,21 +154,14 @@ public class Router {
         Reflections reflections = new Reflections("pt.isel.ls.movies.container.commands");
         Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
 
-        classes.forEach(
-                aClass -> {
-                    try {
-                        if(!Modifier.isAbstract( aClass.getModifiers())) {
-                            ICommand command = aClass.getDeclaredConstructor(DataSource.class).newInstance(ds);
-                            router.add(command.getMethod(), command.getPath(), command);
-                        }
-                    } catch (NoSuchMethodException
-                            | IllegalAccessException
-                            | InvocationTargetException
-                            | InstantiationException e) {
-                        e.printStackTrace();
-                    }
-                }
-        );
+        for(Class<? extends Command> aClass : classes ){
+            try {
+                Command.Creator creator = (Command.Creator)aClass.getField("CREATOR").get(null);
+                Command command = creator.create(ds);
+                Command.CommandDetails details = creator.details();
+                router.add(details.method, details.path, command);
+            } catch (NoSuchFieldException ex){}
+        }
     }
 
     public class RouterHttpServlet extends HttpServlet{

@@ -16,14 +16,20 @@ import java.util.List;
  */
 public class GetHighestRatedMovies extends Command.ViewCommand {
 
-    private static final String DETAILS = "Gets the n movies with the highest average rating";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new GetHighestRatedMovies(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/tops/{n}/ratings/higher/average";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/tops/{n}/ratings/higher/average", null, "Gets the n movies with the highest average rating");
+        }
+    };
 
     public GetHighestRatedMovies(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

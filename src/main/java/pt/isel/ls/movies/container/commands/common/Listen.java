@@ -14,14 +14,20 @@ import javax.sql.DataSource;
 
 public class Listen extends Command {
 
-    private static final String DETAILS = "Launches a webserver listening on port 8080 unless parameter port is specified";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new Listen(dataSource);
+        }
 
-    private static final String METHOD = "LISTEN";
-
-    private static final String PATH = "/";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("LISTEN", "/", null, "Launches a webserver listening on port 8080 unless parameter port is specified");
+        }
+    };
 
     public Listen(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

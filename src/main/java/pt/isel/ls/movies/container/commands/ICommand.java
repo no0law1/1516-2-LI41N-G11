@@ -7,10 +7,5 @@ import pt.isel.ls.movies.engine.Response;
  * Contract of a Command class.
  */
 public interface ICommand {
-
-    String getMethod();
-
-    String getPath();
-
     void execute(Request request, Response response) throws Exception;
 }

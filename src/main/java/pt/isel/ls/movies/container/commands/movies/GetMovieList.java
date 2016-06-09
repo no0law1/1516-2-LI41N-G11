@@ -16,14 +16,20 @@ import java.util.List;
  */
 public class GetMovieList extends Command.ViewCommand {
 
-    private static final String DETAILS = "Gets all the movies";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new GetMovieList(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/movies";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/movies", null, "Gets all the movies");
+        }
+    };
 
     public GetMovieList(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     private Movie.Sort wrapSortParameter(String sortBy){

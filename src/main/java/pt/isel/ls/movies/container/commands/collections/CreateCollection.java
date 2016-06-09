@@ -15,12 +15,20 @@ import java.sql.Connection;
  */
 public class CreateCollection extends Command.RedirectViewCommand {
 
-    private static final String METHOD = "POST";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new CreateCollection(dataSource);
+        }
 
-    private static final String PATH = "/collections";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("POST", "/collections", "name=?&description=?", "Creates a collection");
+        }
+    };
 
     public CreateCollection(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override
@@ -41,15 +49,5 @@ public class CreateCollection extends Command.RedirectViewCommand {
         views.put("text/plain", new CreatedCollectionView(collection));
 
         return new StringBuilder("/collections/").append(id).append("/movies").toString();
-    }
-
-    @Override
-    public String getMethod() {
-        return METHOD;
-    }
-
-    @Override
-    public String getPath() {
-        return PATH;
     }
 }

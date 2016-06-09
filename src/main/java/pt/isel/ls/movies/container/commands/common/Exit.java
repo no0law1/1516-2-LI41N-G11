@@ -1,6 +1,7 @@
 package pt.isel.ls.movies.container.commands.common;
 
 import pt.isel.ls.movies.container.commands.Command;
+import pt.isel.ls.movies.container.commands.collections.RemoveMovieFromCollection;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
 
@@ -11,14 +12,20 @@ import javax.sql.DataSource;
  */
 public class Exit extends Command {
 
-    private static final String DETAILS = "Exits the application";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new Exit(dataSource);
+        }
 
-    private static final String METHOD = "EXIT";
-
-    private static final String PATH = "/";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("EXIT", "/", null, "Exits the application");
+        }
+    };
 
     public Exit(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
 

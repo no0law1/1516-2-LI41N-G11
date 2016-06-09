@@ -11,36 +11,23 @@ import java.util.Map;
 
 /**
  * Abstract class that represents a command
+ *
+ * TO be USED a command should define the following field:
+ * {@code public static Creator CREATOR = new CREATOR{...}}
  */
 public abstract class Command implements ICommand {
-
-    private final String METHOD;
-    private final String PATH;
 
     protected Map<String, Writable> views;
     protected DataSource dataSource;
 
-    public Command(DataSource dataSource, String method, String path) {
+    public Command(DataSource dataSource) {
         this.dataSource = dataSource;
         views = new HashMap<>();
-
-        this.METHOD = method;
-        this.PATH = path;
-    }
-
-    @Override
-    public String getMethod() {
-        return METHOD;
-    }
-
-    @Override
-    public String getPath() {
-        return PATH;
     }
 
     public static abstract class RedirectViewCommand extends Command {
-        public RedirectViewCommand(DataSource dataSource, String method, String path) {
-            super(dataSource, method, path);
+        public RedirectViewCommand(DataSource dataSource) {
+            super(dataSource);
         }
 
         /**
@@ -73,8 +60,8 @@ public abstract class Command implements ICommand {
     }
 
     public static abstract class ViewCommand extends Command {
-        public ViewCommand(DataSource dataSource, String method, String path) {
-            super(dataSource, method, path);
+        public ViewCommand(DataSource dataSource) {
+            super(dataSource);
         }
 
         /**
@@ -102,5 +89,28 @@ public abstract class Command implements ICommand {
             }
             throw new InvalidAcceptException("");
         }
+    }
+
+    public interface Creator{
+        Command create(DataSource dataSource);
+        CommandDetails details();
+    }
+
+    public static class CommandDetails{
+        public final String method;
+        public final String path;
+        public final String parameters;
+        public final String details;
+
+        public CommandDetails(String method, String path, String parameters, String details) {
+            if(details == null || method == null || path == null){
+                throw new IllegalArgumentException("details, method or path can't be null");
+            }
+            this.method = method;
+            this.path = path;
+            this.parameters = parameters;
+            this.details = details;
+        }
+
     }
 }

@@ -16,14 +16,20 @@ import java.util.List;
  */
 public class GetMovieReviews extends Command.ViewCommand {
 
-    private static final String DETAILS = "Gets all reviews of a movie";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new GetMovieReviews(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/movies/{mid}/reviews";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/movies/{mid}/reviews", null, "Gets all reviews of a movie");
+        }
+    };
 
     public GetMovieReviews(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

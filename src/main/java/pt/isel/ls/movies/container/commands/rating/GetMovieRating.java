@@ -16,14 +16,20 @@ import java.util.List;
  */
 public class GetMovieRating extends Command.ViewCommand {
 
-    private static final String DETAILS = "Gets the rating information for a movie, such as the rating average and the number of votes for each rating value";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new GetMovieRating(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/movies/{mid}/ratings";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/movies/{mid}/ratings", null, "Gets the rating information for a movie, such as the rating average and the number of votes for each rating value");
+        }
+    };
 
     public GetMovieRating(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

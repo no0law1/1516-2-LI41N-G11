@@ -13,14 +13,20 @@ import java.sql.Connection;
  */
 public class RemoveMovieFromCollection extends Command.RedirectViewCommand {
 
-    private static final String DETAILS = "Removes a movie from a collection";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new RemoveMovieFromCollection(dataSource);
+        }
 
-    private static final String METHOD = "DELETE";
-
-    private static final String PATH = "/collections/{cid}/movies/{mid}";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("DELETE", "/collections/{cid}/movies/{mid}", null, "Removes a movie from a collection");
+        }
+    };
 
     public RemoveMovieFromCollection(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

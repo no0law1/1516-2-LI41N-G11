@@ -11,14 +11,20 @@ import javax.sql.DataSource;
  */
 public class Home extends Command.ViewCommand {
 
-    private static final String DETAILS = "Home page of webserver";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new Home(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/", null, "Home page of webserver");
+        }
+    };
 
     public Home(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

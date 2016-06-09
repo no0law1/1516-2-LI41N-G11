@@ -18,14 +18,20 @@ import java.util.List;
  */
 public class GetCollection extends Command.ViewCommand {
 
-    private static final String DETAILS = "Gets a specific collection";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new GetCollection(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/collections/{cid}";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/collections/{cid}", null, "Gets a specific collection");
+        }
+    };
 
     public GetCollection(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

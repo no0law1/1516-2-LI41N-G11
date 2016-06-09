@@ -16,14 +16,20 @@ import java.util.List;
  */
 public class GetLowestRatedMovies extends Command.ViewCommand {
 
-    private static final String DETAILS = "Gets the n movies with the lowest average rating";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new GetLowestRatedMovies(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/tops/{n}/ratings/lower/average";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/tops/{n}/ratings/lower/average", null, "Gets the n movies with the lowest average rating");
+        }
+    };
 
     public GetLowestRatedMovies(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

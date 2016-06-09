@@ -15,14 +15,20 @@ import java.sql.Connection;
  */
 public class PostMovie extends Command.RedirectViewCommand {
 
-    private static final String DETAILS = "Posts a movie to the database";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new PostMovie(dataSource);
+        }
 
-    private static final String METHOD = "POST";
-
-    private static final String PATH = "/movies";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("POST", "/movies", "title=?&releaseYear=?", "Posts a movie to the database");
+        }
+    };
 
     public PostMovie(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

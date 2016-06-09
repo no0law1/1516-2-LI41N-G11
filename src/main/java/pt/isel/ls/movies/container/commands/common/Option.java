@@ -13,14 +13,20 @@ import java.util.Map;
  */
 public class Option extends Command {
 
-    private static final String DETAILS = "Lists all the available options";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new Option(dataSource);
+        }
 
-    private static final String METHOD = "OPTION";
-
-    private static final String PATH = "/";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("OPTION", "/", null, "Lists all the available options");
+        }
+    };
 
     public Option(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

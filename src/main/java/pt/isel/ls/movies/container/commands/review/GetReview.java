@@ -15,14 +15,20 @@ import java.sql.Connection;
  */
 public class GetReview extends Command.ViewCommand {
 
-    private static final String DETAILS = "Gets a specific review from a movie";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new GetReview(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/movies/{mid}/reviews/{rid}";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/movies/{mid}/reviews/{rid}", null, "Gets a specific review from a movie");
+        }
+    };
 
     public GetReview(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override

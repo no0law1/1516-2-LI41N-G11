@@ -16,14 +16,20 @@ import java.util.List;
  */
 public class GetCollections extends Command.ViewCommand {
 
-    private static final String DETAILS = "Gets all collections";
+    public static Creator CREATOR = new Creator() {
+        @Override
+        public Command create(DataSource dataSource) {
+            return new GetCollections(dataSource);
+        }
 
-    private static final String METHOD = "GET";
-
-    private static final String PATH = "/collections";
+        @Override
+        public CommandDetails details() {
+            return new CommandDetails("GET", "/collections", null, "Gets all collections");
+        }
+    };
 
     public GetCollections(DataSource dataSource) {
-        super(dataSource, METHOD, PATH);
+        super(dataSource);
     }
 
     @Override
