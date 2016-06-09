@@ -1,12 +1,11 @@
 package pt.isel.ls.movies.container.commands.common;
 
 import pt.isel.ls.movies.container.commands.Command;
+import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
-import pt.isel.ls.utils.FileUtils;
 
 import javax.sql.DataSource;
-import java.util.Map;
 
 /**
  * Lists all the commands available and their description
@@ -31,10 +30,11 @@ public class Option extends Command {
 
     @Override
     public void execute(Request request, Response response) throws Exception {
-        Map<String, String> map = FileUtils.getFromFile("src/main/res/commands.txt", ";");
-
-        for (String s : map.keySet()) {
-            System.out.printf("%s\n\t%s\n", s, map.get(s));
+        for (ICommand c : request.getContextData().commands) {
+            Creator creator = (Creator) c.getClass().getField("CREATOR").get(null);
+            CommandDetails details = creator.details();
+            if(details.parameters == null)System.out.printf("Method: %s Path: %s <No Parameters>\n\t%s\n", details.method, details.path, details.details);
+            else System.out.printf("Method: %s Path: %s Parameters: %s\n\t%s\n", details.method, details.path, details.parameters, details.details);
         }
     }
 

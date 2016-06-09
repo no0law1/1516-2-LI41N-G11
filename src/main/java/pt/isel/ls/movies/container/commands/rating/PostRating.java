@@ -22,7 +22,7 @@ public class PostRating extends Command.RedirectViewCommand {
 
         @Override
         public CommandDetails details() {
-            return new CommandDetails("POST", "/movies/{mid}/ratings", null, "Posts a movie rating");
+            return new CommandDetails("POST", "/movies/{mid}/ratings", "rating=?", "Posts a movie rating");
         }
     };
 

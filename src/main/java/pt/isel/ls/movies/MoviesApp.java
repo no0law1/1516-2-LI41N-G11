@@ -19,6 +19,7 @@ public class MoviesApp {
     public MoviesApp() throws Exception {
         router = Router.createRouter(DataSourceFactory.createInstance());
         contextData = new ContextData();
+        contextData.commands = router.getCommands();
     }
 
     private void run(String[] args) throws Exception {

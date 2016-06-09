@@ -18,9 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class whose instance contains the routing for a set of Commands
@@ -70,12 +68,18 @@ public class Router {
     }
 
     private Node methods;
+    private List<ICommand> commands;
 
     public Router(){
         methods = new Node();
+        commands = new LinkedList<>();
     }
 
-    public void add(String method, String path, ICommand ICommand){
+    public Collection<ICommand> getCommands(){
+        return commands;
+    }
+
+    public void add(String method, String path, ICommand iCommand){
         method = method.toLowerCase();
         path = path.toLowerCase();
         Node node = methods.get(method);
@@ -95,7 +99,8 @@ public class Router {
                 node = addNode(node, name);
             }
         }
-        node.setCommand(ICommand);
+        node.setCommand(iCommand);
+        commands.add(iCommand);
     }
 
     public Node addNode(Node node, String name){

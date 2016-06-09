@@ -22,7 +22,7 @@ public class PostReview extends Command.RedirectViewCommand {
 
         @Override
         public CommandDetails details() {
-            return new CommandDetails("POST", "/movies/{mid}/reviews", null, "Creates a review for a movie");
+            return new CommandDetails("POST", "/movies/{mid}/reviews", "reviewerName=?&reviewSummary=?&review=?&rating=?", "Creates a review for a movie");
         }
     };
 
