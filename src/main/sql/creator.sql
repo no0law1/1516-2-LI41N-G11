@@ -1,5 +1,11 @@
 ﻿--CREATE DATABASE movies;
 --CREATE DATABASE movies_test;
+--drop table movie_collection;
+--drop table rating;
+--drop table review;
+--drop table collection;
+--drop table student;
+--drop table movie;
 
 --Multiple movies can have the same title.
 --
@@ -55,5 +61,7 @@ create table movie_collection(
     cid int,
     mid int,
 
-    primary key(cid, mid)
+    primary key(cid, mid),
+    foreign key (mid) references movie(id),
+    foreign key (cid) references collection(id)
 );

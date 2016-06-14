@@ -3,7 +3,6 @@ package pt.isel.ls.movies.container.commands.collections;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Collection;
 
 import javax.sql.DataSource;
@@ -42,12 +41,6 @@ public class PostMovieToCollection extends Command.RedirectViewCommand {
 
         System.out.printf("cid: %d, mid: %d\n", movieCollectionUID.cid, movieCollectionUID.mid);
 
-        return new StringBuilder("/collections/").append(cid).append("/movies").toString();
-    }
-
-    //TODO remove execute method and create views
-    @Override
-    public void execute(Request request, Response response) throws Exception {
-        doWork(request);
+        return new StringBuilder("/collections/").append(cid).toString();
     }
 }

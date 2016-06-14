@@ -4,8 +4,6 @@ import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.CollectionDAO;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.model.Collection;
-import pt.isel.ls.movies.view.collection.CreatedCollectionView;
-import pt.isel.ls.movies.view.collection.CreatedCollectionViewHtml;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -45,9 +43,6 @@ public class CreateCollection extends Command.RedirectViewCommand {
 
         collection.setId(id);
 
-        views.put("text/html", new CreatedCollectionViewHtml(collection));
-        views.put("text/plain", new CreatedCollectionView(collection));
-
-        return new StringBuilder("/collections/").append(id).append("/movies").toString();
+        return new StringBuilder("/collections/").append(id).toString();
     }
 }
