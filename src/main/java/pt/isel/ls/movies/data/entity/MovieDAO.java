@@ -14,6 +14,15 @@ import java.util.List;
  */
 public class MovieDAO {
 
+    private static Movie map(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt(1);
+        String title = resultSet.getString(2);
+        int releaseYear = resultSet.getInt(3);
+        String genre = resultSet.getString(4);
+        float averageRating = resultSet.getFloat(5);
+        return new Movie(id, title, releaseYear, genre, averageRating);
+    }
+
     public static int getCount(Connection connection) throws SQLException {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select count(*) from movie");
@@ -82,12 +91,7 @@ public class MovieDAO {
         //resultSet.absolute(skip);
         for (int i=0; i<skip; i++) if(!resultSet.next()) return movies;
         for (int i=0; resultSet.next() && (top < 0 || i < top); i++) {
-            int id = resultSet.getInt(1);
-            String title = resultSet.getString(2);
-            int releaseYear = resultSet.getInt(3);
-            String genre = resultSet.getString(4);
-            float averageRating = resultSet.getFloat(5);
-            Movie movie = new Movie(id, title, releaseYear, genre, averageRating);
+            Movie movie = map(resultSet);
             movies.add(movie);
         }
         return movies;
@@ -124,11 +128,7 @@ public class MovieDAO {
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if(resultSet.next()){
-            String title = resultSet.getString(2);
-            int releaseYear = resultSet.getInt(3);
-            String genre = resultSet.getString(4);
-            float averageRating = resultSet.getFloat(5);
-            return new Movie(id, title, releaseYear, genre, averageRating);
+            return map(resultSet);
         }
         throw new NoDataException("There is no such movie with the id: " + id);
     }
@@ -169,12 +169,8 @@ public class MovieDAO {
 
         List<Movie> movies = new LinkedList<>();
         while(resultSet.next()){
-            int id = resultSet.getInt(1);
-            String title = resultSet.getString(2);
-            int releaseYear = resultSet.getInt(3);
-            String genre = resultSet.getString(4);
-            float averageRating = resultSet.getFloat(5);
-            movies.add(new Movie(id, title, releaseYear, genre, averageRating));
+            Movie movie = map(resultSet);
+            movies.add(movie);
         }
         return movies;
     }
@@ -197,12 +193,8 @@ public class MovieDAO {
 
         List<Movie> movies = new LinkedList<>();
         while(resultSet.next()){
-            int id = resultSet.getInt(1);
-            String title = resultSet.getString(2);
-            int releaseYear = resultSet.getInt(3);
-            String genre = resultSet.getString(4);
-            float averageRating = resultSet.getFloat(5);
-            movies.add(new Movie(id, title, releaseYear, genre, averageRating));
+            Movie movie = map(resultSet);
+            movies.add(movie);
         }
         return movies;
     }
@@ -229,12 +221,8 @@ public class MovieDAO {
 
         List<Movie> movies = new LinkedList<>();
         while (resultSet.next()) {
-            int id = resultSet.getInt(1);
-            String title = resultSet.getString(2);
-            int releaseYear = resultSet.getInt(3);
-            String genre = resultSet.getString(4);
-            float averageRating = resultSet.getFloat(5);
-            movies.add(new Movie(id, title, releaseYear, genre, averageRating));
+            Movie movie = map(resultSet);
+            movies.add(movie);
         }
         return movies;
     }
@@ -271,11 +259,8 @@ public class MovieDAO {
         ResultSet resultSet = preparedStatement.executeQuery();
         for (int i=0; i<skip; i++) if(!resultSet.next()) return movies;
         for (int i=0; resultSet.next() && (top < 0 || i < top); i++) {
-            int id = resultSet.getInt(1);
-            String title = resultSet.getString(2);
-            int releaseYear = resultSet.getInt(3);
-            String genre = resultSet.getString(4);
-            movies.add(new Movie(id, title, releaseYear, genre));
+            Movie movie = map(resultSet);
+            movies.add(movie);
         }
         return movies;
     }

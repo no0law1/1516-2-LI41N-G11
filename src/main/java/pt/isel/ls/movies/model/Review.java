@@ -61,6 +61,10 @@ public class Review {
         return review;
     }
 
+    public void setReview(String review) {
+        this.review = review;
+    }
+
     public String getReviewerName() {
         return reviewerName;
     }

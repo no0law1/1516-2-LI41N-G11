@@ -40,9 +40,9 @@ public abstract class Command implements ICommand {
 
         @Override
         public void execute(Request request, Response response) throws Exception {
-            String redirectpath = doWork(request);
+            String redirectPath = doWork(request);
 
-            response.addHeader("Location", redirectpath);
+            response.addHeader("Location", redirectPath);
             response.setStatus(303);
         }
     }
@@ -80,6 +80,8 @@ public abstract class Command implements ICommand {
     }
 
     public interface Creator{
+
+        //TODO: Not necessary. Why use?
         Command create(DataSource dataSource);
         CommandDetails details();
     }

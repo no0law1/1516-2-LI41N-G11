@@ -3,7 +3,6 @@ package pt.isel.ls.movies.container.commands.rating;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.entity.RatingDAO;
 import pt.isel.ls.movies.engine.Request;
-import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.model.Rating;
 
 import javax.sql.DataSource;
@@ -41,7 +40,7 @@ public class PostRating extends Command.RedirectViewCommand {
             rating = RatingDAO.submitRating(connection, rating);
         }
 
-        System.out.printf("rating mid: %d, val: %d\n", rating.getMid(), rating.getVal());
+        System.out.printf("Rating mid: %d, val: %d\n", rating.getMid(), rating.getVal());
 
         return new StringBuilder("/movies/").append(mid).append("/ratings").toString();
     }

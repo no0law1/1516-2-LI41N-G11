@@ -14,6 +14,13 @@ import java.util.List;
  */
 public class CollectionDAO {
 
+    private static Collection map(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt(1);
+        String name = resultSet.getString(2);
+        String description = resultSet.getString(3);
+        return new Collection(id, name, description);
+    }
+
     public static int getCount(Connection connection) throws SQLException {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select count(*) from collection");
@@ -75,9 +82,7 @@ public class CollectionDAO {
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            String name = resultSet.getString(2);
-            String description = resultSet.getString(3);
-            Collection collection = new Collection(id, name, description);
+            Collection collection = map(resultSet);
             collection.setMovies(MovieDAO.getCollectionMovies(connection, collection.getId()));
             return collection;
         }
@@ -103,10 +108,8 @@ public class CollectionDAO {
         //resultSet.absolute(skip);
         for (int i=0; i<skip; i++) if(!resultSet.next()) throw new NoDataException("There are no collection");
         for (int i=0; resultSet.next() && (top < 0 || i < top); i++) {
-            int id = resultSet.getInt(1);
-            String name = resultSet.getString(2);
-            String description = resultSet.getString(3);
-            collections.add(new Collection(id, name, description));
+            Collection collection = map(resultSet);
+            collections.add(collection);
         }
         return collections;
     }

@@ -43,6 +43,8 @@ public class CreateCollection extends Command.RedirectViewCommand {
 
         collection.setId(id);
 
+        System.out.printf("ID: %d", id);
+
         return new StringBuilder("/collections/").append(id).toString();
     }
 }

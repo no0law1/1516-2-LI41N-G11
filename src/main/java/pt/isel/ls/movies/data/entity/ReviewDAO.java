@@ -15,6 +15,16 @@ import java.util.List;
  */
 public class ReviewDAO {
 
+    private static Review map(ResultSet resultSet) throws SQLException {
+        int mid = resultSet.getInt(1);
+        int id = resultSet.getInt(2);
+        String reviewerName = resultSet.getString(3);
+        String reviewSummary = resultSet.getString(4);
+        String review = resultSet.getString(5);
+        int rating = resultSet.getInt(6);
+        return new Review(mid, id, reviewerName, reviewSummary, review, rating);
+    }
+
     public static int getCount(Connection connection) throws SQLException {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("select count(*) from review");
@@ -96,12 +106,9 @@ public class ReviewDAO {
         List<Review> reviews = new LinkedList<>();
         for (int i=0; i<skip; i++) if(!resultSet.next()) return reviews;
         for (int i=0; resultSet.next() && (top < 0 || i < top); i++){
-            int id = resultSet.getInt(2);
-            String reviewerName = resultSet.getString(3);
-            String reviewSummary = resultSet.getString(4);
-            String review = null; //resultSet.getString(5);
-            int rating = resultSet.getInt(6);
-            reviews.add(new Review(mid, id, reviewerName, reviewSummary, review, rating));
+            Review review = map(resultSet);
+            review.setReview(null);
+            reviews.add(review);
         }
         return reviews;
     }
@@ -121,11 +128,8 @@ public class ReviewDAO {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         if(resultSet.next()){
-            String reviewerName = resultSet.getString(3);
-            String reviewSummary = resultSet.getString(4);
-            String review = resultSet.getString(5);
-            int rating = resultSet.getInt(6);
-            return new Review(reviewUID.mid, reviewUID.id, reviewerName, reviewSummary, review, rating);
+            Review review = map(resultSet);
+            return review;
         }
         throw new NoDataException("There is no review with mid: " + reviewUID.mid + " and id: " + reviewUID.id);
     }

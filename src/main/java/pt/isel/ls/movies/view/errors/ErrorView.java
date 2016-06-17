@@ -3,7 +3,7 @@ package pt.isel.ls.movies.view.errors;
 import pt.isel.ls.utils.html.HtmlBootstrap;
 
 /**
- * TODO: Commentary.
+ * Defines the base of an error view html
  */
 public class ErrorView extends HtmlBootstrap {
 

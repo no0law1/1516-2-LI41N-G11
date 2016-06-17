@@ -42,6 +42,8 @@ public class PostMovie extends Command.RedirectViewCommand {
             mid = MovieDAO.submitMovie(connection, movie);
         }
 
+        System.out.printf("ID: %d", mid);
+
         return new StringBuilder("/movies/").append(mid).toString();
     }
 }
