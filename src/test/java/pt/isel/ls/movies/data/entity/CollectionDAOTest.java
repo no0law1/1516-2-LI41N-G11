@@ -117,8 +117,6 @@ public class CollectionDAOTest {
                 assertEquals(actual.get(i), expected.get(2+i));
             }
         }
-
-
     }
 
     @Test
@@ -153,6 +151,28 @@ public class CollectionDAOTest {
             CollectionDAO.postMovieToCollection(connection, id, movie1.getId());
 
             assertTrue(CollectionDAO.removeMovieFromCollection(connection, id, movie1.getId()));
+        }
+    }
+
+    @Test
+    public void testGetMoviesCollectionCount() throws Exception {
+        Collection collection = new Collection(1, "name1", "description1");
+        List<Movie> expected = new LinkedList<>();
+        expected.add(new Movie(1, "test1", 2016, "genre_test"));
+        expected.add(new Movie(2, "test2", 2016, "genre_test"));
+        expected.add(new Movie(3, "test3", 2016, "genre_test"));
+
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            for (Movie movie : expected) {
+                MovieDAO.submitMovie(connection, movie);
+            }
+            CollectionDAO.createCollection(connection, collection);
+            for (Movie movie : expected) {
+                CollectionDAO.postMovieToCollection(connection, collection.getId(), movie.getId());
+            }
+
+            assertEquals(expected.size(), CollectionDAO.getCount(connection, 1));
         }
     }
 }
