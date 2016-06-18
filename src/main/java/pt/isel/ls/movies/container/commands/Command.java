@@ -75,7 +75,7 @@ public abstract class Command implements ICommand {
                     return;
                 }
             }
-            throw new InvalidAcceptException("");
+            throw new InvalidAcceptException("Only valid options are html or plain text");
         }
     }
 
