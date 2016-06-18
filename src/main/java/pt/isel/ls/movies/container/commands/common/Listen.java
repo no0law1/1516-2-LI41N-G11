@@ -10,7 +10,6 @@ import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.movies.engine.ContextData;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
-import pt.isel.ls.movies.engine.Router;
 
 import javax.sql.DataSource;
 
@@ -63,12 +62,16 @@ public class Listen extends Command {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        ContextData data = new ContextData();
-        data.dynamic = false;
+    public static void main(String[] args) {
+        try {
+            ContextData data = new ContextData();
+            data.dynamic = false;
 
-        String[] request = new String[]{"LISTEN", "/", "port="+System.getenv("PORT")};
+            String[] request = new String[]{"LISTEN", "/", "port=" + System.getenv("PORT")};
 
-        new Listen(DataSourceFactory.createInstance()).execute(Request.create(data, request), null);
+            new Listen(DataSourceFactory.createInstance()).execute(Request.create(data, request), null);
+        } catch (Exception e) {
+            logger.error("Main: ", e);
+        }
     }
 }
