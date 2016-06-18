@@ -102,5 +102,9 @@ public abstract class Command implements ICommand {
             this.details = details;
         }
 
+        @Override
+        public String toString() {
+            return "CommandDetails{ method:" + method + ", path:" + path + ", parameters: " + parameters + ", details:" + details + "}";
+        }
     }
 }

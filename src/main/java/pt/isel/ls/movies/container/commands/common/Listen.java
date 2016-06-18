@@ -3,6 +3,8 @@ package pt.isel.ls.movies.container.commands.common;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.movies.engine.ContextData;
@@ -13,6 +15,8 @@ import pt.isel.ls.movies.engine.Router;
 import javax.sql.DataSource;
 
 public class Listen extends Command {
+
+    private static Logger logger = LoggerFactory.getLogger(Listen.class);
 
     public static Creator CREATOR = new Creator() {
         @Override
@@ -34,7 +38,7 @@ public class Listen extends Command {
     public void execute(Request request, Response response) throws Exception {
 
         if(request.getContextData().runningServer != null){
-            System.out.println("A Server is already running");
+            logger.info("A Server is already running");
             return;
         }
 
@@ -43,17 +47,14 @@ public class Listen extends Command {
             port = Integer.valueOf(request.getParameter("port"));
         }
 
-        System.out.println(String.format("launching Web server at port %d...", port));
+        logger.info(String.format("launching Web server at port %d...", port));
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         server.setHandler(context);
-        context.addServlet(new ServletHolder(Router.createRouter(dataSource).createHttpServlet(request.getContextData())), "/*");
-        //ServletHandler handler = new ServletHandler();
-        //server.setHandler(handler);
-        //handler.addServletWithMapping(new ServletHolder(Router.createRouter(dataSource).createHttpServlet(request.getContextData())), "/*");
+        context.addServlet(new ServletHolder(request.getContextData().router.createHttpServlet(request.getContextData())), "/*");
         server.start();
-        System.out.println("Server is started");
+        logger.info("Server is started");
 
         request.getContextData().runningServer = server;
 

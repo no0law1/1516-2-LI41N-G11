@@ -1,6 +1,8 @@
 package pt.isel.ls.movies.engine;
 
 import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.container.commands.ICommand;
 import pt.isel.ls.movies.exceptions.MethodNotAllowedException;
@@ -24,6 +26,8 @@ import java.util.*;
  * Class whose instance contains the routing for a set of Commands
  */
 public class Router {
+
+    private static Logger logger = LoggerFactory.getLogger(Router.class);
 
     private class Parameter {
         private final String name;
@@ -80,6 +84,7 @@ public class Router {
     }
 
     public void add(String method, String path, ICommand iCommand){
+        logger.debug("adding new listener: method: " + method + " path: " + path);
         method = method.toLowerCase();
         path = path.toLowerCase();
         Node node = methods.get(method);
@@ -104,6 +109,7 @@ public class Router {
     }
 
     public Node addNode(Node node, String name){
+        logger.debug("adding node: " + name);
         name = name.toLowerCase();
         Node auxNode = node.get(name);
         if(auxNode == null){
@@ -114,6 +120,7 @@ public class Router {
     }
 
     public Node addParameter(Node node, String name){
+        logger.debug("adding parameter: " + name);
         name = name.toLowerCase();
         Node auxNode;
         if(node.parameter == null){
@@ -162,10 +169,13 @@ public class Router {
         for(Class<? extends ICommand> aClass : classes ){
             try {
                 Command.Creator creator = (Command.Creator)aClass.getField("CREATOR").get(null);
+                logger.info("Adding new command: " + creator.details().toString());
                 Command command = creator.create(ds);
                 Command.CommandDetails details = creator.details();
                 router.add(details.method, details.path, command);
-            } catch (NoSuchFieldException ex){}
+            } catch (NoSuchFieldException ex){
+                logger.debug(aClass.getName() + " not being added to commands");
+            }
         }
     }
 
@@ -209,12 +219,13 @@ public class Router {
                 }
                 resp.setStatus(response.getStatus());
             } catch (HTMLException e) {
+                logger.error("doAll HTMLException", e);
                 new ErrorView(e.getHtmlErrorCode(), e.getErrorTitle(), e.getMessage()).writeTo(resp.getWriter());
                 resp.setStatus(e.getHtmlErrorCode());
             } catch (Exception e) {
+                logger.error("doAll Exception", e);
                 new ErrorView(500, "Internal Server Error", e.getMessage()).writeTo(resp.getWriter());
                 resp.setStatus(500);
-                e.printStackTrace();
             }
         }
     }

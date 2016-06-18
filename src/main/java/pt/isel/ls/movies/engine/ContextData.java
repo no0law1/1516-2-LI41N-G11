@@ -11,5 +11,5 @@ import java.util.Collection;
 public class ContextData {
     public boolean dynamic;
     public Server runningServer;
-    public Collection<ICommand> commands;
+    public Router router;
 }

@@ -1,11 +1,14 @@
 package pt.isel.ls.movies;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.isel.ls.movies.data.DataSourceFactory;
 import pt.isel.ls.movies.engine.ContextData;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
 import pt.isel.ls.movies.engine.Router;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -13,13 +16,15 @@ import java.util.Scanner;
  */
 public class MoviesApp {
 
+    private static Logger logger = LoggerFactory.getLogger(MoviesApp.class);
+
     private final Router router;
     private ContextData contextData;
 
     public MoviesApp() throws Exception {
         router = Router.createRouter(DataSourceFactory.createInstance());
         contextData = new ContextData();
-        contextData.commands = router.getCommands();
+        contextData.router = router;
     }
 
     private void run(String[] args) throws Exception {
@@ -29,7 +34,7 @@ public class MoviesApp {
             Response response = Response.create(request.getHeader("file-name"));
             router.get(request).execute(request, response);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error("run from String[]: ", e);
         }
     }
 
@@ -43,7 +48,7 @@ public class MoviesApp {
                 Response response = Response.create(request.getHeader("file-name"));
                 router.get(request).execute(request, response);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.error("run from dynamic: ", e);
             }
         }
     }
@@ -52,8 +57,10 @@ public class MoviesApp {
         try {
             MoviesApp app = new MoviesApp();
             if (args.length >= 1) {
+                logger.info("running command with args: " +  Arrays.toString(args));
                 app.run(args);
             } else {
+                logger.info("running dynamically");
                 app.run();
             }
         } catch (Exception e) {
