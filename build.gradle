@@ -8,6 +8,6 @@ dependencies {
     testCompile fileTree(dir: 'vendor/test', include: '*.jar')
 }
 
-mainClassName = "pt.isel.ls.movies.container.commands.common.Listen"
+mainClassName = "pt.isel.ls.movies.HerokuLaunch"
 
 task stage(dependsOn: ['clean', 'installApp'])

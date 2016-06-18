@@ -6,8 +6,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.isel.ls.movies.container.commands.Command;
-import pt.isel.ls.movies.data.DataSourceFactory;
-import pt.isel.ls.movies.engine.ContextData;
 import pt.isel.ls.movies.engine.Request;
 import pt.isel.ls.movies.engine.Response;
 
@@ -59,19 +57,6 @@ public class Listen extends Command {
 
         if(!request.getContextData().dynamic) {
             request.getContextData().runningServer.join();
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            ContextData data = new ContextData();
-            data.dynamic = false;
-
-            String[] request = new String[]{"LISTEN", "/", "port=" + System.getenv("PORT")};
-
-            new Listen(DataSourceFactory.createInstance()).execute(Request.create(data, request), null);
-        } catch (Exception e) {
-            logger.error("Main: ", e);
         }
     }
 }
