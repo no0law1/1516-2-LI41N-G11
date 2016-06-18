@@ -30,11 +30,14 @@ public class Option extends Command {
 
     @Override
     public void execute(Request request, Response response) throws Exception {
-        for (ICommand c : request.getContextData().commands) {
+        for (ICommand c : request.getContextData().router.getCommands()) {
             Creator creator = (Creator) c.getClass().getField("CREATOR").get(null);
             CommandDetails details = creator.details();
-            if(details.parameters == null)System.out.printf("Method: %s Path: %s <No Parameters>\n\t%s\n", details.method, details.path, details.details);
-            else System.out.printf("Method: %s Path: %s Parameters: %s\n\t%s\n", details.method, details.path, details.parameters, details.details);
+            System.out.printf("Method: %s Path: %s Parameters: %s\n\t%s\n",
+                    details.method,
+                    details.path,
+                    details.parameters == null ? "<No Parameters>" : details.parameters,
+                    details.details);
         }
     }
 

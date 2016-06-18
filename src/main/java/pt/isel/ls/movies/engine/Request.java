@@ -1,11 +1,14 @@
 package pt.isel.ls.movies.engine;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.isel.ls.movies.exceptions.BadParameterFormatException;
 import pt.isel.ls.movies.exceptions.NoDataException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +17,8 @@ import java.util.Map;
  * Class whose instance represents a request of data.
  */
 public class Request implements IRequest {
+
+    private static Logger logger = LoggerFactory.getLogger(Request.class);
 
     private String method;
     private String path;
@@ -115,7 +120,9 @@ public class Request implements IRequest {
             headers = request[2];
             parameters = request[3];
         }
-        return new Request(contextData, method, path, headers, parameters);
+        Request cRequest = new Request(contextData, method, path, headers, parameters);
+        logger.info("Request created from String[]: " + cRequest);
+        return cRequest;
     }
 
     public static Request create(ContextData contextData, HttpServletRequest request){
@@ -132,6 +139,12 @@ public class Request implements IRequest {
             cRequest.parametersMap.put(s.toLowerCase(), strings[0]);
         });
 
+        logger.info("Request created from HttpServletRequest: " + cRequest);
         return cRequest;
+    }
+
+    @Override
+    public String toString() {
+        return "Request{ method: "+method+", path: "+path+", headers: "+headers+", parameters: "+parameters+", parametersMap: "+parametersMap+", headersMap: "+headersMap+"}";
     }
 }

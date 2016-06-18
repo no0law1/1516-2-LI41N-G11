@@ -1,5 +1,7 @@
 package pt.isel.ls.movies.container.commands.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.isel.ls.movies.container.commands.Command;
 import pt.isel.ls.movies.container.commands.collections.RemoveMovieFromCollection;
 import pt.isel.ls.movies.engine.Request;
@@ -11,6 +13,8 @@ import javax.sql.DataSource;
  * Used to exit the application
  */
 public class Exit extends Command {
+
+    private static Logger logger = LoggerFactory.getLogger(Exit.class);
 
     public static Creator CREATOR = new Creator() {
         @Override
@@ -32,13 +36,13 @@ public class Exit extends Command {
     @Override
     public void execute(Request request, Response response) throws Exception {
         if(request.getContextData().runningServer != null){
-            System.out.println("stopping web server...");
+            logger.info("stopping web server...");
 
             request.getContextData().runningServer.stop();
             request.getContextData().runningServer.join();
         }
 
-        System.out.println("Closing your application...");
+        logger.info("Closing application...");
         System.exit(0);
     }
 }
