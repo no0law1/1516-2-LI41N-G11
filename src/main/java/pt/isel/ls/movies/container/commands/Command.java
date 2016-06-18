@@ -81,7 +81,6 @@ public abstract class Command implements ICommand {
 
     public interface Creator{
 
-        //TODO: Not necessary. Why use?
         Command create(DataSource dataSource);
         CommandDetails details();
     }

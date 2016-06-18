@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO: Commentary.
+ * Class to launch in Heroku server
  */
 public class HerokuLaunch {
     private static Logger logger = LoggerFactory.getLogger(HerokuLaunch.class);

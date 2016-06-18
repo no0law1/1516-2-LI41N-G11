@@ -20,7 +20,7 @@ import java.sql.Connection;
 import static org.junit.Assert.assertEquals;
 
 /**
- * TODO: Commentary.
+ * Tests redirect path of all post commands and their error control
  */
 public class CommandTest {
 

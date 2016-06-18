@@ -89,4 +89,9 @@ public class ReviewDAOTest {
             assertEquals(expected, actual);
         }
     }
+
+    @Test
+    public void testGetCount() {
+        //TODO: test
+    }
 }

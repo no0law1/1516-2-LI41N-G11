@@ -17,9 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
@@ -203,14 +200,13 @@ public class Router {
          *
          * @param req  Request given from http post and http get
          * @param resp Response given from http post and http get
-         * @throws IOException todo
+         * @throws IOException
          */
         private void doAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
             Request request = Request.create(contextData, req);
             Response response = Response.create(resp.getWriter());
             try {
                 router.get(request).execute(request, response);
-                //TODO set response charset
                 if (response.getHeader("Location") != null) {
                     resp.setHeader("Location", response.getHeader("Location"));
                 }

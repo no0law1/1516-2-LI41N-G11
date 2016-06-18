@@ -2,9 +2,6 @@ package pt.isel.ls.movies.exceptions;
 
 import pt.isel.ls.movies.exceptions.common.HTMLException;
 
-/**
- * Created by rcacheira on 23/05/16.
- */
 public class InvalidAcceptException extends HTMLException {
     public InvalidAcceptException(String message){
         super(406, "Not Acceptable", message);

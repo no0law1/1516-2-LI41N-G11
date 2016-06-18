@@ -29,7 +29,20 @@ public class DataSourceFactoryTest {
      * @throws SQLException if some error occurs
      */
     @Test
+    public void testGetTestInstanceConnection() throws SQLException {
+        try (Connection conn = dataSource.getConnection()) {
+            conn.prepareStatement("SELECT * FROM student").executeQuery();
+        }
+    }
+
+    /**
+     * Tests the connection to DataBase
+     *
+     * @throws SQLException if some error occurs
+     */
+    @Test
     public void testGetConnection() throws SQLException {
+        dataSource = DataSourceFactory.createInstance();
         try(Connection conn = dataSource.getConnection()){
             conn.prepareStatement("SELECT * FROM student").executeQuery();
         }

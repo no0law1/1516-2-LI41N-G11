@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import pt.isel.ls.movies.data.DataSourceFactory;
+import pt.isel.ls.movies.model.Collection;
 import pt.isel.ls.movies.model.Movie;
 import pt.isel.ls.movies.model.Rating;
 import pt.isel.ls.movies.model.Review;
@@ -32,6 +33,7 @@ public class MovieDAOTest {
     @After
     public void tearDown() throws Exception {
         try(Connection connection = dataSource.getConnection()){
+            connection.prepareStatement("ALTER SEQUENCE collection_id_seq RESTART WITH 1").execute();
             connection.prepareStatement("ALTER SEQUENCE movie_id_seq RESTART WITH 1").execute();
         }
     }
@@ -504,5 +506,29 @@ public class MovieDAOTest {
             connection.setAutoCommit(false);
             assertTrue(MovieDAO.getMostReviewedMovies(connection, 90).isEmpty());
         }
+    }
+
+    @Test
+    public void testGetLeastReviewedMovies() throws Exception {
+        //TODO: test
+    }
+
+    @Test
+    public void testGetCollectionMovies() throws Exception {
+        List<Movie> movies = new LinkedList<>();
+        movies.add(new Movie(1, "test1", 2016, "genre_test"));
+        movies.add(new Movie(2, "test2", 2016, "genre_test"));
+        movies.add(new Movie(3, "test3", 2016, "genre_test"));
+
+        List<Collection> collections = new LinkedList<>();
+        collections.add(new Collection(1, "name1", "description1"));
+        collections.add(new Collection(2, "name2", "description2"));
+
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+
+
+        }
+
     }
 }
