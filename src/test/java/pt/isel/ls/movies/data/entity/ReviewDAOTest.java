@@ -91,7 +91,42 @@ public class ReviewDAOTest {
     }
 
     @Test
-    public void testGetCount() {
-        //TODO: test
+    public void testGetReviewsCount() throws Exception {
+        List<Review> expected = new LinkedList<>();
+        expected.add(new Review(1, 1, "Nuno", "Kickass Movie", "summary", 5));
+        expected.add(new Review(1, 2, "Nuno", "Just Another Movie", "summary", 3));
+        expected.add(new Review(1, 3, "Nuno", "Superb Movie", "summary", 5));
+        expected.add(new Review(1, 4, "Nuno", "It's Ok", "summary", 2));
+
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
+            for (Review review : expected) {
+                ReviewDAO.submitReview(connection, review);
+            }
+
+            assertEquals(ReviewDAO.getCount(connection), 4);
+        }
+    }
+
+    @Test
+    public void testGetMovieReviewsCount() throws Exception {
+        List<Review> expected = new LinkedList<>();
+        expected.add(new Review(1, 1, "Nuno", "Kickass Movie", "summary", 5));
+        expected.add(new Review(1, 2, "Nuno", "Just Another Movie", "summary", 3));
+        expected.add(new Review(1, 3, "Nuno", "Superb Movie", "summary", 5));
+        expected.add(new Review(1, 4, "Nuno", "It's Ok", "summary", 2));
+
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            int id = MovieDAO.submitMovie(connection, new Movie(1, "test", 2016, "genre_test"));
+            MovieDAO.submitMovie(connection, new Movie(2, "test", 2015, "genre_test"));
+            ReviewDAO.submitReview(connection, new Review(2, 1, "Nuno", "It's Ok", "summary", 2));
+            for (Review review : expected) {
+                ReviewDAO.submitReview(connection, review);
+            }
+
+            assertEquals(ReviewDAO.getCount(connection, id), 4);
+        }
     }
 }

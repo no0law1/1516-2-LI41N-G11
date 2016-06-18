@@ -254,7 +254,13 @@ public class MovieDAO {
     public static List<Movie> getCollectionMovies(Connection connection, int cid, int top, int skip) throws SQLException {
         List<Movie> movies = new LinkedList<>();
         PreparedStatement preparedStatement =
-                connection.prepareStatement("select movie.* , COALESCE(SUM(val*count)::float/SUM(count), 0) AS averageRating from movie_collection join movie on mid=movie.id left join review on movie.id=review.mid left join rating on movie.id=rating.mid where cid=? group by movie.id");
+                connection.prepareStatement("select movie.* , COALESCE(SUM(val*count)::float/SUM(count), 0) AS averageRating\n"
+                        + "from movie_collection join movie on mid=movie.id\n"
+                        + "left join review on movie.id=review.mid\n"
+                        + "left join rating on movie.id=rating.mid\n"
+                        + "where cid=?\n"
+                        + "group by movie.id\n"
+                        + "order by movie.id");
         preparedStatement.setInt(1, cid);
         ResultSet resultSet = preparedStatement.executeQuery();
         for (int i=0; i<skip; i++) if(!resultSet.next()) return movies;
